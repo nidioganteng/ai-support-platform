@@ -1,3 +1,5 @@
+import { OrganizationSwitcher, Show, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs';
+
 const upcomingSections = [
   { name: 'Knowledge Base', phase: 'Phase 2–3' },
   { name: 'Conversations', phase: 'Phase 4' },
@@ -8,10 +10,31 @@ const upcomingSections = [
 
 export default function HomePage() {
   return (
-    <main className="mx-auto flex min-h-screen max-w-2xl flex-col justify-center gap-8 px-6">
-      <div>
-        <p className="mb-2 text-sm font-medium uppercase tracking-wide text-neutral-500">
-          Phase 0 — Foundation
+    <div className="mx-auto flex min-h-screen max-w-4xl flex-col px-6">
+      <header className="flex h-16 items-center justify-between border-b border-neutral-800 pt-4 pb-4">
+        <div className="text-xl font-bold">AI Support</div>
+        <div className="flex items-center gap-4">
+          <Show when="signed-out">
+            <SignInButton>
+              <button className="text-sm font-medium hover:text-neutral-300">Log In</button>
+            </SignInButton>
+            <SignUpButton>
+              <button className="rounded bg-white px-3 py-1.5 text-sm font-medium text-black hover:bg-neutral-200">
+                Sign Up
+              </button>
+            </SignUpButton>
+          </Show>
+          <Show when="signed-in">
+            <OrganizationSwitcher hidePersonal appearance={{ elements: { rootBox: 'text-neutral-100' } }} />
+            <UserButton />
+          </Show>
+        </div>
+      </header>
+
+      <main className="mt-12 flex flex-col gap-8">
+        <div>
+          <p className="mb-2 text-sm font-medium uppercase tracking-wide text-neutral-500">
+            Phase 0 — Foundation
         </p>
         <h1 className="text-3xl font-bold">AI Support Platform</h1>
         <p className="mt-2 text-neutral-400">
@@ -30,6 +53,7 @@ export default function HomePage() {
           </li>
         ))}
       </ul>
-    </main>
+      </main>
+    </div>
   );
 }

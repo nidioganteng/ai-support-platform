@@ -1,16 +1,16 @@
 # Graph Report - ai-support-platform  (2026-07-31)
 
 ## Corpus Check
-- 48 files · ~4,691 words
+- 45 files · ~4,142 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 389 nodes · 390 edges · 32 communities (23 shown, 9 thin omitted)
+- 378 nodes · 382 edges · 30 communities (22 shown, 8 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `f3bcfdea`
+- Built from commit: `1912a099`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -30,6 +30,7 @@
 - compilerOptions
 - devDependencies
 - database/tsconfig.json
+- devDependencies
 - compilerOptions
 - compilerOptions
 - shared/tsconfig.json
@@ -42,7 +43,6 @@
 - next-env.d.ts
 - tailwind.config.ts
 - prisma.ts
-- middleware.ts
 
 ## God Nodes (most connected - your core abstractions)
 1. `compilerOptions` - 18 edges
@@ -71,11 +71,11 @@
 ## Import Cycles
 - None detected.
 
-## Communities (32 total, 9 thin omitted)
+## Communities (30 total, 8 thin omitted)
 
 ### Community 0 - "docs/README.md"
 Cohesion: 0.06
-Nodes (29): AI Agent Guidelines, Do's, Don'ts, Core Entities, ⚠️ Critical Rule: Multi-Tenancy Isolation, Database Schema, Overview, Workflows (+21 more)
+Nodes (28): AI Agent Guidelines, Do's, Don'ts, Error Verification, Core Entities, Database Schema, ERD (Mermaid), Overview (+20 more)
 
 ### Community 1 - "worker/package.json"
 Cohesion: 0.07
@@ -86,16 +86,16 @@ Cohesion: 0.08
 Nodes (24): dependencies, @app/database, @app/shared, cors, express, pino, pino-http, @app/database (+16 more)
 
 ### Community 3 - "database/package.json"
-Cohesion: 0.08
-Nodes (23): dependencies, @prisma/client, devDependencies, prisma, @types/node, typescript, @types/node, typescript (+15 more)
+Cohesion: 0.09
+Nodes (21): dependencies, @prisma/client, devDependencies, prisma, typescript, typescript, main, name (+13 more)
 
 ### Community 4 - "server.ts"
 Cohesion: 0.13
 Nodes (14): createApp(), logger, options, healthRouter, startedAt, app, env, ConversationStatus (+6 more)
 
 ### Community 5 - "scripts"
-Cohesion: 0.09
-Nodes (21): dependencies, @app/shared, @clerk/nextjs, next, react, react-dom, @app/shared, name (+13 more)
+Cohesion: 0.10
+Nodes (19): dependencies, @app/shared, next, react, react-dom, @app/shared, name, private (+11 more)
 
 ### Community 6 - "worker/src/index.ts"
 Cohesion: 0.21
@@ -114,8 +114,8 @@ Cohesion: 0.11
 Nodes (19): devDependencies, pino-pretty, supertest, tsx, @types/cors, @types/express, @types/node, @types/supertest (+11 more)
 
 ### Community 10 - "scripts"
-Cohesion: 0.07
-Nodes (29): eslint, @eslint/js, devDependencies, eslint, @eslint/js, prettier, typescript, typescript-eslint (+21 more)
+Cohesion: 0.11
+Nodes (18): engines, node, name, private, scripts, build, db:generate, db:push (+10 more)
 
 ### Community 11 - "shared/package.json"
 Cohesion: 0.11
@@ -132,6 +132,10 @@ Nodes (15): devDependencies, autoprefixer, postcss, tailwindcss, @types/node, @t
 ### Community 14 - "database/tsconfig.json"
 Cohesion: 0.17
 Nodes (11): compilerOptions, noEmit, outDir, rootDir, exclude, extends, include, node_modules (+3 more)
+
+### Community 15 - "devDependencies"
+Cohesion: 0.18
+Nodes (11): eslint, @eslint/js, devDependencies, eslint, @eslint/js, prettier, typescript, typescript-eslint (+3 more)
 
 ### Community 16 - "compilerOptions"
 Cohesion: 0.20
@@ -150,9 +154,9 @@ Cohesion: 0.33
 Nodes (5): printWidth, semi, singleQuote, tabWidth, trailingComma
 
 ## Knowledge Gaps
-- **235 isolated node(s):** `semi`, `singleQuote`, `trailingComma`, `printWidth`, `tabWidth` (+230 more)
+- **231 isolated node(s):** `semi`, `singleQuote`, `trailingComma`, `printWidth`, `tabWidth` (+226 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **9 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **8 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
@@ -160,14 +164,14 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `devDependencies` connect `devDependencies` to `api/package.json`?**
   _High betweenness centrality (0.008) - this node is a cross-community bridge._
 - **What connects `semi`, `singleQuote`, `trailingComma` to the rest of the system?**
-  _235 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _231 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `docs/README.md` be split into smaller, more focused modules?**
-  _Cohesion score 0.05714285714285714 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.058823529411764705 - nodes in this community are weakly interconnected._
 - **Should `worker/package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.06666666666666667 - nodes in this community are weakly interconnected._
 - **Should `api/package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.08 - nodes in this community are weakly interconnected._
 - **Should `database/package.json` be split into smaller, more focused modules?**
-  _Cohesion score 0.08333333333333333 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09090909090909091 - nodes in this community are weakly interconnected._
 - **Should `server.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.13157894736842105 - nodes in this community are weakly interconnected._

@@ -4,6 +4,8 @@ import { getEnv, __resetEnvCacheForTests } from './env.js';
 const validEnv = {
   DATABASE_URL: 'postgresql://postgres:postgres@localhost:5432/support_platform',
   REDIS_URL: 'redis://localhost:6379',
+  CLERK_SECRET_KEY: 'sk_test_123',
+  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: 'pk_test_123',
 };
 
 describe('getEnv', () => {
