@@ -50,8 +50,8 @@
     "semantic_hash": ""
   },
   "apps/web/package.json": {
-    "mtime": 1785510410.90597,
-    "ast_hash": "7d8ca314e16286e347a4cb50ab7cf18b",
+    "mtime": 1785511798.921022,
+    "ast_hash": "dac72e2c419daddf614b201995bf31fa",
     "semantic_hash": ""
   },
   "apps/web/postcss.config.mjs": {
@@ -65,8 +65,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/app/page.tsx": {
-    "mtime": 1785510588.8218591,
-    "ast_hash": "4288a3421f9405ba7a6e24b2c18860fb",
+    "mtime": 1785512450.2028759,
+    "ast_hash": "21f0ac7053341bd901cfb0ad0ca9a0af",
     "semantic_hash": ""
   },
   "apps/web/tailwind.config.ts": {
@@ -135,8 +135,8 @@
     "semantic_hash": ""
   },
   "packages/database/tsconfig.json": {
-    "mtime": 1785502557.9008172,
-    "ast_hash": "b541a5041d149d9636ffbc2f38a0286e",
+    "mtime": 1785511626.3465824,
+    "ast_hash": "3b84ed208512c12d3b5393e93f4ea502",
     "semantic_hash": ""
   },
   "packages/shared/package.json": {
@@ -247,6 +247,21 @@
   "apps/web/src/middleware.ts": {
     "mtime": 1785510433.3634005,
     "ast_hash": "d7f0f5ae49016e39b08662b30d3b7713",
+    "semantic_hash": ""
+  },
+  "apps/web/src/app/globals.css.d.ts": {
+    "mtime": 1785511305.2363634,
+    "ast_hash": "8cc0e940a705797bc9878015c53fa548",
+    "semantic_hash": ""
+  },
+  "apps/web/src/components/Header.tsx": {
+    "mtime": 1785512440.303119,
+    "ast_hash": "4eaa8af706e380dc2a82add494fb4df0",
+    "semantic_hash": ""
+  },
+  "apps/web/src/global.d.ts": {
+    "mtime": 1785510857.8313751,
+    "ast_hash": "77c5097fbf0b3cc8710ee9416ce251bc",
     "semantic_hash": ""
   }
 }

@@ -14,7 +14,7 @@
   "12": "compilerOptions",
   "13": "devDependencies",
   "14": "database/tsconfig.json",
-  "15": "devDependencies",
+  "15": "[[...sign-in]]/page.tsx",
   "16": "compilerOptions",
   "17": "compilerOptions",
   "18": "shared/tsconfig.json",
@@ -28,5 +28,7 @@
   "26": "tailwind.config.ts",
   "27": "prisma.ts",
   "28": "postcss.config.mjs",
-  "29": "eslint.config.mjs"
+  "29": "eslint.config.mjs",
+  "30": "[[...sign-up]]/page.tsx",
+  "31": "middleware.ts"
 }

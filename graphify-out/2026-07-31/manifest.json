@@ -50,8 +50,8 @@
     "semantic_hash": ""
   },
   "apps/web/package.json": {
-    "mtime": 1785502557.8852806,
-    "ast_hash": "236300d9d3239e376ca296817c54277d",
+    "mtime": 1785510410.90597,
+    "ast_hash": "7d8ca314e16286e347a4cb50ab7cf18b",
     "semantic_hash": ""
   },
   "apps/web/postcss.config.mjs": {
@@ -60,13 +60,13 @@
     "semantic_hash": ""
   },
   "apps/web/src/app/layout.tsx": {
-    "mtime": 1785502557.8872936,
-    "ast_hash": "dcba161937cc0bd6dee3c5b524d15536",
+    "mtime": 1785510422.381513,
+    "ast_hash": "ef35fb4fb9d4f34095af36b09fabef6b",
     "semantic_hash": ""
   },
   "apps/web/src/app/page.tsx": {
-    "mtime": 1785502557.8872936,
-    "ast_hash": "c49b2aeee61c3876da5918f1d144d18a",
+    "mtime": 1785510588.8218591,
+    "ast_hash": "4288a3421f9405ba7a6e24b2c18860fb",
     "semantic_hash": ""
   },
   "apps/web/tailwind.config.ts": {
@@ -125,8 +125,8 @@
     "semantic_hash": ""
   },
   "packages/database/package.json": {
-    "mtime": 1785502557.898166,
-    "ast_hash": "c755d1ed8f9a47aa744bca2363e4f3d4",
+    "mtime": 1785510515.939744,
+    "ast_hash": "6ddb8336f70c29ac6f824384c8314b7d",
     "semantic_hash": ""
   },
   "packages/database/prisma.ts": {
@@ -145,13 +145,13 @@
     "semantic_hash": ""
   },
   "packages/shared/src/env.test.ts": {
-    "mtime": 1785502557.9023385,
-    "ast_hash": "0afbaa59e5dd564fbba768cdfa7856df",
+    "mtime": 1785510531.7663317,
+    "ast_hash": "b5a90e712fda9e79a7a4f2ea9ef7ad06",
     "semantic_hash": ""
   },
   "packages/shared/src/env.ts": {
-    "mtime": 1785502557.9023385,
-    "ast_hash": "30af0f37bd855e2cd10bda654b2ac373",
+    "mtime": 1785510467.3328166,
+    "ast_hash": "04b4e0b369003d87dd909f302e2a42b3",
     "semantic_hash": ""
   },
   "packages/shared/src/index.ts": {
@@ -175,13 +175,13 @@
     "semantic_hash": ""
   },
   ".agents/rules/AGENTS.md": {
-    "mtime": 1785507587.8607674,
-    "ast_hash": "2dd923026c10a469d0244f0366189807",
+    "mtime": 1785510234.2799752,
+    "ast_hash": "5aa48a660f69e5878ea9345910469e4c",
     "semantic_hash": ""
   },
   ".agents/rules/graphify.md": {
-    "mtime": 1785507587.9215586,
-    "ast_hash": "6c175281ddbab8ced8fde9a89bd78285",
+    "mtime": 1785510234.2805152,
+    "ast_hash": "1da1f24655dc442930cb3ef6263739bf",
     "semantic_hash": ""
   },
   "README.md": {
@@ -190,33 +190,33 @@
     "semantic_hash": ""
   },
   "docs/AI_AGENT_GUIDELINES.md": {
-    "mtime": 1785507552.8185463,
-    "ast_hash": "8bdcd5484dbe4d5abfb64a8dabf9a7e0",
+    "mtime": 1785510234.2834084,
+    "ast_hash": "e39ab05109f6fa7eaf64765d4f672d56",
     "semantic_hash": ""
   },
   "docs/DATABASE_SCHEMA.md": {
-    "mtime": 1785507579.0174854,
-    "ast_hash": "1ca0ec1a47671d7e8b619c7b5bd6d198",
+    "mtime": 1785510234.2997956,
+    "ast_hash": "1894bff6d68e4ea387c2f4ef192c91dd",
     "semantic_hash": ""
   },
   "docs/FOLDER_STRUCTURE_AND_ARCHITECTURE.md": {
-    "mtime": 1785507578.9615073,
-    "ast_hash": "d142d060170bb525d32fe568b8fbd848",
+    "mtime": 1785510234.301518,
+    "ast_hash": "5679405fd6afb193b2308628e5952160",
     "semantic_hash": ""
   },
   "docs/GITFLOW_AND_CONVENTIONS.md": {
-    "mtime": 1785507562.19541,
-    "ast_hash": "47c12d8dcc6e301eb51bb2b0b9f36cfe",
+    "mtime": 1785510234.303771,
+    "ast_hash": "2536a3cb41397e857aefa047f84a463b",
     "semantic_hash": ""
   },
   "docs/INFRASTRUCTURE_AND_CICD.md": {
-    "mtime": 1785507577.139327,
-    "ast_hash": "a1949e68e92f04c8df88b018418af1f9",
+    "mtime": 1785510234.306324,
+    "ast_hash": "c0662a795d319044b8ef258a6c7ac7e8",
     "semantic_hash": ""
   },
   "docs/README.md": {
-    "mtime": 1785507579.0882535,
-    "ast_hash": "f2c8f7c31ab583f3ee4a8a1aed2ff9f4",
+    "mtime": 1785510234.3105228,
+    "ast_hash": "371e4da160693856c8c735b13f6ea17e",
     "semantic_hash": ""
   },
   "docs/phase-plan.md": {
@@ -232,6 +232,21 @@
   "pnpm-workspace.yaml": {
     "mtime": 1785502557.907852,
     "ast_hash": "17160fca1214cc1630868fc60086237e",
+    "semantic_hash": ""
+  },
+  "apps/web/src/app/sign-in/[[...sign-in]]/page.tsx": {
+    "mtime": 1785510440.1576874,
+    "ast_hash": "3d9aeaeb699039788b87f40703266a5a",
+    "semantic_hash": ""
+  },
+  "apps/web/src/app/sign-up/[[...sign-up]]/page.tsx": {
+    "mtime": 1785510440.2325597,
+    "ast_hash": "8b81dff91df22add1d9c30c33fd5eb23",
+    "semantic_hash": ""
+  },
+  "apps/web/src/middleware.ts": {
+    "mtime": 1785510433.3634005,
+    "ast_hash": "d7f0f5ae49016e39b08662b30d3b7713",
     "semantic_hash": ""
   }
 }
