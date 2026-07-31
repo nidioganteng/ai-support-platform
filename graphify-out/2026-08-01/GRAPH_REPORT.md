@@ -1,26 +1,26 @@
-# Graph Report - ai-support-platform  (2026-07-31)
+# Graph Report - ai-support-platform  (2026-08-01)
 
 ## Corpus Check
-- 51 files · ~4,728 words
+- 57 files · ~5,249 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 396 nodes · 396 edges · 36 communities (26 shown, 10 thin omitted)
+- 412 nodes · 408 edges · 39 communities (28 shown, 11 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `f3bcfdea`
+- Built from commit: `c5f8b014`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- GitFlow and Conventions
+- docs/README.md
 - worker/package.json
 - api/package.json
 - database/package.json
 - server.ts
-- scripts
+- dependencies
 - worker/src/index.ts
 - Phase Plan
 - compilerOptions
@@ -43,8 +43,7 @@
 - tailwind.config.ts
 - prisma.ts
 - middleware.ts
-- Folder Structure and Architecture
-- Infrastructure and CI/CD
+- dashboard/layout.tsx
 - global.d.ts
 
 ## God Nodes (most connected - your core abstractions)
@@ -74,11 +73,11 @@
 ## Import Cycles
 - None detected.
 
-## Communities (36 total, 10 thin omitted)
+## Communities (39 total, 11 thin omitted)
 
-### Community 0 - "GitFlow and Conventions"
-Cohesion: 0.25
-Nodes (7): Branching Model, Commit Format (Conventional Commits), Commit Rules for AI Agents, GitFlow and Conventions, PR Body:, PR Title:, Pull Request Standard
+### Community 0 - "docs/README.md"
+Cohesion: 0.06
+Nodes (29): AI Agent Guidelines, Do's, Don'ts, Core Entities, ⚠️ Critical Rule: Multi-Tenancy Isolation, Database Schema, Overview, Workflows (+21 more)
 
 ### Community 1 - "worker/package.json"
 Cohesion: 0.07
@@ -96,17 +95,17 @@ Nodes (23): dependencies, @prisma/client, devDependencies, prisma, @types/node, 
 Cohesion: 0.13
 Nodes (14): createApp(), logger, options, healthRouter, startedAt, app, env, ConversationStatus (+6 more)
 
-### Community 5 - "scripts"
-Cohesion: 0.09
-Nodes (21): dependencies, @app/shared, @clerk/nextjs, next, react, react-dom, @app/shared, name (+13 more)
+### Community 5 - "dependencies"
+Cohesion: 0.08
+Nodes (23): dependencies, @app/shared, @clerk/nextjs, lucide-react, next, react, react-dom, @app/shared (+15 more)
 
 ### Community 6 - "worker/src/index.ts"
 Cohesion: 0.21
 Nodes (12): getRedisConnectionOptions(), logger, main(), HeartbeatResult, processHeartbeat(), createHeartbeatQueue(), HeartbeatJobData, Env (+4 more)
 
 ### Community 7 - "Phase Plan"
-Cohesion: 0.06
-Nodes (28): AI Agent Guidelines, Do's, Don'ts, Core Entities, ⚠️ Critical Rule: Multi-Tenancy Isolation, Database Schema, Overview, Workflows (+20 more)
+Cohesion: 0.10
+Nodes (18): Phase 0 — Planning & Foundation ✅, Phase 10 — Polish & Production ⬜, Phase 1 — Auth & Dashboard Shell ⬜, Phase 2 — Knowledge Base: PDF & Text Upload ⬜, Phase 3 — Website Crawling ⬜, Phase 4 — RAG Chat Core ⬜, Phase 5 — Embeddable Widget ⬜, Phase 6 — Human Handoff & Tickets ⬜ (+10 more)
 
 ### Community 8 - "compilerOptions"
 Cohesion: 0.10
@@ -152,26 +151,20 @@ Nodes (7): compilerOptions, outDir, rootDir, extends, include, src, ../../tsconf
 Cohesion: 0.33
 Nodes (5): printWidth, semi, singleQuote, tabWidth, trailingComma
 
-### Community 32 - "Folder Structure and Architecture"
-Cohesion: 0.29
-Nodes (6): Applications (`apps/`), Folder Structure and Architecture, High-Level Architecture Principles, Infrastructure (`infrastructure/`), Monorepo Layout, Packages (`packages/`)
-
-### Community 33 - "Infrastructure and CI/CD"
-Cohesion: 0.29
-Nodes (6): CI/CD Pipeline (To Be Implemented), Commands, Environment Variables, Infrastructure and CI/CD, Infrastructure Setup, Services
-
 ## Knowledge Gaps
-- **237 isolated node(s):** `semi`, `singleQuote`, `trailingComma`, `printWidth`, `tabWidth` (+232 more)
+- **240 isolated node(s):** `semi`, `singleQuote`, `trailingComma`, `printWidth`, `tabWidth` (+235 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **10 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **11 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `devDependencies` connect `devDependencies` to `api/package.json`?**
-  _High betweenness centrality (0.008) - this node is a cross-community bridge._
+  _High betweenness centrality (0.007) - this node is a cross-community bridge._
 - **What connects `semi`, `singleQuote`, `trailingComma` to the rest of the system?**
-  _237 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _240 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `docs/README.md` be split into smaller, more focused modules?**
+  _Cohesion score 0.05714285714285714 - nodes in this community are weakly interconnected._
 - **Should `worker/package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.06666666666666667 - nodes in this community are weakly interconnected._
 - **Should `api/package.json` be split into smaller, more focused modules?**
@@ -180,5 +173,3 @@ _Questions this graph is uniquely positioned to answer:_
   _Cohesion score 0.08333333333333333 - nodes in this community are weakly interconnected._
 - **Should `server.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.13157894736842105 - nodes in this community are weakly interconnected._
-- **Should `scripts` be split into smaller, more focused modules?**
-  _Cohesion score 0.09090909090909091 - nodes in this community are weakly interconnected._

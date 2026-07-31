@@ -50,8 +50,8 @@
     "semantic_hash": ""
   },
   "apps/web/package.json": {
-    "mtime": 1785511798.921022,
-    "ast_hash": "dac72e2c419daddf614b201995bf31fa",
+    "mtime": 1785515135.5346541,
+    "ast_hash": "ef59fed29c5589f142140bea9cfbc064",
     "semantic_hash": ""
   },
   "apps/web/postcss.config.mjs": {
@@ -60,12 +60,12 @@
     "semantic_hash": ""
   },
   "apps/web/src/app/layout.tsx": {
-    "mtime": 1785510422.381513,
+    "mtime": 1785514878.2249231,
     "ast_hash": "ef35fb4fb9d4f34095af36b09fabef6b",
     "semantic_hash": ""
   },
   "apps/web/src/app/page.tsx": {
-    "mtime": 1785512450.2028759,
+    "mtime": 1785514878.2249231,
     "ast_hash": "21f0ac7053341bd901cfb0ad0ca9a0af",
     "semantic_hash": ""
   },
@@ -125,8 +125,8 @@
     "semantic_hash": ""
   },
   "packages/database/package.json": {
-    "mtime": 1785510515.939744,
-    "ast_hash": "6ddb8336f70c29ac6f824384c8314b7d",
+    "mtime": 1785514878.2796257,
+    "ast_hash": "8e38ecfd97dcec66491f6a321d5abefd",
     "semantic_hash": ""
   },
   "packages/database/prisma.ts": {
@@ -135,7 +135,7 @@
     "semantic_hash": ""
   },
   "packages/database/tsconfig.json": {
-    "mtime": 1785511626.3465824,
+    "mtime": 1785514878.2811599,
     "ast_hash": "3b84ed208512c12d3b5393e93f4ea502",
     "semantic_hash": ""
   },
@@ -145,12 +145,12 @@
     "semantic_hash": ""
   },
   "packages/shared/src/env.test.ts": {
-    "mtime": 1785510531.7663317,
+    "mtime": 1785514878.2841556,
     "ast_hash": "b5a90e712fda9e79a7a4f2ea9ef7ad06",
     "semantic_hash": ""
   },
   "packages/shared/src/env.ts": {
-    "mtime": 1785510467.3328166,
+    "mtime": 1785514878.286869,
     "ast_hash": "04b4e0b369003d87dd909f302e2a42b3",
     "semantic_hash": ""
   },
@@ -235,33 +235,63 @@
     "semantic_hash": ""
   },
   "apps/web/src/app/sign-in/[[...sign-in]]/page.tsx": {
-    "mtime": 1785510440.1576874,
-    "ast_hash": "3d9aeaeb699039788b87f40703266a5a",
+    "mtime": 1785514878.2274783,
+    "ast_hash": "31e2e345bd0c5ef79676f68d85434545",
     "semantic_hash": ""
   },
   "apps/web/src/app/sign-up/[[...sign-up]]/page.tsx": {
-    "mtime": 1785510440.2325597,
-    "ast_hash": "8b81dff91df22add1d9c30c33fd5eb23",
+    "mtime": 1785514878.2292264,
+    "ast_hash": "c3c9d9e65ae4d91cf13d5a07b9dc7a69",
     "semantic_hash": ""
   },
   "apps/web/src/middleware.ts": {
-    "mtime": 1785510433.3634005,
-    "ast_hash": "d7f0f5ae49016e39b08662b30d3b7713",
+    "mtime": 1785515126.3788204,
+    "ast_hash": "1b1a035d601970f3957970c48d4b7892",
     "semantic_hash": ""
   },
   "apps/web/src/app/globals.css.d.ts": {
-    "mtime": 1785511305.2363634,
-    "ast_hash": "8cc0e940a705797bc9878015c53fa548",
+    "mtime": 1785514878.2238839,
+    "ast_hash": "5044377999ba63e944c426e9ded8fcea",
     "semantic_hash": ""
   },
   "apps/web/src/components/Header.tsx": {
-    "mtime": 1785512440.303119,
-    "ast_hash": "4eaa8af706e380dc2a82add494fb4df0",
+    "mtime": 1785515205.428053,
+    "ast_hash": "7ba7307d3a287d15b53b59220bb22114",
     "semantic_hash": ""
   },
   "apps/web/src/global.d.ts": {
-    "mtime": 1785510857.8313751,
-    "ast_hash": "77c5097fbf0b3cc8710ee9416ce251bc",
+    "mtime": 1785514878.2341998,
+    "ast_hash": "8b4b8776da15df30cee6721093b01ab1",
+    "semantic_hash": ""
+  },
+  "apps/web/src/app/dashboard/conversations/page.tsx": {
+    "mtime": 1785515176.752692,
+    "ast_hash": "d8f9a52e8e869cfdf37f52714a813dde",
+    "semantic_hash": ""
+  },
+  "apps/web/src/app/dashboard/knowledge-base/page.tsx": {
+    "mtime": 1785515169.1028259,
+    "ast_hash": "a105fb516a381b4f14afb61e690e1153",
+    "semantic_hash": ""
+  },
+  "apps/web/src/app/dashboard/layout.tsx": {
+    "mtime": 1785515144.1405425,
+    "ast_hash": "873604dad13578405b34b2259169988a",
+    "semantic_hash": ""
+  },
+  "apps/web/src/app/dashboard/page.tsx": {
+    "mtime": 1785515161.8646846,
+    "ast_hash": "b34aa160e5db184d3c4e2bc0894716da",
+    "semantic_hash": ""
+  },
+  "apps/web/src/app/dashboard/settings/page.tsx": {
+    "mtime": 1785515184.2530315,
+    "ast_hash": "0bf816fcd5438790375fd0c4ff85797f",
+    "semantic_hash": ""
+  },
+  "apps/web/src/components/Sidebar.tsx": {
+    "mtime": 1785515136.8448615,
+    "ast_hash": "58dfa31b107caed2f301af5969c31a79",
     "semantic_hash": ""
   }
 }

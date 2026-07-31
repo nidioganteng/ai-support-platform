@@ -847,7 +847,7 @@
       "_origin": "ast",
       "id": "apps_web_package",
       "community": 5,
-      "community_name": "scripts",
+      "community_name": "dependencies",
       "norm_label": "web/package.json"
     },
     {
@@ -858,7 +858,7 @@
       "_origin": "ast",
       "id": "apps_web_package_name",
       "community": 5,
-      "community_name": "scripts",
+      "community_name": "dependencies",
       "norm_label": "name"
     },
     {
@@ -869,7 +869,7 @@
       "_origin": "ast",
       "id": "apps_web_package_version",
       "community": 5,
-      "community_name": "scripts",
+      "community_name": "dependencies",
       "norm_label": "version"
     },
     {
@@ -880,7 +880,7 @@
       "_origin": "ast",
       "id": "apps_web_package_private",
       "community": 5,
-      "community_name": "scripts",
+      "community_name": "dependencies",
       "norm_label": "private"
     },
     {
@@ -891,7 +891,7 @@
       "_origin": "ast",
       "id": "apps_web_package_scripts",
       "community": 5,
-      "community_name": "scripts",
+      "community_name": "dependencies",
       "norm_label": "scripts"
     },
     {
@@ -902,7 +902,7 @@
       "_origin": "ast",
       "id": "apps_web_package_scripts_dev",
       "community": 5,
-      "community_name": "scripts",
+      "community_name": "dependencies",
       "norm_label": "dev"
     },
     {
@@ -913,7 +913,7 @@
       "_origin": "ast",
       "id": "apps_web_package_scripts_build",
       "community": 5,
-      "community_name": "scripts",
+      "community_name": "dependencies",
       "norm_label": "build"
     },
     {
@@ -924,7 +924,7 @@
       "_origin": "ast",
       "id": "apps_web_package_scripts_start",
       "community": 5,
-      "community_name": "scripts",
+      "community_name": "dependencies",
       "norm_label": "start"
     },
     {
@@ -935,7 +935,7 @@
       "_origin": "ast",
       "id": "apps_web_package_scripts_typecheck",
       "community": 5,
-      "community_name": "scripts",
+      "community_name": "dependencies",
       "norm_label": "typecheck"
     },
     {
@@ -946,7 +946,7 @@
       "_origin": "ast",
       "id": "apps_web_package_scripts_lint",
       "community": 5,
-      "community_name": "scripts",
+      "community_name": "dependencies",
       "norm_label": "lint"
     },
     {
@@ -957,7 +957,7 @@
       "_origin": "ast",
       "id": "apps_web_package_scripts_test",
       "community": 5,
-      "community_name": "scripts",
+      "community_name": "dependencies",
       "norm_label": "test"
     },
     {
@@ -968,7 +968,7 @@
       "_origin": "ast",
       "id": "apps_web_package_dependencies",
       "community": 5,
-      "community_name": "scripts",
+      "community_name": "dependencies",
       "norm_label": "dependencies"
     },
     {
@@ -979,7 +979,7 @@
       "_origin": "ast",
       "id": "apps_web_package_dependencies_app_shared",
       "community": 5,
-      "community_name": "scripts",
+      "community_name": "dependencies",
       "norm_label": "@app/shared"
     },
     {
@@ -990,7 +990,7 @@
       "_origin": "ast",
       "id": "apps_web_package_json_app_shared",
       "community": 5,
-      "community_name": "scripts",
+      "community_name": "dependencies",
       "norm_label": "@app/shared"
     },
     {
@@ -1001,7 +1001,7 @@
       "_origin": "ast",
       "id": "apps_web_package_dependencies_clerk_nextjs",
       "community": 5,
-      "community_name": "scripts",
+      "community_name": "dependencies",
       "norm_label": "@clerk/nextjs"
     },
     {
@@ -1012,80 +1012,102 @@
       "_origin": "ast",
       "id": "clerk_nextjs",
       "community": 5,
-      "community_name": "scripts",
+      "community_name": "dependencies",
       "norm_label": "@clerk/nextjs"
+    },
+    {
+      "label": "lucide-react",
+      "file_type": "code",
+      "source_file": "apps/web/package.json",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "apps_web_package_dependencies_lucide_react",
+      "community": 5,
+      "community_name": "dependencies",
+      "norm_label": "lucide-react"
+    },
+    {
+      "label": "lucide-react",
+      "file_type": "concept",
+      "source_file": "apps/web/package.json",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "lucide_react",
+      "community": 5,
+      "community_name": "dependencies",
+      "norm_label": "lucide-react"
     },
     {
       "label": "next",
       "file_type": "code",
       "source_file": "apps/web/package.json",
-      "source_location": "L16",
+      "source_location": "L17",
       "_origin": "ast",
       "id": "apps_web_package_dependencies_next",
       "community": 5,
-      "community_name": "scripts",
+      "community_name": "dependencies",
       "norm_label": "next"
     },
     {
       "label": "next",
       "file_type": "concept",
       "source_file": "apps/web/package.json",
-      "source_location": "L16",
+      "source_location": "L17",
       "_origin": "ast",
       "id": "next",
       "community": 5,
-      "community_name": "scripts",
+      "community_name": "dependencies",
       "norm_label": "next"
     },
     {
       "label": "react",
       "file_type": "code",
       "source_file": "apps/web/package.json",
-      "source_location": "L17",
+      "source_location": "L18",
       "_origin": "ast",
       "id": "apps_web_package_dependencies_react",
       "community": 5,
-      "community_name": "scripts",
+      "community_name": "dependencies",
       "norm_label": "react"
     },
     {
       "label": "react",
       "file_type": "concept",
       "source_file": "apps/web/package.json",
-      "source_location": "L17",
+      "source_location": "L18",
       "_origin": "ast",
       "id": "react",
       "community": 5,
-      "community_name": "scripts",
+      "community_name": "dependencies",
       "norm_label": "react"
     },
     {
       "label": "react-dom",
       "file_type": "code",
       "source_file": "apps/web/package.json",
-      "source_location": "L18",
+      "source_location": "L19",
       "_origin": "ast",
       "id": "apps_web_package_dependencies_react_dom",
       "community": 5,
-      "community_name": "scripts",
+      "community_name": "dependencies",
       "norm_label": "react-dom"
     },
     {
       "label": "react-dom",
       "file_type": "concept",
       "source_file": "apps/web/package.json",
-      "source_location": "L18",
+      "source_location": "L19",
       "_origin": "ast",
       "id": "react_dom",
       "community": 5,
-      "community_name": "scripts",
+      "community_name": "dependencies",
       "norm_label": "react-dom"
     },
     {
       "label": "devDependencies",
       "file_type": "code",
       "source_file": "apps/web/package.json",
-      "source_location": "L20",
+      "source_location": "L21",
       "_origin": "ast",
       "id": "apps_web_package_devdependencies",
       "community": 13,
@@ -1096,7 +1118,7 @@
       "label": "@types/node",
       "file_type": "code",
       "source_file": "apps/web/package.json",
-      "source_location": "L21",
+      "source_location": "L22",
       "_origin": "ast",
       "id": "apps_web_package_devdependencies_types_node",
       "community": 13,
@@ -1107,7 +1129,7 @@
       "label": "@types/node",
       "file_type": "concept",
       "source_file": "apps/web/package.json",
-      "source_location": "L21",
+      "source_location": "L22",
       "_origin": "ast",
       "id": "apps_web_package_json_types_node",
       "community": 13,
@@ -1118,7 +1140,7 @@
       "label": "@types/react",
       "file_type": "code",
       "source_file": "apps/web/package.json",
-      "source_location": "L22",
+      "source_location": "L23",
       "_origin": "ast",
       "id": "apps_web_package_devdependencies_types_react",
       "community": 13,
@@ -1129,7 +1151,7 @@
       "label": "@types/react",
       "file_type": "concept",
       "source_file": "apps/web/package.json",
-      "source_location": "L22",
+      "source_location": "L23",
       "_origin": "ast",
       "id": "types_react",
       "community": 13,
@@ -1140,7 +1162,7 @@
       "label": "@types/react-dom",
       "file_type": "code",
       "source_file": "apps/web/package.json",
-      "source_location": "L23",
+      "source_location": "L24",
       "_origin": "ast",
       "id": "apps_web_package_devdependencies_types_react_dom",
       "community": 13,
@@ -1151,7 +1173,7 @@
       "label": "@types/react-dom",
       "file_type": "concept",
       "source_file": "apps/web/package.json",
-      "source_location": "L23",
+      "source_location": "L24",
       "_origin": "ast",
       "id": "types_react_dom",
       "community": 13,
@@ -1162,7 +1184,7 @@
       "label": "autoprefixer",
       "file_type": "code",
       "source_file": "apps/web/package.json",
-      "source_location": "L24",
+      "source_location": "L25",
       "_origin": "ast",
       "id": "apps_web_package_devdependencies_autoprefixer",
       "community": 13,
@@ -1173,7 +1195,7 @@
       "label": "autoprefixer",
       "file_type": "concept",
       "source_file": "apps/web/package.json",
-      "source_location": "L24",
+      "source_location": "L25",
       "_origin": "ast",
       "id": "autoprefixer",
       "community": 13,
@@ -1184,7 +1206,7 @@
       "label": "postcss",
       "file_type": "code",
       "source_file": "apps/web/package.json",
-      "source_location": "L25",
+      "source_location": "L26",
       "_origin": "ast",
       "id": "apps_web_package_devdependencies_postcss",
       "community": 13,
@@ -1195,7 +1217,7 @@
       "label": "postcss",
       "file_type": "concept",
       "source_file": "apps/web/package.json",
-      "source_location": "L25",
+      "source_location": "L26",
       "_origin": "ast",
       "id": "postcss",
       "community": 13,
@@ -1206,7 +1228,7 @@
       "label": "tailwindcss",
       "file_type": "code",
       "source_file": "apps/web/package.json",
-      "source_location": "L26",
+      "source_location": "L27",
       "_origin": "ast",
       "id": "apps_web_package_devdependencies_tailwindcss",
       "community": 13,
@@ -1217,7 +1239,7 @@
       "label": "tailwindcss",
       "file_type": "concept",
       "source_file": "apps/web/package.json",
-      "source_location": "L26",
+      "source_location": "L27",
       "_origin": "ast",
       "id": "tailwindcss",
       "community": 13,
@@ -1228,7 +1250,7 @@
       "label": "typescript",
       "file_type": "code",
       "source_file": "apps/web/package.json",
-      "source_location": "L27",
+      "source_location": "L28",
       "_origin": "ast",
       "id": "apps_web_package_devdependencies_typescript",
       "community": 13,
@@ -1239,7 +1261,7 @@
       "label": "typescript",
       "file_type": "concept",
       "source_file": "apps/web/package.json",
-      "source_location": "L27",
+      "source_location": "L28",
       "_origin": "ast",
       "id": "apps_web_package_json_typescript",
       "community": 13,
@@ -1258,6 +1280,116 @@
       "norm_label": "postcss.config.mjs"
     },
     {
+      "label": "conversations/page.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/dashboard/conversations/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "apps_web_src_app_dashboard_conversations_page",
+      "community": 33,
+      "community_name": "conversations/page.tsx",
+      "norm_label": "conversations/page.tsx"
+    },
+    {
+      "label": "ConversationsPage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/dashboard/conversations/page.tsx",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "apps_web_src_app_dashboard_conversations_page_conversationspage",
+      "community": 33,
+      "community_name": "conversations/page.tsx",
+      "norm_label": "conversationspage()"
+    },
+    {
+      "label": "knowledge-base/page.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/dashboard/knowledge-base/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "apps_web_src_app_dashboard_knowledge_base_page",
+      "community": 36,
+      "community_name": "knowledge-base/page.tsx",
+      "norm_label": "knowledge-base/page.tsx"
+    },
+    {
+      "label": "KnowledgeBasePage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/dashboard/knowledge-base/page.tsx",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "apps_web_src_app_dashboard_knowledge_base_page_knowledgebasepage",
+      "community": 36,
+      "community_name": "knowledge-base/page.tsx",
+      "norm_label": "knowledgebasepage()"
+    },
+    {
+      "label": "dashboard/layout.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/dashboard/layout.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "apps_web_src_app_dashboard_layout",
+      "community": 32,
+      "community_name": "dashboard/layout.tsx",
+      "norm_label": "dashboard/layout.tsx"
+    },
+    {
+      "label": "DashboardLayout()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/dashboard/layout.tsx",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "apps_web_src_app_dashboard_layout_dashboardlayout",
+      "community": 32,
+      "community_name": "dashboard/layout.tsx",
+      "norm_label": "dashboardlayout()"
+    },
+    {
+      "label": "dashboard/page.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/dashboard/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "apps_web_src_app_dashboard_page",
+      "community": 37,
+      "community_name": "dashboard/page.tsx",
+      "norm_label": "dashboard/page.tsx"
+    },
+    {
+      "label": "DashboardHomePage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/dashboard/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "apps_web_src_app_dashboard_page_dashboardhomepage",
+      "community": 37,
+      "community_name": "dashboard/page.tsx",
+      "norm_label": "dashboardhomepage()"
+    },
+    {
+      "label": "settings/page.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/dashboard/settings/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "apps_web_src_app_dashboard_settings_page",
+      "community": 38,
+      "community_name": "settings/page.tsx",
+      "norm_label": "settings/page.tsx"
+    },
+    {
+      "label": "SettingsPage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/dashboard/settings/page.tsx",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "apps_web_src_app_dashboard_settings_page_settingspage",
+      "community": 38,
+      "community_name": "settings/page.tsx",
+      "norm_label": "settingspage()"
+    },
+    {
       "label": "globals.css.d.ts",
       "file_type": "code",
       "source_file": "apps/web/src/app/globals.css.d.ts",
@@ -1269,7 +1401,7 @@
       "norm_label": "globals.css.d.ts"
     },
     {
-      "label": "layout.tsx",
+      "label": "app/layout.tsx",
       "file_type": "code",
       "source_file": "apps/web/src/app/layout.tsx",
       "source_location": "L1",
@@ -1277,7 +1409,7 @@
       "id": "apps_web_src_app_layout",
       "community": 20,
       "community_name": "layout.tsx",
-      "norm_label": "layout.tsx"
+      "norm_label": "app/layout.tsx"
     },
     {
       "label": "metadata",
@@ -1393,12 +1525,45 @@
       "label": "Header()",
       "file_type": "code",
       "source_file": "apps/web/src/components/Header.tsx",
-      "source_location": "L5",
+      "source_location": "L6",
       "_origin": "ast",
       "id": "apps_web_src_components_header_header",
       "community": 21,
       "community_name": "app/page.tsx",
       "norm_label": "header()"
+    },
+    {
+      "label": "Sidebar.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/Sidebar.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "apps_web_src_components_sidebar",
+      "community": 32,
+      "community_name": "dashboard/layout.tsx",
+      "norm_label": "sidebar.tsx"
+    },
+    {
+      "label": "navigation",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/Sidebar.tsx",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "apps_web_src_components_sidebar_navigation",
+      "community": 32,
+      "community_name": "dashboard/layout.tsx",
+      "norm_label": "navigation"
+    },
+    {
+      "label": "Sidebar()",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/Sidebar.tsx",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "apps_web_src_components_sidebar_sidebar",
+      "community": 32,
+      "community_name": "dashboard/layout.tsx",
+      "norm_label": "sidebar()"
     },
     {
       "label": "global.d.ts",
@@ -1434,10 +1599,21 @@
       "norm_label": "middleware.ts"
     },
     {
+      "label": "isProtectedRoute",
+      "file_type": "code",
+      "source_file": "apps/web/src/middleware.ts",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "apps_web_src_middleware_isprotectedroute",
+      "community": 31,
+      "community_name": "middleware.ts",
+      "norm_label": "isprotectedroute"
+    },
+    {
       "label": "config",
       "file_type": "code",
       "source_file": "apps/web/src/middleware.ts",
-      "source_location": "L5",
+      "source_location": "L11",
       "_origin": "ast",
       "id": "apps_web_src_middleware_config",
       "community": 31,
@@ -3838,8 +4014,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_ai_agent_guidelines",
-      "community": 7,
-      "community_name": "Phase Plan",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "ai_agent_guidelines.md"
     },
     {
@@ -3849,8 +4025,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_ai_agent_guidelines_ai_agent_guidelines",
-      "community": 7,
-      "community_name": "Phase Plan",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "ai agent guidelines"
     },
     {
@@ -3860,8 +4036,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "docs_ai_agent_guidelines_do_s",
-      "community": 7,
-      "community_name": "Phase Plan",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "do's"
     },
     {
@@ -3871,8 +4047,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "docs_ai_agent_guidelines_don_ts",
-      "community": 7,
-      "community_name": "Phase Plan",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "don'ts"
     },
     {
@@ -3882,8 +4058,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_database_schema",
-      "community": 7,
-      "community_name": "Phase Plan",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "database_schema.md"
     },
     {
@@ -3893,8 +4069,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_database_schema_database_schema",
-      "community": 7,
-      "community_name": "Phase Plan",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "database schema"
     },
     {
@@ -3904,8 +4080,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "docs_database_schema_overview",
-      "community": 7,
-      "community_name": "Phase Plan",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "overview"
     },
     {
@@ -3915,8 +4091,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "docs_database_schema_core_entities",
-      "community": 7,
-      "community_name": "Phase Plan",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "core entities"
     },
     {
@@ -3926,8 +4102,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "docs_database_schema_critical_rule_multi_tenancy_isolation",
-      "community": 7,
-      "community_name": "Phase Plan",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "\u26a0\ufe0f critical rule: multi-tenancy isolation"
     },
     {
@@ -3937,8 +4113,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "docs_database_schema_workflows",
-      "community": 7,
-      "community_name": "Phase Plan",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "workflows"
     },
     {
@@ -3948,8 +4124,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_folder_structure_and_architecture",
-      "community": 32,
-      "community_name": "Folder Structure and Architecture",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "folder_structure_and_architecture.md"
     },
     {
@@ -3959,8 +4135,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_folder_structure_and_architecture_folder_structure_and_architecture",
-      "community": 32,
-      "community_name": "Folder Structure and Architecture",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "folder structure and architecture"
     },
     {
@@ -3970,8 +4146,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "docs_folder_structure_and_architecture_monorepo_layout",
-      "community": 32,
-      "community_name": "Folder Structure and Architecture",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "monorepo layout"
     },
     {
@@ -3981,8 +4157,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "docs_folder_structure_and_architecture_applications_apps",
-      "community": 32,
-      "community_name": "Folder Structure and Architecture",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "applications (`apps/`)"
     },
     {
@@ -3992,8 +4168,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "docs_folder_structure_and_architecture_packages_packages",
-      "community": 32,
-      "community_name": "Folder Structure and Architecture",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "packages (`packages/`)"
     },
     {
@@ -4003,8 +4179,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "docs_folder_structure_and_architecture_infrastructure_infrastructure",
-      "community": 32,
-      "community_name": "Folder Structure and Architecture",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "infrastructure (`infrastructure/`)"
     },
     {
@@ -4014,8 +4190,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "docs_folder_structure_and_architecture_high_level_architecture_principles",
-      "community": 32,
-      "community_name": "Folder Structure and Architecture",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "high-level architecture principles"
     },
     {
@@ -4026,7 +4202,7 @@
       "_origin": "ast",
       "id": "docs_gitflow_and_conventions",
       "community": 0,
-      "community_name": "GitFlow and Conventions",
+      "community_name": "docs/README.md",
       "norm_label": "gitflow_and_conventions.md"
     },
     {
@@ -4037,7 +4213,7 @@
       "_origin": "ast",
       "id": "docs_gitflow_and_conventions_gitflow_and_conventions",
       "community": 0,
-      "community_name": "GitFlow and Conventions",
+      "community_name": "docs/README.md",
       "norm_label": "gitflow and conventions"
     },
     {
@@ -4048,7 +4224,7 @@
       "_origin": "ast",
       "id": "docs_gitflow_and_conventions_commit_rules_for_ai_agents",
       "community": 0,
-      "community_name": "GitFlow and Conventions",
+      "community_name": "docs/README.md",
       "norm_label": "commit rules for ai agents"
     },
     {
@@ -4059,7 +4235,7 @@
       "_origin": "ast",
       "id": "docs_gitflow_and_conventions_branching_model",
       "community": 0,
-      "community_name": "GitFlow and Conventions",
+      "community_name": "docs/README.md",
       "norm_label": "branching model"
     },
     {
@@ -4070,7 +4246,7 @@
       "_origin": "ast",
       "id": "docs_gitflow_and_conventions_commit_format_conventional_commits",
       "community": 0,
-      "community_name": "GitFlow and Conventions",
+      "community_name": "docs/README.md",
       "norm_label": "commit format (conventional commits)"
     },
     {
@@ -4081,7 +4257,7 @@
       "_origin": "ast",
       "id": "docs_gitflow_and_conventions_pull_request_standard",
       "community": 0,
-      "community_name": "GitFlow and Conventions",
+      "community_name": "docs/README.md",
       "norm_label": "pull request standard"
     },
     {
@@ -4092,7 +4268,7 @@
       "_origin": "ast",
       "id": "docs_gitflow_and_conventions_pr_title",
       "community": 0,
-      "community_name": "GitFlow and Conventions",
+      "community_name": "docs/README.md",
       "norm_label": "pr title:"
     },
     {
@@ -4103,7 +4279,7 @@
       "_origin": "ast",
       "id": "docs_gitflow_and_conventions_pr_body",
       "community": 0,
-      "community_name": "GitFlow and Conventions",
+      "community_name": "docs/README.md",
       "norm_label": "pr body:"
     },
     {
@@ -4113,8 +4289,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_infrastructure_and_cicd",
-      "community": 33,
-      "community_name": "Infrastructure and CI/CD",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "infrastructure_and_cicd.md"
     },
     {
@@ -4124,8 +4300,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_infrastructure_and_cicd_infrastructure_and_ci_cd",
-      "community": 33,
-      "community_name": "Infrastructure and CI/CD",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "infrastructure and ci/cd"
     },
     {
@@ -4135,8 +4311,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "docs_infrastructure_and_cicd_infrastructure_setup",
-      "community": 33,
-      "community_name": "Infrastructure and CI/CD",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "infrastructure setup"
     },
     {
@@ -4146,8 +4322,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "docs_infrastructure_and_cicd_services",
-      "community": 33,
-      "community_name": "Infrastructure and CI/CD",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "services"
     },
     {
@@ -4157,8 +4333,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "docs_infrastructure_and_cicd_commands",
-      "community": 33,
-      "community_name": "Infrastructure and CI/CD",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "commands"
     },
     {
@@ -4168,8 +4344,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "docs_infrastructure_and_cicd_environment_variables",
-      "community": 33,
-      "community_name": "Infrastructure and CI/CD",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "environment variables"
     },
     {
@@ -4179,8 +4355,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "docs_infrastructure_and_cicd_ci_cd_pipeline_to_be_implemented",
-      "community": 33,
-      "community_name": "Infrastructure and CI/CD",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "ci/cd pipeline (to be implemented)"
     },
     {
@@ -4190,8 +4366,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_readme",
-      "community": 7,
-      "community_name": "Phase Plan",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "docs/readme.md"
     },
     {
@@ -4201,8 +4377,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_readme_documentation_index",
-      "community": 7,
-      "community_name": "Phase Plan",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "documentation index"
     },
     {
@@ -4212,8 +4388,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "docs_readme_index",
-      "community": 7,
-      "community_name": "Phase Plan",
+      "community": 0,
+      "community_name": "docs/README.md",
       "norm_label": "index"
     },
     {
@@ -5287,7 +5463,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/package.json",
-      "source_location": "L20",
+      "source_location": "L21",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_package",
@@ -5434,7 +5610,7 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_package_dependencies",
-      "target": "apps_web_package_dependencies_next",
+      "target": "apps_web_package_dependencies_lucide_react",
       "confidence_score": 1.0
     },
     {
@@ -5445,7 +5621,7 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_package_dependencies",
-      "target": "apps_web_package_dependencies_react",
+      "target": "apps_web_package_dependencies_next",
       "confidence_score": 1.0
     },
     {
@@ -5453,6 +5629,17 @@
       "confidence": "EXTRACTED",
       "source_file": "apps/web/package.json",
       "source_location": "L18",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_package_dependencies",
+      "target": "apps_web_package_dependencies_react",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/package.json",
+      "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_package_dependencies",
@@ -5491,6 +5678,18 @@
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
+      "source": "apps_web_package_dependencies_lucide_react",
+      "target": "lucide_react",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/package.json",
+      "source_location": "L17",
+      "weight": 1.0,
+      "context": "import",
+      "_origin": "ast",
       "source": "apps_web_package_dependencies_next",
       "target": "next",
       "confidence_score": 1.0
@@ -5499,7 +5698,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/package.json",
-      "source_location": "L17",
+      "source_location": "L18",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -5511,7 +5710,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/package.json",
-      "source_location": "L18",
+      "source_location": "L19",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -5523,7 +5722,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/package.json",
-      "source_location": "L24",
+      "source_location": "L25",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_package_devdependencies",
@@ -5534,7 +5733,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/package.json",
-      "source_location": "L25",
+      "source_location": "L26",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_package_devdependencies",
@@ -5545,7 +5744,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/package.json",
-      "source_location": "L26",
+      "source_location": "L27",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_package_devdependencies",
@@ -5556,7 +5755,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/package.json",
-      "source_location": "L21",
+      "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_package_devdependencies",
@@ -5567,7 +5766,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/package.json",
-      "source_location": "L22",
+      "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_package_devdependencies",
@@ -5578,7 +5777,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/package.json",
-      "source_location": "L23",
+      "source_location": "L24",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_package_devdependencies",
@@ -5589,7 +5788,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/package.json",
-      "source_location": "L27",
+      "source_location": "L28",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_package_devdependencies",
@@ -5600,7 +5799,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/package.json",
-      "source_location": "L21",
+      "source_location": "L22",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -5612,7 +5811,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/package.json",
-      "source_location": "L22",
+      "source_location": "L23",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -5624,7 +5823,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/package.json",
-      "source_location": "L23",
+      "source_location": "L24",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -5636,7 +5835,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/package.json",
-      "source_location": "L24",
+      "source_location": "L25",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -5648,7 +5847,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/package.json",
-      "source_location": "L25",
+      "source_location": "L26",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -5660,7 +5859,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/package.json",
-      "source_location": "L26",
+      "source_location": "L27",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -5672,12 +5871,91 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/package.json",
-      "source_location": "L27",
+      "source_location": "L28",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
       "source": "apps_web_package_devdependencies_typescript",
       "target": "apps_web_package_json_typescript",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/dashboard/conversations/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_app_dashboard_conversations_page",
+      "target": "apps_web_src_app_dashboard_conversations_page_conversationspage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/dashboard/knowledge-base/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_app_dashboard_knowledge_base_page",
+      "target": "apps_web_src_app_dashboard_knowledge_base_page_knowledgebasepage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/dashboard/layout.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_app_dashboard_layout",
+      "target": "apps_web_src_app_dashboard_layout_dashboardlayout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/dashboard/layout.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_app_dashboard_layout",
+      "target": "apps_web_src_components_sidebar",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/dashboard/layout.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_app_dashboard_layout",
+      "target": "apps_web_src_components_sidebar_sidebar",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/dashboard/page.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_app_dashboard_page",
+      "target": "apps_web_src_app_dashboard_page_dashboardhomepage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/dashboard/settings/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_app_dashboard_settings_page",
+      "target": "apps_web_src_app_dashboard_settings_page_settingspage",
       "confidence_score": 1.0
     },
     {
@@ -5774,11 +6052,33 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/Header.tsx",
-      "source_location": "L5",
+      "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_header",
       "target": "apps_web_src_components_header_header",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/Sidebar.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_components_sidebar",
+      "target": "apps_web_src_components_sidebar_navigation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/Sidebar.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_components_sidebar",
+      "target": "apps_web_src_components_sidebar_sidebar",
       "confidence_score": 1.0
     },
     {
@@ -5796,11 +6096,22 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/middleware.ts",
-      "source_location": "L5",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_middleware",
       "target": "apps_web_src_middleware_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/middleware.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_middleware",
+      "target": "apps_web_src_middleware_isprotectedroute",
       "confidence_score": 1.0
     },
     {
@@ -8827,5 +9138,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "f3bcfdeaf885e2f7c6daaeab6235ce151b5e9535"
+  "built_at_commit": "c5f8b014a766310dcf49e05882c75839d6ce23a1"
 }
