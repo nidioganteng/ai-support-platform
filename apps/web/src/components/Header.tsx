@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { OrganizationSwitcher, Show, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs';
 
 export function Header() {
@@ -18,6 +19,9 @@ export function Header() {
           </SignUpButton>
         </Show>
         <Show when="signed-in">
+          <Link href="/dashboard" className="text-sm font-medium hover:text-neutral-300">
+            Go to Dashboard
+          </Link>
           <OrganizationSwitcher hidePersonal appearance={{ elements: { rootBox: 'text-neutral-100' } }} />
           <UserButton />
         </Show>
