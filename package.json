@@ -6,9 +6,9 @@
     "node": ">=20.0.0"
   },
   "scripts": {
-    "dev:web": "pnpm --filter @app/web dev",
-    "dev:api": "pnpm --filter @app/api dev",
-    "dev:worker": "pnpm --filter @app/worker dev",
+    "dev:web": "dotenv -e .env -- pnpm --filter @app/web dev",
+    "dev:api": "dotenv -e .env -- pnpm --filter @app/api dev",
+    "dev:worker": "dotenv -e .env -- pnpm --filter @app/worker dev",
     "build": "pnpm -r build",
     "typecheck": "pnpm -r typecheck",
     "lint": "pnpm -r lint",
@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "dotenv-cli": "^11.0.0",
     "eslint": "^9.13.0",
     "prettier": "^3.3.3",
     "typescript": "^5.6.3",
