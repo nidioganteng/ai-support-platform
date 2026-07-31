@@ -1,5 +1,5 @@
 {
-  "0": "GitFlow and Conventions",
+  "0": "docs/README.md",
   "1": "worker/package.json",
   "2": "api/package.json",
   "3": "database/package.json",
@@ -20,7 +20,7 @@
   "18": "shared/tsconfig.json",
   "19": ".prettierrc.json",
   "20": "layout.tsx",
-  "21": "app/page.tsx",
+  "21": "page.tsx",
   "22": "AGENTS.md",
   "23": "graphify.md",
   "24": "next.config.mjs",
@@ -30,9 +30,5 @@
   "28": "postcss.config.mjs",
   "29": "eslint.config.mjs",
   "30": "[[...sign-up]]/page.tsx",
-  "31": "middleware.ts",
-  "32": "Folder Structure and Architecture",
-  "33": "Infrastructure and CI/CD",
-  "34": "global.d.ts",
-  "35": "globals.css.d.ts"
+  "31": "middleware.ts"
 }

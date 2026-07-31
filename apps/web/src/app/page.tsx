@@ -1,3 +1,5 @@
+import { Header } from '@/components/Header';
+
 const upcomingSections = [
   { name: 'Knowledge Base', phase: 'Phase 2–3' },
   { name: 'Conversations', phase: 'Phase 4' },
@@ -8,10 +10,13 @@ const upcomingSections = [
 
 export default function HomePage() {
   return (
-    <main className="mx-auto flex min-h-screen max-w-2xl flex-col justify-center gap-8 px-6">
-      <div>
-        <p className="mb-2 text-sm font-medium uppercase tracking-wide text-neutral-500">
-          Phase 0 — Foundation
+    <div className="mx-auto flex min-h-screen max-w-4xl flex-col px-6">
+      <Header />
+
+      <main className="mt-12 flex flex-col gap-8">
+        <div>
+          <p className="mb-2 text-sm font-medium uppercase tracking-wide text-neutral-500">
+            Phase 0 — Foundation
         </p>
         <h1 className="text-3xl font-bold">AI Support Platform</h1>
         <p className="mt-2 text-neutral-400">
@@ -30,6 +35,7 @@ export default function HomePage() {
           </li>
         ))}
       </ul>
-    </main>
+      </main>
+    </div>
   );
 }

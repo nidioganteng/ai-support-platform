@@ -20,8 +20,8 @@ const envSchema = z.object({
   API_PORT: z.coerce.number().int().positive().default(4000),
   WEB_PORT: z.coerce.number().int().positive().default(3000),
 
-  CLERK_SECRET_KEY: z.string().optional(),
-  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().optional(),
+  CLERK_SECRET_KEY: z.string().min(1, 'Required'),
+  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1, 'Required'),
 
   OPENAI_API_KEY: z.string().optional(),
 
