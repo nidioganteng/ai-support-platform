@@ -1,7 +1,7 @@
 import { Queue } from 'bullmq';
 import { getRedisConnectionOptions } from '../connection.js';
 
-export const HEARTBEAT_QUEUE_NAME = 'system:heartbeat';
+export const HEARTBEAT_QUEUE_NAME = 'system-heartbeat';
 
 export interface HeartbeatJobData {
   emittedAt: string;
