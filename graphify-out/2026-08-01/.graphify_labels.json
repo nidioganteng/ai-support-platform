@@ -1,10 +1,10 @@
 {
-  "0": "docs/README.md",
+  "0": "GitFlow and Conventions",
   "1": "worker/package.json",
   "2": "api/package.json",
   "3": "database/package.json",
   "4": "server.ts",
-  "5": "dependencies",
+  "5": "scripts",
   "6": "worker/src/index.ts",
   "7": "Phase Plan",
   "8": "compilerOptions",
@@ -31,11 +31,8 @@
   "29": "eslint.config.mjs",
   "30": "[[...sign-up]]/page.tsx",
   "31": "middleware.ts",
-  "32": "dashboard/layout.tsx",
-  "33": "conversations/page.tsx",
+  "32": "Folder Structure and Architecture",
+  "33": "Infrastructure and CI/CD",
   "34": "global.d.ts",
-  "35": "globals.css.d.ts",
-  "36": "knowledge-base/page.tsx",
-  "37": "dashboard/page.tsx",
-  "38": "settings/page.tsx"
+  "35": "globals.css.d.ts"
 }
