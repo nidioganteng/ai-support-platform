@@ -1,0 +1,23 @@
+{
+  "name": "@app/database",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./generated/client/index.js",
+  "types": "./generated/client/index.d.ts",
+  "scripts": {
+    "generate": "prisma generate",
+    "push": "prisma db push",
+    "studio": "prisma studio",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings=0",
+    "test": "echo \"no tests in @app/database yet\" && exit 0"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.20.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.20.0",
+    "typescript": "^5.6.3"
+  }
+}

@@ -1,0 +1,158 @@
+// Phase 0 schema: multi-tenant foundation only.
+// Fields specific to later phases (embeddings metadata, ticket assignment,
+// analytics rollups, Stripe subscription state, etc.) are added in the
+// phases that implement them, not stubbed out here.
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// A client business using the platform. Every other tenant-scoped
+/// model hangs off Organization so data between clients never mixes.
+model Organization {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  plan      OrganizationPlan @default(FREE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  memberships     Membership[]
+  knowledgeSources KnowledgeSource[]
+  conversations   Conversation[]
+
+  @@map("organizations")
+}
+
+enum OrganizationPlan {
+  FREE
+  PRO
+  ENTERPRISE
+}
+
+/// A person who can log in (owner, admin, or support agent).
+/// Identity itself (email, password, sessions) is owned by Clerk;
+/// this row just links a Clerk user id to our domain data.
+model User {
+  id          String   @id @default(cuid())
+  clerkUserId String   @unique
+  email       String   @unique
+  name        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  memberships Membership[]
+
+  @@map("users")
+}
+
+/// Join table: which role a User has within an Organization.
+/// A user can belong to more than one organization (e.g. an agency
+/// managing support for several clients).
+model Membership {
+  id             String           @id @default(cuid())
+  role           OrganizationRole @default(AGENT)
+  createdAt      DateTime         @default(now())
+
+  userId         String
+  user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  organizationId String
+  organization   Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, organizationId])
+  @@map("memberships")
+}
+
+enum OrganizationRole {
+  OWNER
+  ADMIN
+  AGENT
+}
+
+/// A single ingested source of truth for the AI (an uploaded PDF, a
+/// pasted FAQ text block, or a crawled website). The actual vector
+/// embeddings live in Pinecone; this row tracks status + metadata.
+model KnowledgeSource {
+  id             String                @id @default(cuid())
+  type           KnowledgeSourceType
+  status         KnowledgeSourceStatus @default(PENDING)
+  title          String
+  sourceUrl      String?
+  originalFileName String?
+  errorMessage   String?
+  chunkCount     Int                   @default(0)
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+
+  organizationId String
+  organization   Organization          @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@map("knowledge_sources")
+}
+
+enum KnowledgeSourceType {
+  PDF
+  TEXT
+  WEBSITE
+}
+
+enum KnowledgeSourceStatus {
+  PENDING
+  PROCESSING
+  READY
+  FAILED
+}
+
+/// One end-customer chat thread against an organization's AI assistant.
+model Conversation {
+  id             String             @id @default(cuid())
+  status         ConversationStatus @default(OPEN)
+  customerName   String?
+  customerEmail  String?
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+
+  organizationId String
+  organization   Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  messages       Message[]
+
+  @@index([organizationId])
+  @@map("conversations")
+}
+
+enum ConversationStatus {
+  OPEN
+  PENDING_HUMAN
+  RESOLVED
+  CLOSED
+}
+
+/// A single message within a conversation, from the customer, the AI,
+/// or a human agent.
+model Message {
+  id             String       @id @default(cuid())
+  sender         MessageSender
+  content        String
+  createdAt      DateTime     @default(now())
+
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId])
+  @@map("messages")
+}
+
+enum MessageSender {
+  CUSTOMER
+  AI
+  AGENT
+}

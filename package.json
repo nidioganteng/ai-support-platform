@@ -1,0 +1,29 @@
+{
+  "name": "ai-support-platform",
+  "private": true,
+  "version": "0.1.0",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "dev:web": "pnpm --filter @app/web dev",
+    "dev:api": "pnpm --filter @app/api dev",
+    "dev:worker": "pnpm --filter @app/worker dev",
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test",
+    "db:generate": "pnpm --filter @app/database generate",
+    "db:push": "pnpm --filter @app/database push",
+    "db:studio": "pnpm --filter @app/database studio",
+    "docker:up": "docker compose -f infrastructure/docker/docker-compose.yml up -d",
+    "docker:down": "docker compose -f infrastructure/docker/docker-compose.yml down"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^9.13.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.65.0"
+  }
+}

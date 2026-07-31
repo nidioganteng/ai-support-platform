@@ -1,0 +1,26 @@
+{
+  "name": "@app/worker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings=0",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@app/database": "workspace:*",
+    "@app/shared": "workspace:*",
+    "bullmq": "^5.21.2",
+    "pino": "^9.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.3"
+  }
+}

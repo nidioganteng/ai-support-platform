@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.next/
+build/
+coverage/
+*.log
+.env
+.env.local
+.DS_Store
+packages/database/generated/
+.turbo/
+CLAUDE.md
