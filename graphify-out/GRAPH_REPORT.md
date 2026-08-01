@@ -1,16 +1,16 @@
 # Graph Report - ai-support-platform  (2026-08-02)
 
 ## Corpus Check
-- 69 files · ~10,207 words
+- 69 files · ~10,648 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 483 nodes · 532 edges · 40 communities (29 shown, 11 thin omitted)
+- 487 nodes · 543 edges · 40 communities (29 shown, 11 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 1 edges (avg confidence: 0.5)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `b453785b`
+- Built from commit: `39dd1c0d`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -86,8 +86,8 @@ Cohesion: 0.10
 Nodes (20): devDependencies, tsx, @types/node, typescript, vitest, tsx, @types/node, typescript (+12 more)
 
 ### Community 2 - "dependencies"
-Cohesion: 0.06
-Nodes (32): dependencies, @app/database, @app/shared, bullmq, @clerk/express, cors, express, multer (+24 more)
+Cohesion: 0.10
+Nodes (21): dependencies, @app/database, @app/shared, bullmq, @clerk/express, cors, express, multer (+13 more)
 
 ### Community 3 - "database/package.json"
 Cohesion: 0.08
@@ -102,8 +102,8 @@ Cohesion: 0.08
 Nodes (23): dependencies, @app/shared, @clerk/nextjs, lucide-react, next, react, react-dom, @app/shared (+15 more)
 
 ### Community 6 - "worker/src/index.ts"
-Cohesion: 0.13
-Nodes (23): getRedisConnectionOptions(), logger, main(), HeartbeatResult, processHeartbeat(), chunkText(), embedAndUpsert(), PdfProcessingResult (+15 more)
+Cohesion: 0.12
+Nodes (27): getRedisConnectionOptions(), logger, main(), HeartbeatResult, processHeartbeat(), chunkText(), embedAndUpsert(), PdfProcessingResult (+19 more)
 
 ### Community 7 - "Phase Plan"
 Cohesion: 0.10
@@ -114,8 +114,8 @@ Cohesion: 0.10
 Nodes (19): compilerOptions, declaration, declarationMap, esModuleInterop, exactOptionalPropertyTypes, forceConsistentCasingInFileNames, isolatedModules, lib (+11 more)
 
 ### Community 9 - "devDependencies"
-Cohesion: 0.10
-Nodes (21): devDependencies, pino-pretty, supertest, tsx, @types/cors, @types/express, @types/multer, @types/node (+13 more)
+Cohesion: 0.06
+Nodes (32): devDependencies, pino-pretty, supertest, tsx, @types/cors, @types/express, @types/multer, @types/node (+24 more)
 
 ### Community 10 - "scripts"
 Cohesion: 0.10
@@ -162,7 +162,7 @@ Cohesion: 0.13
 Nodes (15): concurrently, dotenv-cli, eslint, @eslint/js, devDependencies, concurrently, dotenv-cli, eslint (+7 more)
 
 ## Knowledge Gaps
-- **267 isolated node(s):** `semi`, `singleQuote`, `trailingComma`, `printWidth`, `tabWidth` (+262 more)
+- **268 isolated node(s):** `semi`, `singleQuote`, `trailingComma`, `printWidth`, `tabWidth` (+263 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **11 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -170,16 +170,16 @@ Nodes (15): concurrently, dotenv-cli, eslint, @eslint/js, devDependencies, concu
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `dependencies` connect `dependencies` to `worker/package.json`?**
-  _High betweenness centrality (0.033) - this node is a cross-community bridge._
-- **Why does `pdf-parse` connect `dependencies` to `worker/src/index.ts`?**
-  _High betweenness centrality (0.029) - this node is a cross-community bridge._
+  _High betweenness centrality (0.034) - this node is a cross-community bridge._
 - **Why does `processPdfJob()` connect `worker/src/index.ts` to `dependencies`?**
-  _High betweenness centrality (0.029) - this node is a cross-community bridge._
+  _High betweenness centrality (0.030) - this node is a cross-community bridge._
+- **Why does `pdf-parse` connect `dependencies` to `worker/src/index.ts`?**
+  _High betweenness centrality (0.030) - this node is a cross-community bridge._
 - **What connects `semi`, `singleQuote`, `trailingComma` to the rest of the system?**
-  _267 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _268 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `docs/README.md` be split into smaller, more focused modules?**
   _Cohesion score 0.05714285714285714 - nodes in this community are weakly interconnected._
 - **Should `worker/package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.09523809523809523 - nodes in this community are weakly interconnected._
 - **Should `dependencies` be split into smaller, more focused modules?**
-  _Cohesion score 0.06060606060606061 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09523809523809523 - nodes in this community are weakly interconnected._
