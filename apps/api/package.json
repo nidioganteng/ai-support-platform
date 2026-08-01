@@ -15,10 +15,12 @@
     "@app/database": "workspace:*",
     "@app/shared": "workspace:*",
     "@clerk/express": "^2.1.49",
+    "@pinecone-database/pinecone": "^8.2.0",
     "bullmq": "^5.81.3",
     "cors": "^2.8.5",
     "express": "^4.21.1",
     "multer": "^2.2.0",
+    "openai": "^7.2.0",
     "pino": "^9.5.0",
     "pino-http": "^10.3.0",
     "svix": "^1.99.1"

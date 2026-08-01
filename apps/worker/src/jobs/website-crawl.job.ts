@@ -34,7 +34,7 @@ export function extractSameDomainLinks(dom: JSDOM, baseUrl: string): string[] {
   const anchors = dom.window.document.querySelectorAll('a[href]');
   const found = new Set<string>();
 
-  anchors.forEach((a) => {
+  anchors.forEach((a: Element) => {
     const href = a.getAttribute('href');
     if (!href) return;
 
