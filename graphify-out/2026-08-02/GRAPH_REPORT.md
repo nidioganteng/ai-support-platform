@@ -1,16 +1,16 @@
-# Graph Report - ai-support-platform  (2026-08-01)
+# Graph Report - ai-support-platform  (2026-08-02)
 
 ## Corpus Check
-- 60 files · ~6,734 words
+- 68 files · ~9,301 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 422 nodes · 427 edges · 39 communities (29 shown, 10 thin omitted)
-- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
+- 480 nodes · 527 edges · 40 communities (29 shown, 11 thin omitted)
+- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 1 edges (avg confidence: 0.5)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `5bd539fe`
+- Built from commit: `d7271dba`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -41,67 +41,69 @@
 - next.config.mjs
 - next-env.d.ts
 - tailwind.config.ts
+- dependencies
 - middleware.ts
 - dashboard/layout.tsx
 - global.d.ts
+- knowledge-base/page.tsx
 - devDependencies
 
 ## God Nodes (most connected - your core abstractions)
 1. `compilerOptions` - 18 edges
-2. `scripts` - 13 edges
-3. `Phase Plan` - 12 edges
-4. `compilerOptions` - 9 edges
-5. `getEnv()` - 8 edges
-6. `scripts` - 7 edges
+2. `scripts` - 14 edges
+3. `getEnv()` - 12 edges
+4. `Phase Plan` - 12 edges
+5. `compilerOptions` - 10 edges
+6. `getRedisConnectionOptions()` - 10 edges
 7. `scripts` - 7 edges
 8. `scripts` - 7 edges
 9. `scripts` - 7 edges
-10. `getRedisConnectionOptions()` - 6 edges
+10. `main()` - 7 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `getRedisConnectionOptions()` --calls--> `getEnv()`  [EXTRACTED]
+  apps/api/src/connection.ts → packages/shared/src/env.ts
 - `getRedisConnectionOptions()` --calls--> `getEnv()`  [EXTRACTED]
   apps/worker/src/connection.ts → packages/shared/src/env.ts
 - `main()` --calls--> `getEnv()`  [EXTRACTED]
   apps/worker/src/index.ts → packages/shared/src/env.ts
-- `main()` --calls--> `getRedisConnectionOptions()`  [EXTRACTED]
-  apps/worker/src/index.ts → apps/worker/src/connection.ts
-- `createHeartbeatQueue()` --calls--> `getRedisConnectionOptions()`  [EXTRACTED]
-  apps/worker/src/queues/heartbeat.queue.ts → apps/worker/src/connection.ts
-- `main()` --calls--> `processHeartbeat()`  [EXTRACTED]
-  apps/worker/src/index.ts → apps/worker/src/jobs/heartbeat.job.ts
+- `embedAndUpsert()` --calls--> `getEnv()`  [EXTRACTED]
+  apps/worker/src/jobs/pdf-processing.job.ts → packages/shared/src/env.ts
+- `processPdfJob()` --references--> `pdf-parse`  [EXTRACTED]
+  apps/worker/src/jobs/pdf-processing.job.ts → apps/worker/package.json
 
 ## Import Cycles
 - None detected.
 
-## Communities (39 total, 10 thin omitted)
+## Communities (40 total, 11 thin omitted)
 
 ### Community 0 - "docs/README.md"
 Cohesion: 0.06
 Nodes (29): AI Agent Guidelines, Do's, Don'ts, Core Entities, ⚠️ Critical Rule: Multi-Tenancy Isolation, Database Schema, Overview, Workflows (+21 more)
 
 ### Community 1 - "worker/package.json"
-Cohesion: 0.07
-Nodes (29): dependencies, @app/database, @app/shared, bullmq, pino, devDependencies, tsx, @types/node (+21 more)
+Cohesion: 0.10
+Nodes (20): devDependencies, tsx, @types/node, typescript, vitest, tsx, @types/node, typescript (+12 more)
 
 ### Community 2 - "dependencies"
-Cohesion: 0.07
-Nodes (26): dependencies, @app/database, @app/shared, cors, express, pino, pino-http, svix (+18 more)
+Cohesion: 0.06
+Nodes (32): dependencies, @app/database, @app/shared, bullmq, @clerk/express, cors, express, multer (+24 more)
 
 ### Community 3 - "database/package.json"
 Cohesion: 0.08
 Nodes (23): dependencies, @prisma/client, devDependencies, prisma, @types/node, typescript, @types/node, typescript (+15 more)
 
 ### Community 4 - "app.ts"
-Cohesion: 0.10
-Nodes (19): createApp(), logger, options, healthRouter, startedAt, ClerkUserData, CustomRequest, mapClerkRoleToRole() (+11 more)
+Cohesion: 0.08
+Nodes (26): createApp(), getRedisConnectionOptions(), logger, options, healthRouter, startedAt, getPdfQueue(), knowledgeSourcesRouter (+18 more)
 
 ### Community 5 - "dependencies"
 Cohesion: 0.08
 Nodes (23): dependencies, @app/shared, @clerk/nextjs, lucide-react, next, react, react-dom, @app/shared (+15 more)
 
 ### Community 6 - "worker/src/index.ts"
-Cohesion: 0.21
-Nodes (12): getRedisConnectionOptions(), logger, main(), HeartbeatResult, processHeartbeat(), createHeartbeatQueue(), HeartbeatJobData, Env (+4 more)
+Cohesion: 0.13
+Nodes (23): getRedisConnectionOptions(), logger, main(), HeartbeatResult, processHeartbeat(), chunkText(), embedAndUpsert(), PdfProcessingResult (+15 more)
 
 ### Community 7 - "Phase Plan"
 Cohesion: 0.10
@@ -109,23 +111,23 @@ Nodes (18): Phase 0 — Planning & Foundation ✅, Phase 10 — Polish & Product
 
 ### Community 8 - "compilerOptions"
 Cohesion: 0.10
-Nodes (19): ES2022, compilerOptions, declaration, declarationMap, esModuleInterop, exactOptionalPropertyTypes, forceConsistentCasingInFileNames, isolatedModules (+11 more)
+Nodes (19): compilerOptions, declaration, declarationMap, esModuleInterop, exactOptionalPropertyTypes, forceConsistentCasingInFileNames, isolatedModules, lib (+11 more)
 
 ### Community 9 - "devDependencies"
-Cohesion: 0.11
-Nodes (19): devDependencies, pino-pretty, supertest, tsx, @types/cors, @types/express, @types/node, @types/supertest (+11 more)
+Cohesion: 0.10
+Nodes (21): devDependencies, pino-pretty, supertest, tsx, @types/cors, @types/express, @types/multer, @types/node (+13 more)
 
 ### Community 10 - "scripts"
-Cohesion: 0.11
-Nodes (18): engines, node, name, private, scripts, build, db:generate, db:migrate (+10 more)
+Cohesion: 0.10
+Nodes (19): engines, node, name, private, scripts, build, db:generate, db:migrate (+11 more)
 
 ### Community 11 - "shared/package.json"
 Cohesion: 0.11
 Nodes (18): dependencies, zod, devDependencies, typescript, vitest, typescript, vitest, main (+10 more)
 
 ### Community 12 - "compilerOptions"
-Cohesion: 0.11
-Nodes (17): compilerOptions, allowJs, incremental, jsx, module, moduleResolution, noEmit, paths (+9 more)
+Cohesion: 0.09
+Nodes (21): compilerOptions, allowJs, incremental, jsx, lib, module, moduleResolution, noEmit (+13 more)
 
 ### Community 13 - "devDependencies"
 Cohesion: 0.13
@@ -151,29 +153,33 @@ Nodes (7): compilerOptions, outDir, rootDir, extends, include, src, ../../tsconf
 Cohesion: 0.33
 Nodes (5): printWidth, semi, singleQuote, tabWidth, trailingComma
 
+### Community 27 - "dependencies"
+Cohesion: 0.09
+Nodes (23): dependencies, @app/database, @app/shared, bullmq, jsdom, @mozilla/readability, openai, pdf-parse (+15 more)
+
 ### Community 39 - "devDependencies"
-Cohesion: 0.15
-Nodes (13): dotenv-cli, eslint, @eslint/js, devDependencies, dotenv-cli, eslint, @eslint/js, prettier (+5 more)
+Cohesion: 0.13
+Nodes (15): concurrently, dotenv-cli, eslint, @eslint/js, devDependencies, concurrently, dotenv-cli, eslint (+7 more)
 
 ## Knowledge Gaps
-- **243 isolated node(s):** `semi`, `singleQuote`, `trailingComma`, `printWidth`, `tabWidth` (+238 more)
+- **266 isolated node(s):** `semi`, `singleQuote`, `trailingComma`, `printWidth`, `tabWidth` (+261 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **10 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **11 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `devDependencies` connect `devDependencies` to `dependencies`?**
-  _High betweenness centrality (0.007) - this node is a cross-community bridge._
+- **Why does `dependencies` connect `dependencies` to `worker/package.json`?**
+  _High betweenness centrality (0.033) - this node is a cross-community bridge._
+- **Why does `pdf-parse` connect `dependencies` to `worker/src/index.ts`?**
+  _High betweenness centrality (0.029) - this node is a cross-community bridge._
+- **Why does `processPdfJob()` connect `worker/src/index.ts` to `dependencies`?**
+  _High betweenness centrality (0.029) - this node is a cross-community bridge._
 - **What connects `semi`, `singleQuote`, `trailingComma` to the rest of the system?**
-  _243 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _266 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `docs/README.md` be split into smaller, more focused modules?**
   _Cohesion score 0.05714285714285714 - nodes in this community are weakly interconnected._
 - **Should `worker/package.json` be split into smaller, more focused modules?**
-  _Cohesion score 0.06666666666666667 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09523809523809523 - nodes in this community are weakly interconnected._
 - **Should `dependencies` be split into smaller, more focused modules?**
-  _Cohesion score 0.07407407407407407 - nodes in this community are weakly interconnected._
-- **Should `database/package.json` be split into smaller, more focused modules?**
-  _Cohesion score 0.08333333333333333 - nodes in this community are weakly interconnected._
-- **Should `app.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.10317460317460317 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06060606060606061 - nodes in this community are weakly interconnected._

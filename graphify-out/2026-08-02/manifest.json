@@ -5,13 +5,13 @@
     "semantic_hash": ""
   },
   "apps/api/package.json": {
-    "mtime": 1785594742.0585537,
-    "ast_hash": "44bc66e4463193163949a73d126136f1",
+    "mtime": 1785600516.1586301,
+    "ast_hash": "bda395cebd5ebb9343af308f502b2f61",
     "semantic_hash": ""
   },
   "apps/api/src/app.ts": {
-    "mtime": 1785594815.2383468,
-    "ast_hash": "3c66ce8a35d225a276796cc2fa2d143a",
+    "mtime": 1785600516.1610155,
+    "ast_hash": "0b323c198f965ea7643cc74f5340add6",
     "semantic_hash": ""
   },
   "apps/api/src/logger.ts": {
@@ -20,8 +20,8 @@
     "semantic_hash": ""
   },
   "apps/api/src/routes/health.test.ts": {
-    "mtime": 1785502557.8820815,
-    "ast_hash": "8a76bf476a4b40d9e0f7795b6b6fff9c",
+    "mtime": 1785600516.162205,
+    "ast_hash": "bd3bf363532a2d2c60b77d902ece9e25",
     "semantic_hash": ""
   },
   "apps/api/src/routes/health.ts": {
@@ -75,13 +75,13 @@
     "semantic_hash": ""
   },
   "apps/web/tsconfig.json": {
-    "mtime": 1785502557.8893085,
-    "ast_hash": "f153b7f45144709d7ddcb03f3db7d2af",
+    "mtime": 1785600516.1690884,
+    "ast_hash": "9efbb826c8049855fd38f5e1e4e0337b",
     "semantic_hash": ""
   },
   "apps/worker/package.json": {
-    "mtime": 1785502557.8913276,
-    "ast_hash": "ccf85f9227b0183c2b1630a45f554b32",
+    "mtime": 1785601182.0771062,
+    "ast_hash": "84191448d9909e1bf97c7e0ad813c340",
     "semantic_hash": ""
   },
   "apps/worker/src/connection.ts": {
@@ -90,8 +90,8 @@
     "semantic_hash": ""
   },
   "apps/worker/src/index.ts": {
-    "mtime": 1785502557.8923428,
-    "ast_hash": "61ccf088bcb95575417c1312f9b0b5d3",
+    "mtime": 1785601243.0961523,
+    "ast_hash": "2511821f7589ef371d1d35dd89517ce5",
     "semantic_hash": ""
   },
   "apps/worker/src/jobs/heartbeat.job.test.ts": {
@@ -120,12 +120,12 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1785593996.3437314,
-    "ast_hash": "9baf7af55508c184068c2ace8024a43a",
+    "mtime": 1785600527.9661317,
+    "ast_hash": "3480dce9a237515b77f2565a51cad2e2",
     "semantic_hash": ""
   },
   "packages/database/package.json": {
-    "mtime": 1785594929.3806722,
+    "mtime": 1785595609.633638,
     "ast_hash": "f8d92ab3440722fba257ff809af35947",
     "semantic_hash": ""
   },
@@ -150,8 +150,8 @@
     "semantic_hash": ""
   },
   "packages/shared/src/env.ts": {
-    "mtime": 1785594757.096258,
-    "ast_hash": "7c5d17333e916e7395c2d38bc2946f1f",
+    "mtime": 1785600516.1774886,
+    "ast_hash": "4ada0be95a14e3e66fe824835f6e52d4",
     "semantic_hash": ""
   },
   "packages/shared/src/index.ts": {
@@ -270,8 +270,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/app/dashboard/knowledge-base/page.tsx": {
-    "mtime": 1785590545.8099337,
-    "ast_hash": "f4f8f9093aacfc31cdf2d8e7df9307fc",
+    "mtime": 1785600516.1662765,
+    "ast_hash": "e8aaa58137d4f20039df5603eb6bde28",
     "semantic_hash": ""
   },
   "apps/web/src/app/dashboard/layout.tsx": {
@@ -290,8 +290,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/Sidebar.tsx": {
-    "mtime": 1785590545.892262,
-    "ast_hash": "16075bf492631bd54d7bb1fb0cf9812a",
+    "mtime": 1785600516.167503,
+    "ast_hash": "07d05262322fdfcbdf9c2654c85c130d",
     "semantic_hash": ""
   },
   "packages/database/prisma/migrations/20260801134200_init/migration.sql": {
@@ -300,13 +300,53 @@
     "semantic_hash": ""
   },
   "apps/api/src/routes/webhooks.test.ts": {
-    "mtime": 1785594822.5351598,
-    "ast_hash": "c15ecb44dec553c1b4ef750439b73c64",
+    "mtime": 1785600516.1632144,
+    "ast_hash": "b8e6005304086a43c0e916d8719b30e9",
     "semantic_hash": ""
   },
   "apps/api/src/routes/webhooks.ts": {
-    "mtime": 1785595065.3793063,
-    "ast_hash": "689f32997f97bb330e9e8e20869171e2",
+    "mtime": 1785595609.5818162,
+    "ast_hash": "1eea13a42a20268a7a1e16f6a787c49e",
+    "semantic_hash": ""
+  },
+  "apps/api/src/connection.ts": {
+    "mtime": 1785600516.1610155,
+    "ast_hash": "c0fc402cbc3b896fc0f6259a01c5d920",
+    "semantic_hash": ""
+  },
+  "apps/api/src/routes/knowledge-sources.ts": {
+    "mtime": 1785600516.1632144,
+    "ast_hash": "5edb1c673f33db6074af600540af5994",
+    "semantic_hash": ""
+  },
+  "apps/worker/src/jobs/pdf-processing.job.test.ts": {
+    "mtime": 1785600516.1723964,
+    "ast_hash": "4739a9244d0d99b367d76e04e5a555ab",
+    "semantic_hash": ""
+  },
+  "apps/worker/src/jobs/pdf-processing.job.ts": {
+    "mtime": 1785601205.2042122,
+    "ast_hash": "e252a8890af32fae0b39a0a63a3c14be",
+    "semantic_hash": ""
+  },
+  "apps/worker/src/jobs/website-crawl.job.test.ts": {
+    "mtime": 1785601484.8051279,
+    "ast_hash": "27bca85ade6fb1c35388cbe3d0f68e83",
+    "semantic_hash": ""
+  },
+  "apps/worker/src/jobs/website-crawl.job.ts": {
+    "mtime": 1785601211.918574,
+    "ast_hash": "ba0987ad0fdca9ab64944ab0fd8b80cb",
+    "semantic_hash": ""
+  },
+  "apps/worker/src/queues/pdf-processing.queue.ts": {
+    "mtime": 1785600516.1746538,
+    "ast_hash": "857bb3cca8a017a6e88ce2725aca182a",
+    "semantic_hash": ""
+  },
+  "apps/worker/src/queues/website-crawl.queue.ts": {
+    "mtime": 1785601198.2317474,
+    "ast_hash": "3a828268f560a68eeddf59bf78422ac5",
     "semantic_hash": ""
   }
 }
