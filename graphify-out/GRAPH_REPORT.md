@@ -1,16 +1,16 @@
 # Graph Report - ai-support-platform  (2026-08-02)
 
 ## Corpus Check
-- 68 files · ~9,301 words
+- 69 files · ~10,207 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 480 nodes · 527 edges · 40 communities (29 shown, 11 thin omitted)
+- 483 nodes · 532 edges · 40 communities (29 shown, 11 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 1 edges (avg confidence: 0.5)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `d7271dba`
+- Built from commit: `b453785b`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -69,8 +69,8 @@
   apps/worker/src/index.ts → packages/shared/src/env.ts
 - `embedAndUpsert()` --calls--> `getEnv()`  [EXTRACTED]
   apps/worker/src/jobs/pdf-processing.job.ts → packages/shared/src/env.ts
-- `processPdfJob()` --references--> `pdf-parse`  [EXTRACTED]
-  apps/worker/src/jobs/pdf-processing.job.ts → apps/worker/package.json
+- `getPdfQueue()` --calls--> `getRedisConnectionOptions()`  [EXTRACTED]
+  apps/api/src/routes/knowledge-sources.ts → apps/api/src/connection.ts
 
 ## Import Cycles
 - None detected.
@@ -94,8 +94,8 @@ Cohesion: 0.08
 Nodes (23): dependencies, @prisma/client, devDependencies, prisma, @types/node, typescript, @types/node, typescript (+15 more)
 
 ### Community 4 - "app.ts"
-Cohesion: 0.08
-Nodes (26): createApp(), getRedisConnectionOptions(), logger, options, healthRouter, startedAt, getPdfQueue(), knowledgeSourcesRouter (+18 more)
+Cohesion: 0.07
+Nodes (28): createApp(), getRedisConnectionOptions(), logger, options, healthRouter, startedAt, getPdfQueue(), getWebsiteCrawlQueue() (+20 more)
 
 ### Community 5 - "dependencies"
 Cohesion: 0.08
@@ -162,7 +162,7 @@ Cohesion: 0.13
 Nodes (15): concurrently, dotenv-cli, eslint, @eslint/js, devDependencies, concurrently, dotenv-cli, eslint (+7 more)
 
 ## Knowledge Gaps
-- **266 isolated node(s):** `semi`, `singleQuote`, `trailingComma`, `printWidth`, `tabWidth` (+261 more)
+- **267 isolated node(s):** `semi`, `singleQuote`, `trailingComma`, `printWidth`, `tabWidth` (+262 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **11 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -176,7 +176,7 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `processPdfJob()` connect `worker/src/index.ts` to `dependencies`?**
   _High betweenness centrality (0.029) - this node is a cross-community bridge._
 - **What connects `semi`, `singleQuote`, `trailingComma` to the rest of the system?**
-  _266 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _267 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `docs/README.md` be split into smaller, more focused modules?**
   _Cohesion score 0.05714285714285714 - nodes in this community are weakly interconnected._
 - **Should `worker/package.json` be split into smaller, more focused modules?**

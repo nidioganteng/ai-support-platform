@@ -112,6 +112,78 @@ knowledgeSourcesRouter.post(
   },
 );
 
+interface WebsiteCrawlJobData {
+  knowledgeSourceId: string;
+  organizationId: string;
+  url: string;
+}
+
+const WEBSITE_CRAWL_QUEUE_NAME = 'website-crawl';
+
+function getWebsiteCrawlQueue(): Queue<WebsiteCrawlJobData> {
+  return new Queue<WebsiteCrawlJobData>(WEBSITE_CRAWL_QUEUE_NAME, {
+    connection: getRedisConnectionOptions(),
+  });
+}
+
+knowledgeSourcesRouter.post(
+  '/website',
+  requireOrgAuth,
+  async (req: Request, res: Response) => {
+    const { orgSlug } = getAuth(req);
+
+    if (!orgSlug) {
+      res.status(403).json({ error: 'No active organization selected' });
+      return;
+    }
+
+    const { url } = req.body as { url?: string };
+
+    if (!url || typeof url !== 'string') {
+      res.status(400).json({ error: 'Website URL is required' });
+      return;
+    }
+
+    try {
+      new URL(url);
+    } catch {
+      res.status(400).json({ error: 'Invalid URL format' });
+      return;
+    }
+
+    const { orgId } = getAuth(req);
+    const org = await prisma.organization.upsert({
+      where: { slug: orgSlug },
+      create: { slug: orgSlug, name: orgId ?? orgSlug },
+      update: {},
+    });
+
+    const source = await prisma.knowledgeSource.create({
+      data: {
+        organizationId: org.id,
+        type: 'WEBSITE',
+        status: 'PENDING',
+        title: url,
+        sourceUrl: url,
+      },
+    });
+
+    const queue = getWebsiteCrawlQueue();
+    await queue.add(
+      'process-website',
+      {
+        knowledgeSourceId: source.id,
+        organizationId: org.id,
+        url,
+      } satisfies WebsiteCrawlJobData,
+      { removeOnComplete: 20, removeOnFail: 20 },
+    );
+    await queue.close();
+
+    res.status(201).json(source);
+  },
+);
+
 knowledgeSourcesRouter.get(
   '/',
   requireOrgAuth,
