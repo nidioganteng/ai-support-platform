@@ -1,7 +1,7 @@
 # Graph Report - ai-support-platform  (2026-08-01)
 
 ## Corpus Check
-- 57 files · ~5,263 words
+- 58 files · ~5,712 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `114735d8`
+- Built from commit: `424c1980`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -120,7 +120,7 @@ Nodes (19): devDependencies, pino-pretty, supertest, tsx, @types/cors, @types/ex
 
 ### Community 10 - "scripts"
 Cohesion: 0.11
-Nodes (18): engines, node, name, private, scripts, build, db:generate, db:push (+10 more)
+Nodes (18): engines, node, name, private, scripts, build, db:generate, db:migrate (+10 more)
 
 ### Community 11 - "shared/package.json"
 Cohesion: 0.11

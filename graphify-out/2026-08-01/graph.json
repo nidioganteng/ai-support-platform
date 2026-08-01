@@ -2589,15 +2589,15 @@
       "norm_label": "db:generate"
     },
     {
-      "label": "db:push",
+      "label": "db:migrate",
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L17",
       "_origin": "ast",
-      "id": "package_scripts_db_push",
+      "id": "package_scripts_db_migrate",
       "community": 10,
       "community_name": "scripts",
-      "norm_label": "db:push"
+      "norm_label": "db:migrate"
     },
     {
       "label": "db:studio",
@@ -2875,15 +2875,15 @@
       "norm_label": "generate"
     },
     {
-      "label": "push",
+      "label": "migrate",
       "file_type": "code",
       "source_file": "packages/database/package.json",
       "source_location": "L10",
       "_origin": "ast",
-      "id": "packages_database_package_scripts_push",
+      "id": "packages_database_package_scripts_migrate",
       "community": 3,
       "community_name": "database/package.json",
-      "norm_label": "push"
+      "norm_label": "migrate"
     },
     {
       "label": "studio",
@@ -7227,7 +7227,7 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_scripts",
-      "target": "package_scripts_db_push",
+      "target": "package_scripts_db_migrate",
       "confidence_score": 1.0
     },
     {
@@ -7596,7 +7596,7 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_database_package_scripts",
-      "target": "packages_database_package_scripts_push",
+      "target": "packages_database_package_scripts_migrate",
       "confidence_score": 1.0
     },
     {
@@ -9183,5 +9183,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "114735d8d3892fd071234758f9c83bcc8cfd58b6"
+  "built_at_commit": "424c1980ec6da755c9fc2e549d9247dd4d2a3167"
 }
