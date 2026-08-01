@@ -7,7 +7,7 @@
   "types": "./generated/client/index.d.ts",
   "scripts": {
     "generate": "prisma generate",
-    "push": "prisma db push",
+    "migrate": "prisma migrate dev",
     "studio": "prisma studio",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings=0",
