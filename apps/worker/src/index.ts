@@ -8,6 +8,11 @@ import {
   type HeartbeatJobData,
 } from './queues/heartbeat.queue.js';
 import { processHeartbeat } from './jobs/heartbeat.job.js';
+import {
+  PDF_PROCESSING_QUEUE_NAME,
+  type PdfProcessingJobData,
+} from './queues/pdf-processing.queue.js';
+import { processPdfJob } from './jobs/pdf-processing.job.js';
 
 const logger = pino({ level: process.env.LOG_LEVEL ?? 'info' });
 
@@ -40,11 +45,29 @@ async function main() {
     logger.error({ jobId: job?.id, err }, 'heartbeat job failed');
   });
 
-  logger.info('worker started, listening on queue: %s', HEARTBEAT_QUEUE_NAME);
+  const pdfWorker = new Worker<PdfProcessingJobData>(
+    PDF_PROCESSING_QUEUE_NAME,
+    async (job) => {
+      const result = await processPdfJob(job);
+      logger.info({ jobId: job.id, ...result }, 'pdf-processing job completed');
+      return result;
+    },
+    { connection: getRedisConnectionOptions() },
+  );
+
+  pdfWorker.on('failed', (job, err) => {
+    logger.error({ jobId: job?.id, err }, 'pdf-processing job failed');
+  });
+
+  logger.info(
+    'worker started, listening on queues: %s, %s',
+    HEARTBEAT_QUEUE_NAME,
+    PDF_PROCESSING_QUEUE_NAME,
+  );
 
   const shutdown = async () => {
     logger.info('shutting down worker...');
-    await worker.close();
+    await Promise.all([worker.close(), pdfWorker.close()]);
     await heartbeatQueue.close();
     process.exit(0);
   };
