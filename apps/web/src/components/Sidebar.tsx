@@ -42,7 +42,7 @@ export function Sidebar() {
       </nav>
 
       <div className="border-t border-neutral-800 p-4 flex items-center justify-between">
-        <OrganizationSwitcher hidePersonal appearance={{ elements: { rootBox: 'text-neutral-100' } }} />
+        <OrganizationSwitcher appearance={{ elements: { rootBox: 'text-neutral-100' } }} />
         <UserButton />
       </div>
     </div>
