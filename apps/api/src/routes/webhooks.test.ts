@@ -4,6 +4,12 @@ import { createApp } from '../app.js';
 import { mapClerkRoleToRole } from './webhooks.js';
 import { OrganizationRole } from '@app/database';
 
+vi.mock('@clerk/express', () => ({
+  clerkMiddleware: () => (_req: unknown, _res: unknown, next: () => void) => next(),
+  requireAuth: () => (_req: unknown, _res: unknown, next: () => void) => next(),
+  getAuth: () => ({ userId: null, orgSlug: null }),
+}));
+
 vi.mock('svix', () => {
   return {
     Webhook: vi.fn().mockImplementation(() => ({

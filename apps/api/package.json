@@ -14,8 +14,11 @@
   "dependencies": {
     "@app/database": "workspace:*",
     "@app/shared": "workspace:*",
+    "@clerk/express": "^2.1.49",
+    "bullmq": "^5.81.3",
     "cors": "^2.8.5",
     "express": "^4.21.1",
+    "multer": "^2.2.0",
     "pino": "^9.5.0",
     "pino-http": "^10.3.0",
     "svix": "^1.99.1"
@@ -23,6 +26,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "@types/multer": "^2.2.0",
     "@types/node": "^22.7.5",
     "@types/supertest": "^6.0.2",
     "pino-pretty": "^11.2.2",
