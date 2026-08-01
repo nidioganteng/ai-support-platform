@@ -6,6 +6,7 @@ import { logger } from './logger.js';
 import { healthRouter } from './routes/health.js';
 import { webhooksRouter, type CustomRequest } from './routes/webhooks.js';
 import { knowledgeSourcesRouter } from './routes/knowledge-sources.js';
+import { chatRouter, conversationsRouter } from './routes/chat.js';
 
 export function createApp(): Express {
   const app = express();
@@ -31,6 +32,8 @@ export function createApp(): Express {
   app.use('/health', healthRouter);
   app.use('/webhooks', webhooksRouter);
   app.use('/knowledge-sources', knowledgeSourcesRouter);
+  app.use('/chat', chatRouter);
+  app.use('/conversations', conversationsRouter);
 
   return app;
 }
