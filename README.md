@@ -36,9 +36,9 @@ cp .env.example .env
 # 3. Start Postgres + Redis
 pnpm docker:up
 
-# 4. Push the Prisma schema to your local database
+# 4. Run Prisma schema migration
 pnpm db:generate
-pnpm db:push
+pnpm db:migrate
 
 # 5. Run everything (in separate terminals)
 pnpm dev:api      # http://localhost:4000/health
