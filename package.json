@@ -6,6 +6,7 @@
     "node": ">=20.0.0"
   },
   "scripts": {
+    "dev": "concurrently -n api,worker,web -c cyan,yellow,magenta \"pnpm dev:api\" \"pnpm dev:worker\" \"pnpm dev:web\"",
     "dev:web": "dotenv -e .env -- pnpm --filter @app/web dev",
     "dev:api": "dotenv -e .env -- pnpm --filter @app/api dev",
     "dev:worker": "dotenv -e .env -- pnpm --filter @app/worker dev",
@@ -21,6 +22,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "concurrently": "^10.0.4",
     "dotenv-cli": "^11.0.0",
     "eslint": "^9.13.0",
     "prettier": "^3.3.3",
