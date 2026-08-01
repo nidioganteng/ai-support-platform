@@ -22,6 +22,7 @@ const envSchema = z.object({
 
   CLERK_SECRET_KEY: z.string().min(1, 'Required'),
   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1, 'Required'),
+  CLERK_WEBHOOK_SECRET: z.string().optional(),
 
   OPENAI_API_KEY: z.string().optional(),
 
