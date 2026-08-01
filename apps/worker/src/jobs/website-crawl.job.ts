@@ -10,7 +10,54 @@ export interface WebsiteCrawlResult {
   embedded: boolean;
 }
 
-export async function fetchAndParseWebpage(url: string, timeoutMs = 10000): Promise<string> {
+export interface WebpageParseResult {
+  url: string;
+  cleanText: string;
+  links: string[];
+}
+
+export function normalizeUrl(urlStr: string, baseUrl?: string): string | null {
+  try {
+    const parsed = baseUrl ? new URL(urlStr, baseUrl) : new URL(urlStr);
+    if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+      return null;
+    }
+    parsed.hash = '';
+    return parsed.toString();
+  } catch {
+    return null;
+  }
+}
+
+export function extractSameDomainLinks(dom: JSDOM, baseUrl: string): string[] {
+  const seedHostname = new URL(baseUrl).hostname;
+  const anchors = dom.window.document.querySelectorAll('a[href]');
+  const found = new Set<string>();
+
+  anchors.forEach((a) => {
+    const href = a.getAttribute('href');
+    if (!href) return;
+
+    const normalized = normalizeUrl(href, baseUrl);
+    if (normalized) {
+      try {
+        const u = new URL(normalized);
+        if (u.hostname === seedHostname) {
+          found.add(normalized);
+        }
+      } catch {
+        // ignore invalid URLs
+      }
+    }
+  });
+
+  return Array.from(found);
+}
+
+export async function fetchAndParseWebpage(
+  url: string,
+  timeoutMs = 10000,
+): Promise<WebpageParseResult> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
 
@@ -28,26 +75,72 @@ export async function fetchAndParseWebpage(url: string, timeoutMs = 10000): Prom
 
     const html = await response.text();
     const dom = new JSDOM(html, { url });
+
+    const links = extractSameDomainLinks(dom, url);
+
     const reader = new Readability(dom.window.document);
     const article = reader.parse();
 
     const textContent = article?.textContent || dom.window.document.body?.textContent || '';
     const cleanText = textContent.replace(/\s+/g, ' ').trim();
 
-    if (!cleanText) {
-      throw new Error(`No readable text content found at ${url}`);
-    }
-
-    return cleanText;
+    return { url, cleanText, links };
   } finally {
     clearTimeout(timer);
   }
 }
 
+export async function crawlWebsite(
+  seedUrl: string,
+  maxPages = 50,
+  timeoutMs = 10000,
+): Promise<string[]> {
+  const normalizedSeed = normalizeUrl(seedUrl);
+  if (!normalizedSeed) {
+    throw new Error(`Invalid start URL: ${seedUrl}`);
+  }
+
+  const visited = new Set<string>();
+  const queue: string[] = [normalizedSeed];
+  const pageTexts: string[] = [];
+
+  while (queue.length > 0 && visited.size < maxPages) {
+    const currentUrl = queue.shift();
+    if (!currentUrl || visited.has(currentUrl)) continue;
+
+    visited.add(currentUrl);
+
+    try {
+      const pageResult = await fetchAndParseWebpage(currentUrl, timeoutMs);
+      if (pageResult.cleanText) {
+        pageTexts.push(`--- Source: ${currentUrl} ---\n${pageResult.cleanText}`);
+      }
+
+      for (const link of pageResult.links) {
+        if (!visited.has(link) && !queue.includes(link)) {
+          queue.push(link);
+        }
+      }
+    } catch (err) {
+      if (currentUrl === normalizedSeed && pageTexts.length === 0) {
+        throw err;
+      }
+    }
+  }
+
+  if (pageTexts.length === 0) {
+    throw new Error(
+      `No readable text content found across ${visited.size} crawled pages starting from ${seedUrl}`,
+    );
+  }
+
+  return pageTexts;
+}
+
 export async function processWebsiteCrawlJob(
   job: Job<WebsiteCrawlJobData>,
 ): Promise<WebsiteCrawlResult> {
-  const { knowledgeSourceId, organizationId, url } = job.data;
+  const { knowledgeSourceId, organizationId, url, maxPages = 50 } = job.data;
 
   await prisma.knowledgeSource.update({
     where: { id: knowledgeSourceId, organizationId },
@@ -55,8 +148,9 @@ export async function processWebsiteCrawlJob(
   });
 
   try {
-    const textContent = await fetchAndParseWebpage(url);
-    const chunks = chunkText(textContent);
+    const pageTexts = await crawlWebsite(url, maxPages);
+    const combinedContent = pageTexts.join('\n\n');
+    const chunks = chunkText(combinedContent);
 
     let embedded = false;
     try {
