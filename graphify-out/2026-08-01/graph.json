@@ -2639,8 +2639,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "package_devdependencies",
-      "community": 10,
-      "community_name": "scripts",
+      "community": 39,
+      "community_name": "devDependencies",
       "norm_label": "devdependencies"
     },
     {
@@ -2650,8 +2650,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "package_devdependencies_eslint_js",
-      "community": 10,
-      "community_name": "scripts",
+      "community": 39,
+      "community_name": "devDependencies",
       "norm_label": "@eslint/js"
     },
     {
@@ -2661,96 +2661,118 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "eslint_js",
-      "community": 10,
-      "community_name": "scripts",
+      "community": 39,
+      "community_name": "devDependencies",
       "norm_label": "@eslint/js"
+    },
+    {
+      "label": "dotenv-cli",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "package_devdependencies_dotenv_cli",
+      "community": 39,
+      "community_name": "devDependencies",
+      "norm_label": "dotenv-cli"
+    },
+    {
+      "label": "dotenv-cli",
+      "file_type": "concept",
+      "source_file": "package.json",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "dotenv_cli",
+      "community": 39,
+      "community_name": "devDependencies",
+      "norm_label": "dotenv-cli"
     },
     {
       "label": "eslint",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L24",
+      "source_location": "L25",
       "_origin": "ast",
       "id": "package_devdependencies_eslint",
-      "community": 10,
-      "community_name": "scripts",
+      "community": 39,
+      "community_name": "devDependencies",
       "norm_label": "eslint"
     },
     {
       "label": "eslint",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L24",
+      "source_location": "L25",
       "_origin": "ast",
       "id": "eslint",
-      "community": 10,
-      "community_name": "scripts",
+      "community": 39,
+      "community_name": "devDependencies",
       "norm_label": "eslint"
     },
     {
       "label": "prettier",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L25",
+      "source_location": "L26",
       "_origin": "ast",
       "id": "package_devdependencies_prettier",
-      "community": 10,
-      "community_name": "scripts",
+      "community": 39,
+      "community_name": "devDependencies",
       "norm_label": "prettier"
     },
     {
       "label": "prettier",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L25",
+      "source_location": "L26",
       "_origin": "ast",
       "id": "prettier",
-      "community": 10,
-      "community_name": "scripts",
+      "community": 39,
+      "community_name": "devDependencies",
       "norm_label": "prettier"
     },
     {
       "label": "typescript",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L26",
+      "source_location": "L27",
       "_origin": "ast",
       "id": "package_devdependencies_typescript",
-      "community": 10,
-      "community_name": "scripts",
+      "community": 39,
+      "community_name": "devDependencies",
       "norm_label": "typescript"
     },
     {
       "label": "typescript",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L26",
+      "source_location": "L27",
       "_origin": "ast",
       "id": "package_json_typescript",
-      "community": 10,
-      "community_name": "scripts",
+      "community": 39,
+      "community_name": "devDependencies",
       "norm_label": "typescript"
     },
     {
       "label": "typescript-eslint",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L27",
+      "source_location": "L28",
       "_origin": "ast",
       "id": "package_devdependencies_typescript_eslint",
-      "community": 10,
-      "community_name": "scripts",
+      "community": 39,
+      "community_name": "devDependencies",
       "norm_label": "typescript-eslint"
     },
     {
       "label": "typescript-eslint",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L27",
+      "source_location": "L28",
       "_origin": "ast",
       "id": "typescript_eslint",
-      "community": 10,
-      "community_name": "scripts",
+      "community": 39,
+      "community_name": "devDependencies",
       "norm_label": "typescript-eslint"
     },
     {
@@ -4014,8 +4036,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_ai_agent_guidelines",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 7,
+      "community_name": "Phase Plan",
       "norm_label": "ai_agent_guidelines.md"
     },
     {
@@ -4025,8 +4047,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_ai_agent_guidelines_ai_agent_guidelines",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 7,
+      "community_name": "Phase Plan",
       "norm_label": "ai agent guidelines"
     },
     {
@@ -4036,8 +4058,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "docs_ai_agent_guidelines_do_s",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 7,
+      "community_name": "Phase Plan",
       "norm_label": "do's"
     },
     {
@@ -4047,8 +4069,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "docs_ai_agent_guidelines_don_ts",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 7,
+      "community_name": "Phase Plan",
       "norm_label": "don'ts"
     },
     {
@@ -4058,8 +4080,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_database_schema",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 7,
+      "community_name": "Phase Plan",
       "norm_label": "database_schema.md"
     },
     {
@@ -4069,8 +4091,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_database_schema_database_schema",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 7,
+      "community_name": "Phase Plan",
       "norm_label": "database schema"
     },
     {
@@ -4080,8 +4102,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "docs_database_schema_overview",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 7,
+      "community_name": "Phase Plan",
       "norm_label": "overview"
     },
     {
@@ -4091,8 +4113,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "docs_database_schema_core_entities",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 7,
+      "community_name": "Phase Plan",
       "norm_label": "core entities"
     },
     {
@@ -4102,8 +4124,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "docs_database_schema_critical_rule_multi_tenancy_isolation",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 7,
+      "community_name": "Phase Plan",
       "norm_label": "\u26a0\ufe0f critical rule: multi-tenancy isolation"
     },
     {
@@ -4113,8 +4135,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "docs_database_schema_workflows",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 7,
+      "community_name": "Phase Plan",
       "norm_label": "workflows"
     },
     {
@@ -4124,8 +4146,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_folder_structure_and_architecture",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 40,
+      "community_name": "Folder Structure and Architecture",
       "norm_label": "folder_structure_and_architecture.md"
     },
     {
@@ -4135,8 +4157,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_folder_structure_and_architecture_folder_structure_and_architecture",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 40,
+      "community_name": "Folder Structure and Architecture",
       "norm_label": "folder structure and architecture"
     },
     {
@@ -4146,8 +4168,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "docs_folder_structure_and_architecture_monorepo_layout",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 40,
+      "community_name": "Folder Structure and Architecture",
       "norm_label": "monorepo layout"
     },
     {
@@ -4157,8 +4179,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "docs_folder_structure_and_architecture_applications_apps",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 40,
+      "community_name": "Folder Structure and Architecture",
       "norm_label": "applications (`apps/`)"
     },
     {
@@ -4168,8 +4190,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "docs_folder_structure_and_architecture_packages_packages",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 40,
+      "community_name": "Folder Structure and Architecture",
       "norm_label": "packages (`packages/`)"
     },
     {
@@ -4179,8 +4201,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "docs_folder_structure_and_architecture_infrastructure_infrastructure",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 40,
+      "community_name": "Folder Structure and Architecture",
       "norm_label": "infrastructure (`infrastructure/`)"
     },
     {
@@ -4190,8 +4212,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "docs_folder_structure_and_architecture_high_level_architecture_principles",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 40,
+      "community_name": "Folder Structure and Architecture",
       "norm_label": "high-level architecture principles"
     },
     {
@@ -4202,7 +4224,7 @@
       "_origin": "ast",
       "id": "docs_gitflow_and_conventions",
       "community": 0,
-      "community_name": "docs/README.md",
+      "community_name": "GitFlow and Conventions",
       "norm_label": "gitflow_and_conventions.md"
     },
     {
@@ -4213,7 +4235,7 @@
       "_origin": "ast",
       "id": "docs_gitflow_and_conventions_gitflow_and_conventions",
       "community": 0,
-      "community_name": "docs/README.md",
+      "community_name": "GitFlow and Conventions",
       "norm_label": "gitflow and conventions"
     },
     {
@@ -4224,7 +4246,7 @@
       "_origin": "ast",
       "id": "docs_gitflow_and_conventions_commit_rules_for_ai_agents",
       "community": 0,
-      "community_name": "docs/README.md",
+      "community_name": "GitFlow and Conventions",
       "norm_label": "commit rules for ai agents"
     },
     {
@@ -4235,7 +4257,7 @@
       "_origin": "ast",
       "id": "docs_gitflow_and_conventions_branching_model",
       "community": 0,
-      "community_name": "docs/README.md",
+      "community_name": "GitFlow and Conventions",
       "norm_label": "branching model"
     },
     {
@@ -4246,7 +4268,7 @@
       "_origin": "ast",
       "id": "docs_gitflow_and_conventions_commit_format_conventional_commits",
       "community": 0,
-      "community_name": "docs/README.md",
+      "community_name": "GitFlow and Conventions",
       "norm_label": "commit format (conventional commits)"
     },
     {
@@ -4257,7 +4279,7 @@
       "_origin": "ast",
       "id": "docs_gitflow_and_conventions_pull_request_standard",
       "community": 0,
-      "community_name": "docs/README.md",
+      "community_name": "GitFlow and Conventions",
       "norm_label": "pull request standard"
     },
     {
@@ -4268,7 +4290,7 @@
       "_origin": "ast",
       "id": "docs_gitflow_and_conventions_pr_title",
       "community": 0,
-      "community_name": "docs/README.md",
+      "community_name": "GitFlow and Conventions",
       "norm_label": "pr title:"
     },
     {
@@ -4279,7 +4301,7 @@
       "_origin": "ast",
       "id": "docs_gitflow_and_conventions_pr_body",
       "community": 0,
-      "community_name": "docs/README.md",
+      "community_name": "GitFlow and Conventions",
       "norm_label": "pr body:"
     },
     {
@@ -4289,8 +4311,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_infrastructure_and_cicd",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 41,
+      "community_name": "Infrastructure and CI/CD",
       "norm_label": "infrastructure_and_cicd.md"
     },
     {
@@ -4300,8 +4322,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_infrastructure_and_cicd_infrastructure_and_ci_cd",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 41,
+      "community_name": "Infrastructure and CI/CD",
       "norm_label": "infrastructure and ci/cd"
     },
     {
@@ -4311,8 +4333,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "docs_infrastructure_and_cicd_infrastructure_setup",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 41,
+      "community_name": "Infrastructure and CI/CD",
       "norm_label": "infrastructure setup"
     },
     {
@@ -4322,8 +4344,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "docs_infrastructure_and_cicd_services",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 41,
+      "community_name": "Infrastructure and CI/CD",
       "norm_label": "services"
     },
     {
@@ -4333,8 +4355,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "docs_infrastructure_and_cicd_commands",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 41,
+      "community_name": "Infrastructure and CI/CD",
       "norm_label": "commands"
     },
     {
@@ -4344,8 +4366,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "docs_infrastructure_and_cicd_environment_variables",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 41,
+      "community_name": "Infrastructure and CI/CD",
       "norm_label": "environment variables"
     },
     {
@@ -4355,8 +4377,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "docs_infrastructure_and_cicd_ci_cd_pipeline_to_be_implemented",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 41,
+      "community_name": "Infrastructure and CI/CD",
       "norm_label": "ci/cd pipeline (to be implemented)"
     },
     {
@@ -4366,8 +4388,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_readme",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 7,
+      "community_name": "Phase Plan",
       "norm_label": "docs/readme.md"
     },
     {
@@ -4377,8 +4399,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_readme_documentation_index",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 7,
+      "community_name": "Phase Plan",
       "norm_label": "documentation index"
     },
     {
@@ -4388,8 +4410,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "docs_readme_index",
-      "community": 0,
-      "community_name": "docs/README.md",
+      "community": 7,
+      "community_name": "Phase Plan",
       "norm_label": "index"
     },
     {
@@ -7315,6 +7337,17 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_devdependencies",
+      "target": "package_devdependencies_dotenv_cli",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L25",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "package_devdependencies",
       "target": "package_devdependencies_eslint",
       "confidence_score": 1.0
     },
@@ -7333,7 +7366,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L25",
+      "source_location": "L26",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_devdependencies",
@@ -7344,7 +7377,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L26",
+      "source_location": "L27",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_devdependencies",
@@ -7355,7 +7388,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L27",
+      "source_location": "L28",
       "weight": 1.0,
       "_origin": "ast",
       "source": "package_devdependencies",
@@ -7382,6 +7415,18 @@
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
+      "source": "package_devdependencies_dotenv_cli",
+      "target": "dotenv_cli",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L25",
+      "weight": 1.0,
+      "context": "import",
+      "_origin": "ast",
       "source": "package_devdependencies_eslint",
       "target": "eslint",
       "confidence_score": 1.0
@@ -7390,7 +7435,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L25",
+      "source_location": "L26",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -7402,7 +7447,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L26",
+      "source_location": "L27",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -7414,7 +7459,7 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L27",
+      "source_location": "L28",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -9138,5 +9183,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "c5f8b014a766310dcf49e05882c75839d6ce23a1"
+  "built_at_commit": "114735d8d3892fd071234758f9c83bcc8cfd58b6"
 }
