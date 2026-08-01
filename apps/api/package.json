@@ -17,7 +17,8 @@
     "cors": "^2.8.5",
     "express": "^4.21.1",
     "pino": "^9.5.0",
-    "pino-http": "^10.3.0"
+    "pino-http": "^10.3.0",
+    "svix": "^1.99.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",

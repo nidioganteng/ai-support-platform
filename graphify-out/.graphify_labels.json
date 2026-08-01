@@ -1,9 +1,9 @@
 {
-  "0": "GitFlow and Conventions",
+  "0": "docs/README.md",
   "1": "worker/package.json",
-  "2": "api/package.json",
+  "2": "dependencies",
   "3": "database/package.json",
-  "4": "server.ts",
+  "4": "app.ts",
   "5": "dependencies",
   "6": "worker/src/index.ts",
   "7": "Phase Plan",
@@ -26,7 +26,6 @@
   "24": "next.config.mjs",
   "25": "next-env.d.ts",
   "26": "tailwind.config.ts",
-  "27": "prisma.ts",
   "28": "postcss.config.mjs",
   "29": "eslint.config.mjs",
   "30": "[[...sign-up]]/page.tsx",
@@ -38,7 +37,5 @@
   "36": "knowledge-base/page.tsx",
   "37": "dashboard/page.tsx",
   "38": "settings/page.tsx",
-  "39": "devDependencies",
-  "40": "Folder Structure and Architecture",
-  "41": "Infrastructure and CI/CD"
+  "39": "devDependencies"
 }
