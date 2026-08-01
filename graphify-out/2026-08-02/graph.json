@@ -692,8 +692,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_api_src_connection",
-      "community": 4,
-      "community_name": "app.ts",
+      "community": 6,
+      "community_name": "worker/src/index.ts",
       "norm_label": "api/src/connection.ts"
     },
     {
@@ -785,6 +785,17 @@
       "norm_label": "startedat"
     },
     {
+      "label": "knowledge-sources.test.ts",
+      "file_type": "code",
+      "source_file": "apps/api/src/routes/knowledge-sources.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "apps_api_src_routes_knowledge_sources_test",
+      "community": 4,
+      "community_name": "app.ts",
+      "norm_label": "knowledge-sources.test.ts"
+    },
+    {
       "label": "knowledge-sources.ts",
       "file_type": "code",
       "source_file": "apps/api/src/routes/knowledge-sources.ts",
@@ -871,6 +882,28 @@
       "community": 4,
       "community_name": "app.ts",
       "norm_label": "getpdfqueue()"
+    },
+    {
+      "label": "WebsiteCrawlJobData",
+      "file_type": "code",
+      "source_file": "apps/api/src/routes/knowledge-sources.ts",
+      "source_location": "L115",
+      "_origin": "ast",
+      "id": "apps_api_src_routes_knowledge_sources_websitecrawljobdata",
+      "community": 4,
+      "community_name": "app.ts",
+      "norm_label": "websitecrawljobdata"
+    },
+    {
+      "label": "getWebsiteCrawlQueue()",
+      "file_type": "code",
+      "source_file": "apps/api/src/routes/knowledge-sources.ts",
+      "source_location": "L123",
+      "_origin": "ast",
+      "id": "apps_api_src_routes_knowledge_sources_getwebsitecrawlqueue",
+      "community": 4,
+      "community_name": "app.ts",
+      "norm_label": "getwebsitecrawlqueue()"
     },
     {
       "label": "webhooks.test.ts",
@@ -1613,7 +1646,7 @@
       "label": "StatusBadge()",
       "file_type": "code",
       "source_file": "apps/web/src/app/dashboard/knowledge-base/page.tsx",
-      "source_location": "L19",
+      "source_location": "L21",
       "_origin": "ast",
       "id": "apps_web_src_app_dashboard_knowledge_base_page_statusbadge",
       "community": 36,
@@ -1624,7 +1657,7 @@
       "label": "KnowledgeBasePage()",
       "file_type": "code",
       "source_file": "apps/web/src/app/dashboard/knowledge-base/page.tsx",
-      "source_location": "L38",
+      "source_location": "L40",
       "_origin": "ast",
       "id": "apps_web_src_app_dashboard_knowledge_base_page_knowledgebasepage",
       "community": 36,
@@ -6078,6 +6111,18 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/routes/knowledge-sources.test.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_api_src_routes_knowledge_sources_test",
+      "target": "apps_api_src_app",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "apps/api/src/routes/webhooks.test.ts",
       "source_location": "L3",
       "weight": 1.0,
@@ -6107,6 +6152,18 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_api_src_routes_health_test",
+      "target": "apps_api_src_app_createapp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/routes/knowledge-sources.test.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_api_src_routes_knowledge_sources_test",
       "target": "apps_api_src_app_createapp",
       "confidence_score": 1.0
     },
@@ -6218,6 +6275,18 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/routes/knowledge-sources.ts",
+      "source_location": "L125",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_api_src_routes_knowledge_sources_getwebsitecrawlqueue",
+      "target": "apps_api_src_connection_getredisconnectionoptions",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/logger.ts",
@@ -6324,6 +6393,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/routes/knowledge-sources.ts",
+      "source_location": "L123",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_api_src_routes_knowledge_sources",
+      "target": "apps_api_src_routes_knowledge_sources_getwebsitecrawlqueue",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/routes/knowledge-sources.ts",
       "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
@@ -6385,6 +6465,17 @@
       "_origin": "ast",
       "source": "apps_api_src_routes_knowledge_sources",
       "target": "apps_api_src_routes_knowledge_sources_uploads_dir",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/routes/knowledge-sources.ts",
+      "source_location": "L115",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_api_src_routes_knowledge_sources",
+      "target": "apps_api_src_routes_knowledge_sources_websitecrawljobdata",
       "confidence_score": 1.0
     },
     {
@@ -7130,7 +7221,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/app/dashboard/knowledge-base/page.tsx",
-      "source_location": "L38",
+      "source_location": "L40",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_app_dashboard_knowledge_base_page",
@@ -7152,7 +7243,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/app/dashboard/knowledge-base/page.tsx",
-      "source_location": "L19",
+      "source_location": "L21",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_app_dashboard_knowledge_base_page",
@@ -11274,5 +11365,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "d7271dba9613a6534f2cca4a99ae13613fce987c"
+  "built_at_commit": "b453785beccf4e2491d6bb0d9dbe525c30de237f"
 }

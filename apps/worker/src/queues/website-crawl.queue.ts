@@ -7,6 +7,7 @@ export interface WebsiteCrawlJobData {
   knowledgeSourceId: string;
   organizationId: string;
   url: string;
+  maxPages?: number;
 }
 
 export function createWebsiteCrawlQueue(): Queue<WebsiteCrawlJobData> {

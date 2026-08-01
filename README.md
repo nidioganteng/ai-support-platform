@@ -40,9 +40,12 @@ pnpm docker:up
 pnpm db:generate
 pnpm db:migrate
 
-# 5. Run everything (in separate terminals)
+# 5. Run all services concurrently (or individually)
+pnpm dev          # Runs API, Worker, and Web concurrently
+
+# Or run services individually in separate terminals if preferred:
 pnpm dev:api      # http://localhost:4000/health
-pnpm dev:worker   # logs a heartbeat every 30s
+pnpm dev:worker   # BullMQ background job processor
 pnpm dev:web      # http://localhost:3000
 ```
 
