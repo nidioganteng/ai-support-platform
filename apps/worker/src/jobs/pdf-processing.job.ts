@@ -29,7 +29,7 @@ export function chunkText(text: string): string[] {
   return chunks;
 }
 
-async function embedAndUpsert(
+export async function embedAndUpsert(
   chunks: string[],
   knowledgeSourceId: string,
   organizationId: string,

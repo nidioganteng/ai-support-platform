@@ -13,6 +13,11 @@ import {
   type PdfProcessingJobData,
 } from './queues/pdf-processing.queue.js';
 import { processPdfJob } from './jobs/pdf-processing.job.js';
+import {
+  WEBSITE_CRAWL_QUEUE_NAME,
+  type WebsiteCrawlJobData,
+} from './queues/website-crawl.queue.js';
+import { processWebsiteCrawlJob } from './jobs/website-crawl.job.js';
 
 const logger = pino({ level: process.env.LOG_LEVEL ?? 'info' });
 
@@ -59,15 +64,31 @@ async function main() {
     logger.error({ jobId: job?.id, err }, 'pdf-processing job failed');
   });
 
+
+  const websiteCrawlWorker = new Worker<WebsiteCrawlJobData>(
+    WEBSITE_CRAWL_QUEUE_NAME,
+    async (job) => {
+      const result = await processWebsiteCrawlJob(job);
+      logger.info({ jobId: job.id, ...result }, 'website-crawl job completed');
+      return result;
+    },
+    { connection: getRedisConnectionOptions() },
+  );
+
+  websiteCrawlWorker.on('failed', (job, err) => {
+    logger.error({ jobId: job?.id, err }, 'website-crawl job failed');
+  });
+
   logger.info(
-    'worker started, listening on queues: %s, %s',
+    'worker started, listening on queues: %s, %s, %s',
     HEARTBEAT_QUEUE_NAME,
     PDF_PROCESSING_QUEUE_NAME,
+    WEBSITE_CRAWL_QUEUE_NAME,
   );
 
   const shutdown = async () => {
     logger.info('shutting down worker...');
-    await Promise.all([worker.close(), pdfWorker.close()]);
+    await Promise.all([worker.close(), pdfWorker.close(), websiteCrawlWorker.close()]);
     await heartbeatQueue.close();
     process.exit(0);
   };
