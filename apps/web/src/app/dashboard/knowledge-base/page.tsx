@@ -95,8 +95,14 @@ export default function KnowledgeBasePage() {
       });
 
       if (!res.ok) {
-        const body = (await res.json()) as { error?: string };
-        throw new Error(body.error ?? `Upload failed (${res.status})`);
+        let msg = `Upload failed (${res.status})`;
+        try {
+          const body = (await res.json()) as { error?: string };
+          if (body.error) msg = body.error;
+        } catch {
+          // Fallback if response is not JSON
+        }
+        throw new Error(msg);
       }
 
       await fetchSources();
@@ -129,8 +135,14 @@ export default function KnowledgeBasePage() {
       });
 
       if (!res.ok) {
-        const body = (await res.json()) as { error?: string };
-        throw new Error(body.error ?? `Crawl request failed (${res.status})`);
+        let msg = `Crawl request failed (${res.status})`;
+        try {
+          const body = (await res.json()) as { error?: string };
+          if (body.error) msg = body.error;
+        } catch {
+          // Fallback if response is HTML or non-JSON
+        }
+        throw new Error(msg);
       }
 
       setWebsiteUrl('');
