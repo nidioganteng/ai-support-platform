@@ -144,13 +144,27 @@ ${contextBlock}`;
 // POST /chat
 chatRouter.post(
   '/',
-  requireOrgAuth,
   async (req: Request, res: Response) => {
-    const { orgSlug, orgId } = getAuth(req);
+    let org;
 
-    if (!orgSlug) {
-      res.status(403).json({ error: 'No active organization selected' });
-      return;
+    // Check for public API key first (Widget access)
+    const publicApiKey = req.headers['x-org-key'] as string;
+    if (publicApiKey) {
+      org = await prisma.organization.findUnique({
+        where: { publicApiKey },
+      });
+      if (!org) {
+        res.status(401).json({ error: 'Invalid API key' });
+        return;
+      }
+    } else {
+      // Fallback to Clerk Auth (Dashboard access)
+      const { userId, orgSlug, orgId } = getAuth(req);
+      if (!userId || !orgSlug) {
+        res.status(401).json({ error: 'Unauthorized or no active organization' });
+        return;
+      }
+      org = await getOrUpsertOrg(orgSlug, orgId ?? null);
     }
 
     const { message, conversationId } = req.body as {
@@ -162,8 +176,6 @@ chatRouter.post(
       res.status(400).json({ error: 'message is required' });
       return;
     }
-
-    const org = await getOrUpsertOrg(orgSlug, orgId ?? null);
 
     // Get or create conversation
     let conversation;
