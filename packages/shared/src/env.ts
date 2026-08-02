@@ -25,7 +25,10 @@ const envSchema = z.object({
   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1, 'Required'),
   CLERK_WEBHOOK_SECRET: z.string().optional(),
 
+  AI_PROVIDER: z.enum(['openai', 'anthropic', 'gemini']).default('openai'),
   OPENAI_API_KEY: z.string().optional(),
+  ANTHROPIC_API_KEY: z.string().optional(),
+  GEMINI_API_KEY: z.string().optional(),
 
   PINECONE_API_KEY: z.string().optional(),
   PINECONE_INDEX_NAME: z.string().default('support-platform'),

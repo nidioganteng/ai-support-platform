@@ -39,24 +39,58 @@ export async function runRagPipeline(
 ): Promise<{ answer: string; sources: ChatSource[] }> {
   const env = getEnv();
 
-  if (!env.OPENAI_API_KEY || !env.PINECONE_API_KEY) {
+  const provider = env.AI_PROVIDER;
+  const apiKey = provider === 'gemini' ? env.GEMINI_API_KEY : provider === 'anthropic' ? env.ANTHROPIC_API_KEY : env.OPENAI_API_KEY;
+
+  if (!apiKey || !env.PINECONE_API_KEY) {
     return {
       answer:
-        'The AI service is not configured yet. Please set OPENAI_API_KEY and PINECONE_API_KEY.',
+        'The AI service is not configured yet. Please set your AI provider API key and PINECONE_API_KEY.',
       sources: [],
     };
   }
 
-  const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY });
+  let baseURL: string | undefined = undefined;
+  let chatModel = 'gpt-4o-mini';
+  let embedModel = 'text-embedding-3-small';
+
+  if (provider === 'gemini') {
+    baseURL = 'https://generativelanguage.googleapis.com/v1beta/openai/';
+    chatModel = 'gemini-2.5-flash';
+    embedModel = 'text-embedding-004';
+  }
+  // Anthropic requires a different SDK structure or proxy for embeddings, so we just pass through for now if anthropic is set.
+
+  const openai = new OpenAI({ apiKey, baseURL });
   const pc = new Pinecone({ apiKey: env.PINECONE_API_KEY });
   const index = pc.index(env.PINECONE_INDEX_NAME);
 
   // 1. Embed the question
-  const embeddingRes = await openai.embeddings.create({
-    model: 'text-embedding-3-small',
-    input: question,
-  });
-  const questionVector = embeddingRes.data[0]?.embedding ?? [];
+  let questionVector: number[] = [];
+  
+  if (provider === 'gemini') {
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:embedContent?key=${apiKey}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'models/gemini-embedding-2',
+        content: { parts: [{ text: question }] },
+        outputDimensionality: 1536
+      })
+    });
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(`Gemini embedding failed: ${err}`);
+    }
+    const data = await res.json();
+    questionVector = data.embedding.values;
+  } else {
+    const embeddingRes = await openai.embeddings.create({
+      model: embedModel,
+      input: question,
+    });
+    questionVector = embeddingRes.data[0]?.embedding ?? [];
+  }
 
   // 2. Similarity search scoped to this organization's namespace
   const queryRes = await index.namespace(organizationId).query({
@@ -91,7 +125,7 @@ ${contextBlock}`;
 
   // 4. Generate answer
   const completion = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
+    model: chatModel,
     messages: [
       { role: 'system', content: systemPrompt },
       { role: 'user', content: question },
