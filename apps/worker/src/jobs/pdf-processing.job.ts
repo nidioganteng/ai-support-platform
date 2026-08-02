@@ -59,7 +59,7 @@ export async function embedAndUpsert(
   for (let i = 0; i < chunks.length; i += batchSize) {
     const batch = chunks.slice(i, i + batchSize);
 
-    let vectors: number[][] = [];
+    let vectors: number[][];
 
     if (provider === 'gemini') {
       const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents?key=${apiKey}`, {
@@ -78,7 +78,7 @@ export async function embedAndUpsert(
         throw new Error(`Gemini batch embedding failed: ${err}`);
       }
       const data = await res.json();
-      vectors = data.embeddings.map((e: any) => e.values);
+      vectors = data.embeddings.map((e: { values: number[] }) => e.values);
     } else {
       const embeddingRes = await openai.embeddings.create({
         model: embedModel,
