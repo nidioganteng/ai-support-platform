@@ -35,12 +35,23 @@ export async function embedAndUpsert(
   organizationId: string,
 ): Promise<boolean> {
   const env = getEnv();
-  if (!env.OPENAI_API_KEY || !env.PINECONE_API_KEY) return false;
+  const provider = env.AI_PROVIDER;
+  const apiKey = provider === 'gemini' ? env.GEMINI_API_KEY : provider === 'anthropic' ? env.ANTHROPIC_API_KEY : env.OPENAI_API_KEY;
+
+  if (!apiKey || !env.PINECONE_API_KEY) return false;
 
   const { default: OpenAI } = await import('openai');
   const { Pinecone } = await import('@pinecone-database/pinecone');
 
-  const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY });
+  let baseURL: string | undefined = undefined;
+  let embedModel = 'text-embedding-3-small';
+
+  if (provider === 'gemini') {
+    baseURL = 'https://generativelanguage.googleapis.com/v1beta/openai/';
+    embedModel = 'text-embedding-004';
+  }
+
+  const openai = new OpenAI({ apiKey, baseURL });
   const pc = new Pinecone({ apiKey: env.PINECONE_API_KEY });
   const index = pc.index(env.PINECONE_INDEX_NAME);
 
@@ -48,14 +59,37 @@ export async function embedAndUpsert(
   for (let i = 0; i < chunks.length; i += batchSize) {
     const batch = chunks.slice(i, i + batchSize);
 
-    const embeddingRes = await openai.embeddings.create({
-      model: 'text-embedding-3-small',
-      input: batch,
-    });
+    let vectors: number[][] = [];
 
-    const records = embeddingRes.data.map((item, j) => ({
+    if (provider === 'gemini') {
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents?key=${apiKey}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          requests: batch.map(text => ({
+            model: 'models/gemini-embedding-2',
+            content: { parts: [{ text }] },
+            outputDimensionality: 1536
+          }))
+        })
+      });
+      if (!res.ok) {
+        const err = await res.text();
+        throw new Error(`Gemini batch embedding failed: ${err}`);
+      }
+      const data = await res.json();
+      vectors = data.embeddings.map((e: any) => e.values);
+    } else {
+      const embeddingRes = await openai.embeddings.create({
+        model: embedModel,
+        input: batch,
+      });
+      vectors = embeddingRes.data.map(item => item.embedding);
+    }
+
+    const records = vectors.map((embeddingVector, j) => ({
       id: `${knowledgeSourceId}-chunk-${i + j}`,
-      values: item.embedding,
+      values: embeddingVector,
       metadata: {
         organizationId,
         sourceId: knowledgeSourceId,
