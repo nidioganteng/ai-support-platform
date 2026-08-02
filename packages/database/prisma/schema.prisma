@@ -16,12 +16,13 @@ datasource db {
 /// A client business using the platform. Every other tenant-scoped
 /// model hangs off Organization so data between clients never mixes.
 model Organization {
-  id        String   @id @default(cuid())
-  name      String
-  slug      String   @unique
-  plan      OrganizationPlan @default(FREE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String   @id @default(cuid())
+  name         String
+  slug         String   @unique
+  publicApiKey String?  @unique
+  plan         OrganizationPlan @default(FREE)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   memberships     Membership[]
   knowledgeSources KnowledgeSource[]

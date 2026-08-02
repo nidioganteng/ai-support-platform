@@ -1,0 +1,49 @@
+import { Router, type Request, type Response, type NextFunction } from 'express';
+import { getAuth } from '@clerk/express';
+import { prisma } from '@app/database';
+import crypto from 'crypto';
+
+export const orgRouter: Router = Router();
+
+function requireOrgAuth(req: Request, res: Response, next: NextFunction): void {
+  const { userId, orgSlug } = getAuth(req);
+  if (!userId || !orgSlug) {
+    res.status(401).json({ error: 'Unauthorized or no active organization' });
+    return;
+  }
+  next();
+}
+
+orgRouter.use(requireOrgAuth);
+
+// GET /organizations/api-key
+orgRouter.get('/api-key', async (req: Request, res: Response) => {
+  const { orgSlug } = getAuth(req);
+  const org = await prisma.organization.findUnique({
+    where: { slug: orgSlug as string },
+    select: { publicApiKey: true },
+  });
+
+  if (!org) {
+    res.status(404).json({ error: 'Organization not found' });
+    return;
+  }
+
+  res.json({ publicApiKey: org.publicApiKey });
+});
+
+// POST /organizations/api-key/generate
+orgRouter.post('/api-key/generate', async (req: Request, res: Response) => {
+  const { orgSlug } = getAuth(req);
+  
+  // Generate a random API key (e.g., ai_live_xxxxxxxxxxxxxxxx)
+  const newKey = `ai_live_${crypto.randomBytes(24).toString('hex')}`;
+
+  const updatedOrg = await prisma.organization.update({
+    where: { slug: orgSlug as string },
+    data: { publicApiKey: newKey },
+    select: { publicApiKey: true },
+  });
+
+  res.json({ publicApiKey: updatedOrg.publicApiKey });
+});
