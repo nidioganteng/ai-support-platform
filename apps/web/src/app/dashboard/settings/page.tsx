@@ -1,4 +1,3 @@
-import { Settings } from 'lucide-react';
 import { ApiKeyManager } from '@/components/dashboard/ApiKeyManager';
 
 export default function SettingsPage() {

@@ -66,7 +66,7 @@ export async function runRagPipeline(
   const index = pc.index(env.PINECONE_INDEX_NAME);
 
   // 1. Embed the question
-  let questionVector: number[] = [];
+  let questionVector: number[];
   
   if (provider === 'gemini') {
     const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:embedContent?key=${apiKey}`, {
@@ -82,7 +82,7 @@ export async function runRagPipeline(
       const err = await res.text();
       throw new Error(`Gemini embedding failed: ${err}`);
     }
-    const data = await res.json();
+    const data = (await res.json()) as { embedding: { values: number[] } };
     questionVector = data.embedding.values;
   } else {
     const embeddingRes = await openai.embeddings.create({
