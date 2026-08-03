@@ -16,7 +16,7 @@
   }
 
   // Configuration
-  const API_URL = currentScript.getAttribute('data-api-url') || 'http://localhost:8000';
+  const API_URL = currentScript.getAttribute('data-api-url') || 'http://localhost:4000';
   let conversationId = null;
 
   // Create UI Container
