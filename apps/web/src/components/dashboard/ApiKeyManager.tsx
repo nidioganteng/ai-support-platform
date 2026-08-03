@@ -18,7 +18,8 @@ export function ApiKeyManager() {
     setIsLoading(true);
     try {
       const token = await getToken();
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/organizations/api-key`, {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+      const res = await fetch(`${apiUrl}/organizations/api-key`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -38,7 +39,8 @@ export function ApiKeyManager() {
     setIsLoading(true);
     try {
       const token = await getToken();
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/organizations/api-key/generate`, {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+      const res = await fetch(`${apiUrl}/organizations/api-key/generate`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
