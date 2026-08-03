@@ -2,6 +2,7 @@ import { Router, type Request, type Response } from 'express';
 import { Webhook } from 'svix';
 import { prisma, OrganizationRole } from '@app/database';
 import { getEnv } from '@app/shared';
+import crypto from 'crypto';
 
 export const webhooksRouter: Router = Router();
 
@@ -105,10 +106,11 @@ interface ClerkUserData {
       case 'organization.updated': {
         const name = data.name as string;
         const slug = (data.slug as string) || (data.id as string);
+        const newKey = `ai_live_${crypto.randomBytes(24).toString('hex')}`;
 
         await prisma.organization.upsert({
           where: { slug },
-          create: { name, slug },
+          create: { name, slug, publicApiKey: newKey },
           update: { name },
         });
         break;
@@ -135,9 +137,10 @@ interface ClerkUserData {
           return;
         }
 
+        const newKey = `ai_live_${crypto.randomBytes(24).toString('hex')}`;
         const org = await prisma.organization.upsert({
           where: { slug: orgSlug },
-          create: { name: orgName, slug: orgSlug },
+          create: { name: orgName, slug: orgSlug, publicApiKey: newKey },
           update: { name: orgName },
         });
 

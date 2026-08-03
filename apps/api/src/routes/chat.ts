@@ -4,6 +4,7 @@ import OpenAI from 'openai';
 import { Pinecone } from '@pinecone-database/pinecone';
 import { prisma } from '@app/database';
 import { getEnv } from '@app/shared';
+import crypto from 'crypto';
 
 export const chatRouter: Router = Router();
 export const conversationsRouter: Router = Router();
@@ -18,11 +19,12 @@ function requireOrgAuth(req: Request, res: Response, next: NextFunction): void {
 }
 
 async function getOrUpsertOrg(orgSlug: string, orgId: string | null) {
-  return prisma.organization.upsert({
-    where: { slug: orgSlug },
-    create: { slug: orgSlug, name: orgId ?? orgSlug },
-    update: {},
-  });
+    const newKey = `ai_live_${crypto.randomBytes(24).toString('hex')}`;
+    return prisma.organization.upsert({
+      where: { slug: orgSlug },
+      create: { slug: orgSlug, name: orgId ?? orgSlug, publicApiKey: newKey },
+      update: {},
+    });
 }
 
 export interface ChatSource {
