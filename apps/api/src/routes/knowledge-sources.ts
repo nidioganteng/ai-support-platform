@@ -7,6 +7,7 @@ import { mkdirSync } from 'fs';
 import { Queue } from 'bullmq';
 import { prisma } from '@app/database';
 import { getRedisConnectionOptions } from '../connection.js';
+import { PLAN_LIMITS } from './billing.js';
 
 interface PdfProcessingJobData {
   knowledgeSourceId: string;
@@ -83,7 +84,18 @@ knowledgeSourcesRouter.post(
       where: { slug: orgSlug },
       create: { slug: orgSlug, name: orgId ?? orgSlug },
       update: {},
+      select: { id: true, plan: true },
     });
+
+    const sourceCount = await prisma.knowledgeSource.count({ where: { organizationId: org.id } });
+    const limit = PLAN_LIMITS[org.plan].knowledgeSources;
+    if (sourceCount >= limit) {
+      res.status(403).json({
+        error: `Knowledge source limit reached (${limit} on ${org.plan} plan). Upgrade to add more.`,
+        code: 'LIMIT_EXCEEDED',
+      });
+      return;
+    }
 
     const source = await prisma.knowledgeSource.create({
       data: {
@@ -156,7 +168,18 @@ knowledgeSourcesRouter.post(
       where: { slug: orgSlug },
       create: { slug: orgSlug, name: orgId ?? orgSlug },
       update: {},
+      select: { id: true, plan: true },
     });
+
+    const sourceCount = await prisma.knowledgeSource.count({ where: { organizationId: org.id } });
+    const limit = PLAN_LIMITS[org.plan].knowledgeSources;
+    if (sourceCount >= limit) {
+      res.status(403).json({
+        error: `Knowledge source limit reached (${limit} on ${org.plan} plan). Upgrade to add more.`,
+        code: 'LIMIT_EXCEEDED',
+      });
+      return;
+    }
 
     const source = await prisma.knowledgeSource.create({
       data: {
