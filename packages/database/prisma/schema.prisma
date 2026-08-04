@@ -1,7 +1,5 @@
-// Phase 0 schema: multi-tenant foundation only.
-// Fields specific to later phases (embeddings metadata, ticket assignment,
-// analytics rollups, Stripe subscription state, etc.) are added in the
-// phases that implement them, not stubbed out here.
+// Multi-tenant foundation schema.
+// Fields are added per phase as features land — no forward stubs.
 
 generator client {
   provider = "prisma-client-js"
@@ -24,11 +22,38 @@ model Organization {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  memberships     Membership[]
+  // Phase 5 — widget appearance & security
+  widgetPrimaryColor   String   @default("#6366f1")
+  widgetPosition       WidgetPosition @default(BOTTOM_RIGHT)
+  widgetLabel          String   @default("Chat with us")
+  allowedDomains       String[] @default([])
+
+  // Phase 6 — AI persona
+  botName              String   @default("AI Assistant")
+  botTone              BotTone  @default(PROFESSIONAL)
+  fallbackMessage      String   @default("I'm sorry, I don't have information on that. Let me connect you with a human agent.")
+
+  // Phase 6 — notification preferences
+  notifyEmail          String?
+  notifyOnHandoff      Boolean  @default(true)
+  notifyOnNewConversation Boolean @default(false)
+
+  memberships      Membership[]
   knowledgeSources KnowledgeSource[]
-  conversations   Conversation[]
+  conversations    Conversation[]
 
   @@map("organizations")
+}
+
+enum WidgetPosition {
+  BOTTOM_RIGHT
+  BOTTOM_LEFT
+}
+
+enum BotTone {
+  PROFESSIONAL
+  FRIENDLY
+  CONCISE
 }
 
 enum OrganizationPlan {
