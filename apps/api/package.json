@@ -23,6 +23,7 @@
     "openai": "^7.2.0",
     "pino": "^9.5.0",
     "pino-http": "^10.3.0",
+    "resend": "^6.18.1",
     "svix": "^1.99.1"
   },
   "devDependencies": {
