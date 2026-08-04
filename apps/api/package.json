@@ -24,6 +24,7 @@
     "pino": "^9.5.0",
     "pino-http": "^10.3.0",
     "resend": "^6.18.1",
+    "stripe": "^22.4.0",
     "svix": "^1.99.1"
   },
   "devDependencies": {
