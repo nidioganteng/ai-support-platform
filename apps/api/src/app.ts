@@ -9,6 +9,7 @@ import { knowledgeSourcesRouter } from './routes/knowledge-sources.js';
 import { chatRouter, conversationsRouter } from './routes/chat.js';
 import { orgRouter } from './routes/organizations.js';
 import { analyticsRouter } from './routes/analytics.js';
+import { billingRouter } from './routes/billing.js';
 
 export function createApp(): Express {
   const app = express();
@@ -38,6 +39,7 @@ export function createApp(): Express {
   app.use('/conversations', conversationsRouter);
   app.use('/organizations', orgRouter);
   app.use('/analytics', analyticsRouter);
+  app.use('/billing', billingRouter);
 
   // Global error handler — catches any error thrown/rejected inside route handlers
   // Prevents unhandled rejections from crashing the process
