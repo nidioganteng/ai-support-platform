@@ -38,7 +38,7 @@ export async function runRagPipeline(
   question: string,
   organizationId: string,
   orgName: string,
-): Promise<{ answer: string; sources: ChatSource[] }> {
+): Promise<{ answer: string; sources: ChatSource[]; requiresHandoff: boolean }> {
   const env = getEnv();
 
   const provider = env.AI_PROVIDER;
@@ -49,6 +49,7 @@ export async function runRagPipeline(
       answer:
         'The AI service is not configured yet. Please set your AI provider API key and PINECONE_API_KEY.',
       sources: [],
+      requiresHandoff: false,
     };
   }
 
@@ -111,11 +112,29 @@ export async function runRagPipeline(
     }))
     .filter((s) => s.text.length > 0);
 
+  const isLowConfidence = sources.length === 0;
+
+  const explicitHandoffPatterns = [
+    /talk to (a )?(human|agent|person)/i,
+    /speak to (a )?(human|agent|person)/i,
+    /live agent/i,
+    /customer (service|support)/i,
+    /bantuan manusia/i,
+    /bicara dengan (admin|operator|manusia)/i,
+    /hubungi admin/i
+  ];
+  const isExplicitRequest = explicitHandoffPatterns.some(p => p.test(question));
+
+  if (isExplicitRequest || isLowConfidence) {
+    return {
+      answer: "I'm connecting you with a human agent",
+      sources,
+      requiresHandoff: true,
+    };
+  }
+
   // 3. Assemble prompt with retrieved context
-  const contextBlock =
-    sources.length > 0
-      ? sources.map((s, i) => `[Source ${i + 1}]:\n${s.text}`).join('\n\n')
-      : 'No relevant context found in the knowledge base.';
+  const contextBlock = sources.map((s, i) => `[Source ${i + 1}]:\n${s.text}`).join('\n\n');
 
   const systemPrompt = `You are a helpful AI customer support assistant for ${orgName}.
 Answer the user's question using ONLY the context provided below.
@@ -140,7 +159,7 @@ ${contextBlock}`;
     completion.choices[0]?.message.content ??
     "I'm unable to generate a response at this time.";
 
-  return { answer, sources };
+  return { answer, sources, requiresHandoff: false };
 }
 
 // POST /chat
@@ -204,11 +223,22 @@ chatRouter.post(
       },
     });
 
+    // Check if we are already waiting for a human
+    if (conversation.status === 'PENDING_HUMAN') {
+      res.status(200).json({
+        conversationId: conversation.id,
+        message: null,
+        sources: [],
+      });
+      return;
+    }
+
     // Run RAG pipeline
     let answer: string;
     let sources: ChatSource[];
+    let requiresHandoff = false;
     try {
-      ({ answer, sources } = await runRagPipeline(
+      ({ answer, sources, requiresHandoff } = await runRagPipeline(
         message.trim(),
         org.id,
         org.name,
@@ -230,6 +260,13 @@ chatRouter.post(
         content: answer,
       },
     });
+
+    if (requiresHandoff) {
+      await prisma.conversation.update({
+        where: { id: conversation.id },
+        data: { status: 'PENDING_HUMAN' },
+      });
+    }
 
     res.status(201).json({
       conversationId: conversation.id,
