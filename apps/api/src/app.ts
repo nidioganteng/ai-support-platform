@@ -1,4 +1,4 @@
-import express, { type Express } from 'express';
+import express, { type Express, type Request, type Response, type NextFunction } from 'express';
 import cors from 'cors';
 import { pinoHttp } from 'pino-http';
 import { clerkMiddleware } from '@clerk/express';
@@ -8,6 +8,7 @@ import { webhooksRouter, type CustomRequest } from './routes/webhooks.js';
 import { knowledgeSourcesRouter } from './routes/knowledge-sources.js';
 import { chatRouter, conversationsRouter } from './routes/chat.js';
 import { orgRouter } from './routes/organizations.js';
+import { analyticsRouter } from './routes/analytics.js';
 
 export function createApp(): Express {
   const app = express();
@@ -36,6 +37,15 @@ export function createApp(): Express {
   app.use('/chat', chatRouter);
   app.use('/conversations', conversationsRouter);
   app.use('/organizations', orgRouter);
+  app.use('/analytics', analyticsRouter);
+
+  // Global error handler — catches any error thrown/rejected inside route handlers
+  // Prevents unhandled rejections from crashing the process
+  app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
+    logger.error({ err }, 'unhandled route error');
+    const message = err instanceof Error ? err.message : 'Internal server error';
+    res.status(500).json({ error: message });
+  });
 
   return app;
 }

@@ -78,8 +78,8 @@ export default function HomePage() {
         </nav>
 
         {/* Hero text — dead center */}
-        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4">
-          <div>
+        <div className="pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4">
+          <div className="pointer-events-auto">
 
           <p className="mb-5 text-[11px] font-semibold uppercase tracking-[0.2em]"
             style={{ color: '#ffffff', textShadow: '0 1px 6px rgba(0,0,0,0.5)' }}>

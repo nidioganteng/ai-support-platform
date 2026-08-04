@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import { ClerkProvider } from '@clerk/nextjs';
+import { NavigationLoader } from '@/components/NavigationLoader';
 import './globals.css';
 
 const poppins = Poppins({
@@ -24,6 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <link rel="dns-prefetch" href="https://prod.spline.design" />
         </head>
         <body className="min-h-screen bg-[#0d0d0d] text-neutral-100 antialiased font-sans">
+          <NavigationLoader />
           {children}
         </body>
       </html>

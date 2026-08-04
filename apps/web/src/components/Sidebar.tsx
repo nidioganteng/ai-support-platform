@@ -8,6 +8,7 @@ import {
   MessageSquare,
   Settings,
   LayoutDashboard,
+  BarChart2,
   ChevronLeft,
   ChevronRight,
   Zap,
@@ -18,6 +19,7 @@ const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { name: 'Knowledge Base', href: '/dashboard/knowledge-base', icon: Book },
   { name: 'Conversations', href: '/dashboard/conversations', icon: MessageSquare },
+  { name: 'Analytics', href: '/dashboard/analytics', icon: BarChart2 },
   { name: 'Settings', href: '/dashboard/settings', icon: Settings },
 ];
 
