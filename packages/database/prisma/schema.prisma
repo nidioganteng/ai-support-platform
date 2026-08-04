@@ -38,6 +38,11 @@ model Organization {
   notifyOnHandoff      Boolean  @default(true)
   notifyOnNewConversation Boolean @default(false)
 
+  // Phase 8 — Stripe billing
+  stripeCustomerId     String?  @unique
+  stripeSubscriptionId String?  @unique
+  currentPeriodEnd     DateTime?
+
   memberships      Membership[]
   knowledgeSources KnowledgeSource[]
   conversations    Conversation[]
