@@ -162,6 +162,41 @@ ${contextBlock}`;
   return { answer, sources, requiresHandoff: false };
 }
 
+// GET /chat/messages - Widget polling endpoint to fetch conversation history & agent replies
+chatRouter.get('/messages', async (req: Request, res: Response) => {
+  const publicApiKey = req.headers['x-org-key'] as string;
+  const conversationId = req.query['conversationId'] as string;
+
+  if (!publicApiKey || !conversationId) {
+    res.status(400).json({ error: 'x-org-key and conversationId are required' });
+    return;
+  }
+
+  const org = await prisma.organization.findUnique({
+    where: { publicApiKey },
+  });
+
+  if (!org) {
+    res.status(401).json({ error: 'Invalid API key' });
+    return;
+  }
+
+  const conversation = await prisma.conversation.findFirst({
+    where: { id: conversationId, organizationId: org.id },
+    include: { messages: { orderBy: { createdAt: 'asc' } } },
+  });
+
+  if (!conversation) {
+    res.status(404).json({ error: 'Conversation not found' });
+    return;
+  }
+
+  res.json({
+    status: conversation.status,
+    messages: conversation.messages,
+  });
+});
+
 // POST /chat
 chatRouter.post(
   '/',
@@ -373,3 +408,101 @@ conversationsRouter.get(
     res.json(conversation);
   },
 );
+
+// POST /conversations/:id/reply - Send message as AGENT
+conversationsRouter.post(
+  '/:id/reply',
+  requireOrgAuth,
+  async (req: Request, res: Response) => {
+    const { orgSlug, orgId } = getAuth(req);
+
+    if (!orgSlug) {
+      res.status(403).json({ error: 'No active organization selected' });
+      return;
+    }
+
+    const org = await getOrUpsertOrg(orgSlug, orgId ?? null);
+    const paramId = req.params['id'];
+    if (!paramId) {
+      res.status(400).json({ error: 'Missing id' });
+      return;
+    }
+
+    const { message } = req.body as { message?: string };
+
+    if (!message || typeof message !== 'string' || !message.trim()) {
+      res.status(400).json({ error: 'message is required' });
+      return;
+    }
+
+    const conversation = await prisma.conversation.findFirst({
+      where: { id: paramId, organizationId: org.id },
+    });
+
+    if (!conversation) {
+      res.status(404).json({ error: 'Conversation not found' });
+      return;
+    }
+
+    const agentMessage = await prisma.message.create({
+      data: {
+        conversationId: conversation.id,
+        sender: 'AGENT',
+        content: message.trim(),
+      },
+    });
+
+    // Touch conversation updatedAt
+    await prisma.conversation.update({
+      where: { id: conversation.id },
+      data: { updatedAt: new Date() },
+    });
+
+    res.status(201).json(agentMessage);
+  },
+);
+
+// PATCH /conversations/:id - Update status (RESOLVED, PENDING_HUMAN, OPEN, CLOSED)
+conversationsRouter.patch(
+  '/:id',
+  requireOrgAuth,
+  async (req: Request, res: Response) => {
+    const { orgSlug, orgId } = getAuth(req);
+
+    if (!orgSlug) {
+      res.status(403).json({ error: 'No active organization selected' });
+      return;
+    }
+
+    const org = await getOrUpsertOrg(orgSlug, orgId ?? null);
+    const paramId = req.params['id'];
+    if (!paramId) {
+      res.status(400).json({ error: 'Missing id' });
+      return;
+    }
+
+    const { status } = req.body as { status?: string };
+
+    if (!status || !['OPEN', 'PENDING_HUMAN', 'RESOLVED', 'CLOSED'].includes(status)) {
+      res.status(400).json({ error: 'Valid status is required' });
+      return;
+    }
+
+    const conversation = await prisma.conversation.findFirst({
+      where: { id: paramId, organizationId: org.id },
+    });
+
+    if (!conversation) {
+      res.status(404).json({ error: 'Conversation not found' });
+      return;
+    }
+
+    const updated = await prisma.conversation.update({
+      where: { id: paramId },
+      data: { status: status as any },
+    });
+
+    res.json(updated);
+  },
+);
+
