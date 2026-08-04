@@ -2,15 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useAuth } from '@clerk/nextjs';
-import {
-  MessageSquare,
-  Send,
-  Loader2,
-  Bot,
-  User,
-  ChevronRight,
-  BookOpen,
-} from 'lucide-react';
+import { MessageSquare, Send, Loader2, Bot, User, ChevronRight, BookOpen, Plus } from 'lucide-react';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000';
 
@@ -53,15 +45,12 @@ function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString([], { month: 'short', day: 'numeric' });
 }
 
-function StatusDot({ status }: { status: Conversation['status'] }) {
-  const colors: Record<Conversation['status'], string> = {
-    OPEN: 'bg-green-400',
-    PENDING_HUMAN: 'bg-yellow-400',
-    RESOLVED: 'bg-neutral-500',
-    CLOSED: 'bg-neutral-700',
-  };
-  return <span className={`inline-block h-2 w-2 rounded-full ${colors[status]}`} />;
-}
+const statusColors: Record<Conversation['status'], string> = {
+  OPEN: 'bg-emerald-400',
+  PENDING_HUMAN: 'bg-amber-400',
+  RESOLVED: 'bg-neutral-500',
+  CLOSED: 'bg-neutral-700',
+};
 
 export default function ConversationsPage() {
   const { getToken } = useAuth();
@@ -81,10 +70,7 @@ export default function ConversationsPage() {
     const res = await fetch(`${API_URL}/conversations`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    if (res.ok) {
-      const data = (await res.json()) as Conversation[];
-      setConversations(data);
-    }
+    if (res.ok) setConversations((await res.json()) as Conversation[]);
     setLoadingList(false);
   }, [getToken]);
 
@@ -96,84 +82,56 @@ export default function ConversationsPage() {
       const res = await fetch(`${API_URL}/conversations/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      if (res.ok) {
-        const data = (await res.json()) as ConversationDetail;
-        setDetail(data);
-      }
+      if (res.ok) setDetail((await res.json()) as ConversationDetail);
       setLoadingDetail(false);
     },
     [getToken],
   );
 
-  useEffect(() => {
-    void fetchConversations();
-  }, [fetchConversations]);
-
+  useEffect(() => { void fetchConversations(); }, [fetchConversations]);
   useEffect(() => {
     if (selectedId) void fetchDetail(selectedId);
     else setDetail(null);
   }, [selectedId, fetchDetail]);
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [detail?.messages]);
+  useEffect(() => { messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [detail?.messages]);
 
   async function handleSend(e: React.FormEvent) {
     e.preventDefault();
     if (!input.trim() || sending) return;
-
     const token = await getToken();
     if (!token) return;
-
     const userMessage = input.trim();
     setInput('');
     setSending(true);
 
-    const optimisticMsg: Message = {
-      id: `optimistic-${Date.now()}`,
+    const optimistic: Message = {
+      id: `opt-${Date.now()}`,
       conversationId: selectedId ?? '',
       sender: 'CUSTOMER',
       content: userMessage,
       createdAt: new Date().toISOString(),
     };
-
-    if (detail) {
-      setDetail((prev) =>
-        prev ? { ...prev, messages: [...prev.messages, optimisticMsg] } : prev,
-      );
-    }
+    if (detail) setDetail((p) => (p ? { ...p, messages: [...p.messages, optimistic] } : p));
 
     try {
       const res = await fetch(`${API_URL}/chat`, {
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: userMessage,
-          conversationId: selectedId ?? undefined,
-        }),
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userMessage, conversationId: selectedId ?? undefined }),
       });
-
       if (res.ok) {
         const data = (await res.json()) as {
           conversationId: string;
           message: Message;
           sources: ChatSource[];
         };
-
         if (!selectedId) {
           setSelectedId(data.conversationId);
           await fetchConversations();
         } else {
           await fetchDetail(data.conversationId);
-          if (data.sources.length > 0) {
-            setPendingSources((prev) => [
-              ...prev,
-              { messageId: data.message.id, sources: data.sources },
-            ]);
-          }
+          if (data.sources.length > 0)
+            setPendingSources((p) => [...p, { messageId: data.message.id, sources: data.sources }]);
         }
       }
     } finally {
@@ -181,56 +139,82 @@ export default function ConversationsPage() {
     }
   }
 
-  function sourcesForMessage(messageId: string): ChatSource[] {
-    return pendingSources.find((p) => p.messageId === messageId)?.sources ?? [];
-  }
+  const sourcesForMessage = (id: string) =>
+    pendingSources.find((p) => p.messageId === id)?.sources ?? [];
+
+  const inputBar = (placeholder: string) => (
+    <form
+      onSubmit={handleSend}
+      className="border-t border-white/[0.05] bg-[#0a0a0a]/60 p-4 backdrop-blur-sm"
+    >
+      <div className="flex gap-3">
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder={placeholder}
+          disabled={sending}
+          className="input-glass flex-1 rounded-xl px-4 py-2.5 text-sm"
+        />
+        <button
+          type="submit"
+          disabled={sending || !input.trim()}
+          className="btn-primary inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
+        >
+          {sending ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <Send className="h-4 w-4" />
+          )}
+        </button>
+      </div>
+    </form>
+  );
 
   return (
-    <div className="flex h-full gap-0 overflow-hidden rounded-xl border border-neutral-800">
-      {/* Left panel — conversation list */}
-      <div className="flex w-72 shrink-0 flex-col border-r border-neutral-800 bg-neutral-900/50">
-        <div className="flex items-center justify-between border-b border-neutral-800 px-4 py-3">
-          <h2 className="text-sm font-semibold text-white">Conversations</h2>
+    <div className="flex h-full overflow-hidden rounded-2xl glass animate-fade-in">
+      {/* Left panel */}
+      <div className="flex w-64 shrink-0 flex-col border-r border-white/[0.05]">
+        <div className="flex items-center justify-between border-b border-white/[0.05] px-4 py-3">
+          <span className="text-sm font-semibold text-white">Conversations</span>
           <button
             type="button"
             onClick={() => setSelectedId(null)}
-            className="rounded-lg bg-white px-3 py-1.5 text-xs font-medium text-black transition-opacity hover:bg-neutral-200"
+            className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/[0.06] text-neutral-300 transition-all hover:bg-white/[0.1]"
           >
-            New
+            <Plus className="h-3.5 w-3.5" />
           </button>
         </div>
 
         <div className="flex-1 overflow-y-auto">
           {loadingList ? (
             <div className="flex h-full items-center justify-center">
-              <Loader2 className="h-5 w-5 animate-spin text-neutral-500" />
+              <Loader2 className="h-5 w-5 animate-spin text-neutral-600" />
             </div>
           ) : conversations.length === 0 ? (
             <div className="flex h-full flex-col items-center justify-center gap-2 p-6 text-center">
-              <MessageSquare className="h-6 w-6 text-neutral-600" />
-              <p className="text-xs text-neutral-500">No conversations yet. Start one!</p>
+              <MessageSquare className="h-6 w-6 text-neutral-700" />
+              <p className="text-xs text-neutral-600">No conversations yet</p>
             </div>
           ) : (
-            <ul className="divide-y divide-neutral-800">
+            <ul className="divide-y divide-white/[0.03]">
               {conversations.map((conv) => (
                 <li key={conv.id}>
                   <button
                     type="button"
                     onClick={() => setSelectedId(conv.id)}
-                    className={`flex w-full items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-neutral-800/60 ${
-                      selectedId === conv.id ? 'bg-neutral-800' : ''
+                    className={`flex w-full items-center gap-3 px-4 py-3 text-left transition-all hover:bg-white/[0.03] ${
+                      selectedId === conv.id ? 'bg-white/[0.06]' : ''
                     }`}
                   >
-                    <StatusDot status={conv.status} />
+                    <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${statusColors[conv.status]}`} />
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-xs font-medium text-white">
-                        #{conv.id.slice(-8)}
-                      </p>
-                      <p className="text-xs text-neutral-500">
+                      <p className="truncate text-xs font-medium text-white">#{conv.id.slice(-8)}</p>
+                      <p className="text-[10px] text-neutral-600">
                         {conv._count.messages} msgs · {formatDate(conv.updatedAt)}
                       </p>
                     </div>
-                    <ChevronRight className="h-3.5 w-3.5 shrink-0 text-neutral-600" />
+                    <ChevronRight className="h-3 w-3 shrink-0 text-neutral-700" />
                   </button>
                 </li>
               ))}
@@ -239,130 +223,93 @@ export default function ConversationsPage() {
         </div>
       </div>
 
-      {/* Right panel — chat window */}
-      <div className="flex flex-1 flex-col">
+      {/* Right panel */}
+      <div className="flex flex-1 flex-col overflow-hidden">
         {!selectedId && !detail ? (
-          /* New conversation / empty state */
-          <div className="flex flex-1 flex-col">
-            <div className="border-b border-neutral-800 px-6 py-3">
-              <p className="text-sm font-medium text-white">New Conversation</p>
-              <p className="text-xs text-neutral-500">Ask a question to get started</p>
-            </div>
-            <div className="flex flex-1 flex-col items-center justify-center gap-3 p-8 text-center">
-              <div className="rounded-full bg-neutral-900 p-4">
-                <Bot className="h-8 w-8 text-neutral-400" />
+          <>
+            <div className="flex flex-1 flex-col items-center justify-center gap-4 p-8 text-center">
+              <div className="relative">
+                <div className="absolute inset-0 rounded-full bg-white/5 blur-xl" />
+                <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04]">
+                  <Bot className="h-8 w-8 text-neutral-400" />
+                </div>
               </div>
-              <p className="text-sm text-neutral-400">
-                Type a message below to start a new conversation.
-              </p>
-            </div>
-            <form
-              onSubmit={handleSend}
-              className="border-t border-neutral-800 bg-neutral-900/50 p-4"
-            >
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Type a message…"
-                  disabled={sending}
-                  className="flex-1 rounded-lg border border-neutral-800 bg-neutral-950 px-4 py-2.5 text-sm text-white placeholder-neutral-500 focus:border-neutral-600 focus:outline-none"
-                />
-                <button
-                  type="submit"
-                  disabled={sending || !input.trim()}
-                  className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2.5 text-sm font-medium text-black transition-opacity hover:bg-neutral-200 disabled:opacity-50"
-                >
-                  {sending ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <Send className="h-4 w-4" />
-                  )}
-                </button>
+              <div>
+                <p className="text-sm font-medium text-white">Start a new conversation</p>
+                <p className="mt-1 text-xs text-neutral-600">Type a message below to get started</p>
               </div>
-            </form>
-          </div>
+            </div>
+            {inputBar('Type a message…')}
+          </>
         ) : loadingDetail ? (
           <div className="flex flex-1 items-center justify-center">
-            <Loader2 className="h-6 w-6 animate-spin text-neutral-500" />
+            <Loader2 className="h-6 w-6 animate-spin text-neutral-600" />
           </div>
         ) : detail ? (
-          <div className="flex flex-1 flex-col overflow-hidden">
-            {/* Header */}
-            <div className="flex items-center gap-3 border-b border-neutral-800 px-6 py-3">
-              <StatusDot status={detail.status} />
+          <>
+            <div className="flex items-center gap-3 border-b border-white/[0.05] px-5 py-3">
+              <span className={`h-2 w-2 rounded-full ${statusColors[detail.status]}`} />
               <div>
                 <p className="text-sm font-medium text-white">#{detail.id.slice(-8)}</p>
-                <p className="text-xs text-neutral-500 capitalize">
+                <p className="text-xs capitalize text-neutral-600">
                   {detail.status.toLowerCase().replace('_', ' ')}
                 </p>
               </div>
             </div>
 
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto px-6 py-4">
-              <div className="flex flex-col gap-4">
+            <div className="flex-1 overflow-y-auto px-5 py-5">
+              <div className="flex flex-col gap-5">
                 {detail.messages.map((msg) => {
                   const isAI = msg.sender === 'AI';
                   const isCustomer = msg.sender === 'CUSTOMER';
                   const sources = isAI ? sourcesForMessage(msg.id) : [];
 
                   return (
-                    <div
-                      key={msg.id}
-                      className={`flex gap-3 ${isCustomer ? 'flex-row-reverse' : 'flex-row'}`}
-                    >
+                    <div key={msg.id} className={`flex gap-3 ${isCustomer ? 'flex-row-reverse' : ''}`}>
                       <div
                         className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${
-                          isAI
-                            ? 'bg-blue-500/20'
-                            : isCustomer
-                              ? 'bg-neutral-700'
-                              : 'bg-purple-500/20'
+                          isAI ? 'bg-white/[0.06]' : 'bg-white/10'
                         }`}
                       >
                         {isAI ? (
-                          <Bot className="h-4 w-4 text-blue-400" />
+                          <Bot className="h-3.5 w-3.5 text-neutral-400" />
                         ) : (
-                          <User className="h-4 w-4 text-neutral-300" />
+                          <User className="h-3.5 w-3.5 text-neutral-300" />
                         )}
                       </div>
 
                       <div
-                        className={`flex max-w-[75%] flex-col gap-1 ${isCustomer ? 'items-end' : 'items-start'}`}
+                        className={`flex max-w-[72%] flex-col gap-1.5 ${isCustomer ? 'items-end' : 'items-start'}`}
                       >
                         <div
                           className={`rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
                             isCustomer
-                              ? 'rounded-tr-sm bg-white text-black'
-                              : 'rounded-tl-sm bg-neutral-800 text-neutral-100'
+                              ? 'rounded-tr-sm bg-white text-black shadow-glass'
+                              : 'rounded-tl-sm glass text-neutral-100'
                           }`}
                         >
                           {msg.content}
                         </div>
 
                         {sources.length > 0 && (
-                          <div className="mt-1 flex flex-col gap-1.5">
+                          <div className="flex w-full flex-col gap-1.5">
                             {sources.map((src, i) => (
                               <div
                                 key={`${src.sourceId}-${src.chunkIndex}`}
-                                className="flex items-start gap-1.5 rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-2 text-xs text-neutral-400"
+                                className="flex items-start gap-2 rounded-xl glass px-3 py-2 text-xs text-neutral-400"
                               >
                                 <BookOpen className="mt-0.5 h-3 w-3 shrink-0 text-neutral-500" />
                                 <span>
-                                  <span className="font-medium text-neutral-300">
-                                    Source {i + 1}
-                                  </span>{' '}
-                                  — {src.text.slice(0, 120)}
-                                  {src.text.length > 120 ? '…' : ''}
+                                  <span className="font-medium text-neutral-300">Source {i + 1}</span>{' '}
+                                  — {src.text.slice(0, 110)}
+                                  {src.text.length > 110 ? '…' : ''}
                                 </span>
                               </div>
                             ))}
                           </div>
                         )}
 
-                        <p className="text-xs text-neutral-600">{formatTime(msg.createdAt)}</p>
+                        <p className="text-[10px] text-neutral-700">{formatTime(msg.createdAt)}</p>
                       </div>
                     </div>
                   );
@@ -370,51 +317,28 @@ export default function ConversationsPage() {
 
                 {sending && (
                   <div className="flex gap-3">
-                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-500/20">
-                      <Bot className="h-4 w-4 text-blue-400" />
+                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/[0.06]">
+                      <Bot className="h-3.5 w-3.5 text-neutral-400" />
                     </div>
-                    <div className="rounded-2xl rounded-tl-sm bg-neutral-800 px-4 py-2.5">
+                    <div className="rounded-2xl rounded-tl-sm glass px-4 py-3">
                       <div className="flex gap-1">
-                        <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-neutral-500 [animation-delay:0ms]" />
-                        <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-neutral-500 [animation-delay:150ms]" />
-                        <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-neutral-500 [animation-delay:300ms]" />
+                        {[0, 150, 300].map((delay) => (
+                          <span
+                            key={delay}
+                            className="h-1.5 w-1.5 animate-bounce rounded-full bg-neutral-500"
+                            style={{ animationDelay: `${delay}ms` }}
+                          />
+                        ))}
                       </div>
                     </div>
                   </div>
                 )}
-
                 <div ref={messagesEndRef} />
               </div>
             </div>
 
-            {/* Input */}
-            <form
-              onSubmit={handleSend}
-              className="border-t border-neutral-800 bg-neutral-900/50 p-4"
-            >
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Reply…"
-                  disabled={sending}
-                  className="flex-1 rounded-lg border border-neutral-800 bg-neutral-950 px-4 py-2.5 text-sm text-white placeholder-neutral-500 focus:border-neutral-600 focus:outline-none"
-                />
-                <button
-                  type="submit"
-                  disabled={sending || !input.trim()}
-                  className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2.5 text-sm font-medium text-black transition-opacity hover:bg-neutral-200 disabled:opacity-50"
-                >
-                  {sending ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <Send className="h-4 w-4" />
-                  )}
-                </button>
-              </div>
-            </form>
-          </div>
+            {inputBar('Reply…')}
+          </>
         ) : null}
       </div>
     </div>
