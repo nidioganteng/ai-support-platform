@@ -34,10 +34,17 @@ export interface ChatSource {
   score: number;
 }
 
+export interface OrgPersona {
+  botName: string;
+  botTone: string;
+  fallbackMessage: string;
+}
+
 export async function runRagPipeline(
   question: string,
   organizationId: string,
   orgName: string,
+  persona?: OrgPersona,
 ): Promise<{ answer: string; sources: ChatSource[]; requiresHandoff: boolean }> {
   const env = getEnv();
 
@@ -127,7 +134,7 @@ export async function runRagPipeline(
 
   if (isExplicitRequest || isLowConfidence) {
     return {
-      answer: "I'm connecting you with a human agent",
+      answer: persona?.fallbackMessage ?? "I'm connecting you with a human agent",
       sources,
       requiresHandoff: true,
     };
@@ -136,10 +143,19 @@ export async function runRagPipeline(
   // 3. Assemble prompt with retrieved context
   const contextBlock = sources.map((s, i) => `[Source ${i + 1}]:\n${s.text}`).join('\n\n');
 
-  const systemPrompt = `You are a helpful AI customer support assistant for ${orgName}.
+  const botName = persona?.botName ?? 'AI Assistant';
+  const toneInstruction =
+    persona?.botTone === 'FRIENDLY'
+      ? 'Be warm, approachable, and friendly in tone.'
+      : persona?.botTone === 'CONCISE'
+        ? 'Be as brief and direct as possible. Avoid filler words.'
+        : 'Be professional and clear.';
+
+  const systemPrompt = `You are ${botName}, an AI customer support assistant for ${orgName}.
+${toneInstruction}
 Answer the user's question using ONLY the context provided below.
 If the answer is not in the context, say: "I don't have information about that in my knowledge base."
-Never make up information. Be concise. Cite sources by referencing [Source N] when relevant.
+Never make up information. Cite sources by referencing [Source N] when relevant.
 
 Context:
 ${contextBlock}`;
@@ -213,6 +229,19 @@ chatRouter.post(
         res.status(401).json({ error: 'Invalid API key' });
         return;
       }
+
+      // Enforce allowed domains whitelist (skip if no domains configured)
+      if (org.allowedDomains.length > 0) {
+        const origin = req.headers['origin'] ?? '';
+        const hostname = origin.replace(/^https?:\/\//, '').split(':')[0] ?? '';
+        const allowed = org.allowedDomains.some(
+          (d) => hostname === d || hostname.endsWith(`.${d}`),
+        );
+        if (!allowed) {
+          res.status(403).json({ error: 'Origin not allowed' });
+          return;
+        }
+      }
     } else {
       // Fallback to Clerk Auth (Dashboard access)
       const { userId, orgSlug, orgId } = getAuth(req);
@@ -277,6 +306,11 @@ chatRouter.post(
         message.trim(),
         org.id,
         org.name,
+        {
+          botName: org.botName,
+          botTone: org.botTone,
+          fallbackMessage: org.fallbackMessage,
+        },
       ));
     } catch (ragErr) {
       const msg = ragErr instanceof Error ? ragErr.message : String(ragErr);
@@ -302,19 +336,11 @@ chatRouter.post(
         data: { status: 'PENDING_HUMAN' },
       });
 
-      // ponytail: fire-and-forget email to admins/owners — no separate job
+      // fire-and-forget email notification — respects org notification preferences
       const env = getEnv();
-      if (env.RESEND_API_KEY) {
+      if (env.RESEND_API_KEY && org.notifyOnHandoff) {
         const { Resend } = await import('resend');
         const resend = new Resend(env.RESEND_API_KEY);
-
-        const admins = await prisma.membership.findMany({
-          where: {
-            organizationId: org.id,
-            role: { in: ['OWNER', 'ADMIN'] },
-          },
-          include: { user: true },
-        });
 
         const firstMsg = await prisma.message.findFirst({
           where: { conversationId: conversation.id, sender: 'CUSTOMER' },
@@ -324,10 +350,22 @@ chatRouter.post(
         const ticketUrl = `${env.NEXT_PUBLIC_API_URL?.replace(':4000', ':3000') ?? 'http://localhost:3000'}/dashboard/conversations?id=${conversation.id}`;
         const customerInfo = conversation.customerEmail ?? 'Anonymous visitor';
 
-        for (const m of admins) {
+        // Use org notifyEmail if set, otherwise fall back to all admins/owners
+        const recipients: string[] = [];
+        if (org.notifyEmail) {
+          recipients.push(org.notifyEmail);
+        } else {
+          const admins = await prisma.membership.findMany({
+            where: { organizationId: org.id, role: { in: ['OWNER', 'ADMIN'] } },
+            include: { user: true },
+          });
+          recipients.push(...admins.map((m) => m.user.email));
+        }
+
+        for (const to of recipients) {
           resend.emails.send({
             from: 'AI Support <onboarding@resend.dev>',
-            to: m.user.email,
+            to,
             subject: `New ticket: customer needs human help`,
             html: `<h2>New Support Ticket</h2>
               <p><strong>Customer:</strong> ${customerInfo}</p>
