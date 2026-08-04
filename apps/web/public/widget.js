@@ -88,7 +88,7 @@
       gap: 12px;
       background-color: #f9fafb;
     }
-    .ai-msg, .user-msg {
+    .ai-msg, .user-msg, .agent-msg {
       max-width: 80%;
       padding: 10px 14px;
       border-radius: 8px;
@@ -99,6 +99,12 @@
       align-self: flex-start;
       background-color: #e5e7eb;
       color: #111827;
+      border-bottom-left-radius: 0;
+    }
+    .agent-msg {
+      align-self: flex-start;
+      background-color: #7c3aed;
+      color: white;
       border-bottom-left-radius: 0;
     }
     .user-msg {
@@ -201,10 +207,13 @@
   btn.addEventListener('click', toggleWindow);
   closeBtn.addEventListener('click', toggleWindow);
 
+  const renderedMsgIds = new Set();
+
   // Add Message to UI
-  const appendMessage = (text, sender) => {
+  const appendMessage = (text, sender, id = null) => {
+    if (id) renderedMsgIds.add(id);
     const msgDiv = document.createElement('div');
-    msgDiv.className = sender === 'user' ? 'user-msg' : 'ai-msg';
+    msgDiv.className = sender === 'user' ? 'user-msg' : sender === 'agent' ? 'agent-msg' : 'ai-msg';
     msgDiv.textContent = text;
     messagesDiv.appendChild(msgDiv);
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
@@ -223,6 +232,34 @@
     const loader = document.getElementById('ai-loading-indicator');
     if (loader) loader.remove();
   };
+
+  // Poll for new messages (e.g. Agent replies)
+  const pollMessages = async () => {
+    if (!conversationId) return;
+    try {
+      const response = await fetch(`${API_URL}/chat/messages?conversationId=${conversationId}`, {
+        headers: { 'x-org-key': orgKey }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        if (data.messages && Array.isArray(data.messages)) {
+          data.messages.forEach(msg => {
+            if (!renderedMsgIds.has(msg.id)) {
+              if (msg.sender !== 'CUSTOMER') {
+                appendMessage(msg.content, msg.sender === 'AGENT' ? 'agent' : 'ai', msg.id);
+              } else {
+                renderedMsgIds.add(msg.id);
+              }
+            }
+          });
+        }
+      }
+    } catch (err) {
+      // silent poll failure
+    }
+  };
+
+  setInterval(pollMessages, 2500);
 
   // Send Message API Call
   const sendMessage = async () => {
@@ -253,9 +290,11 @@
       removeLoading();
 
       if (response.ok) {
-        appendMessage(data.message.content, 'ai');
+        if (data.message && data.message.content) {
+          appendMessage(data.message.content, 'ai', data.message.id);
+        }
         if (data.conversationId) {
-          conversationId = data.conversationId; // store if backend returns it
+          conversationId = data.conversationId;
         }
       } else {
         appendMessage('Sorry, an error occurred: ' + (data.error || 'Unknown error'), 'ai');
