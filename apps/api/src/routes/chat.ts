@@ -266,6 +266,42 @@ chatRouter.post(
         where: { id: conversation.id },
         data: { status: 'PENDING_HUMAN' },
       });
+
+      // ponytail: fire-and-forget email to admins/owners — no separate job
+      const env = getEnv();
+      if (env.RESEND_API_KEY) {
+        const { Resend } = await import('resend');
+        const resend = new Resend(env.RESEND_API_KEY);
+
+        const admins = await prisma.membership.findMany({
+          where: {
+            organizationId: org.id,
+            role: { in: ['OWNER', 'ADMIN'] },
+          },
+          include: { user: true },
+        });
+
+        const firstMsg = await prisma.message.findFirst({
+          where: { conversationId: conversation.id, sender: 'CUSTOMER' },
+          orderBy: { createdAt: 'asc' },
+        });
+
+        const ticketUrl = `${env.NEXT_PUBLIC_API_URL?.replace(':4000', ':3000') ?? 'http://localhost:3000'}/dashboard/conversations?id=${conversation.id}`;
+        const customerInfo = conversation.customerEmail ?? 'Anonymous visitor';
+
+        for (const m of admins) {
+          resend.emails.send({
+            from: 'AI Support <onboarding@resend.dev>',
+            to: m.user.email,
+            subject: `New ticket: customer needs human help`,
+            html: `<h2>New Support Ticket</h2>
+              <p><strong>Customer:</strong> ${customerInfo}</p>
+              <p><strong>First message:</strong></p>
+              <blockquote>${firstMsg?.content ?? '(no message)'}</blockquote>
+              <p><a href="${ticketUrl}">View ticket in dashboard →</a></p>`,
+          }).catch((err: unknown) => console.error('Resend email failed:', err));
+        }
+      }
     }
 
     res.status(201).json({
