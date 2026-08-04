@@ -4,6 +4,7 @@ import OpenAI from 'openai';
 import { Pinecone } from '@pinecone-database/pinecone';
 import { prisma } from '@app/database';
 import { getEnv } from '@app/shared';
+import { PLAN_LIMITS } from './billing.js';
 import crypto from 'crypto';
 
 export const chatRouter: Router = Router();
@@ -273,6 +274,23 @@ chatRouter.post(
         return;
       }
     } else {
+      // Enforce monthly conversation limit
+      const startOfMonth = new Date();
+      startOfMonth.setDate(1);
+      startOfMonth.setHours(0, 0, 0, 0);
+
+      const convCount = await prisma.conversation.count({
+        where: { organizationId: org.id, createdAt: { gte: startOfMonth } },
+      });
+      const limit = PLAN_LIMITS[org.plan].conversationsPerMonth;
+      if (convCount >= limit) {
+        res.status(403).json({
+          error: `Monthly conversation limit reached (${limit} on ${org.plan} plan). Upgrade to continue.`,
+          code: 'LIMIT_EXCEEDED',
+        });
+        return;
+      }
+
       conversation = await prisma.conversation.create({
         data: { organizationId: org.id, status: 'OPEN' },
       });
