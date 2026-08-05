@@ -3,6 +3,7 @@ import { Webhook } from 'svix';
 import Stripe from 'stripe';
 import { prisma, OrganizationRole } from '@app/database';
 import { getEnv } from '@app/shared';
+import { logger } from '../logger.js';
 import crypto from 'crypto';
 
 export const webhooksRouter: Router = Router();
@@ -220,20 +221,28 @@ webhooksRouter.post('/stripe', async (req: CustomRequest, res: Response) => {
   }
 
   try {
+    logger.info({ type: event.type }, 'stripe webhook received');
+
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session;
         const orgId = session.metadata?.['orgId'];
-        if (!orgId || !session.subscription) break;
+        const subscriptionId = typeof session.subscription === 'string'
+          ? session.subscription
+          : (session.subscription as Stripe.Subscription | null)?.id ?? null;
 
-        const subscription = await stripe.subscriptions.retrieve(session.subscription as string);
+        logger.info({ orgId, subscriptionId }, 'checkout.session.completed');
+
+        if (!orgId || !subscriptionId) break;
+
+        const subscription = await stripe.subscriptions.retrieve(subscriptionId);
         const priceId = subscription.items.data[0]?.price.id;
-        const env2 = getEnv();
+        logger.info({ priceId, subscriptionId: subscription.id }, 'subscription retrieved');
 
+        const env2 = getEnv();
         let plan: 'PRO' | 'ENTERPRISE' = 'PRO';
         if (priceId === env2.STRIPE_ENTERPRISE_PRICE_ID) plan = 'ENTERPRISE';
 
-        // billing_cycle_anchor is the next renewal timestamp in Stripe SDK v22
         const periodEnd = (subscription as unknown as Record<string, unknown>)['current_period_end'];
         const currentPeriodEnd = typeof periodEnd === 'number' ? new Date(periodEnd * 1000) : null;
 
@@ -241,6 +250,7 @@ webhooksRouter.post('/stripe', async (req: CustomRequest, res: Response) => {
           where: { id: orgId },
           data: { plan, stripeSubscriptionId: subscription.id, currentPeriodEnd },
         });
+        logger.info({ orgId, plan }, 'organization plan updated');
         break;
       }
 
@@ -280,7 +290,8 @@ webhooksRouter.post('/stripe', async (req: CustomRequest, res: Response) => {
     }
 
     res.status(200).json({ received: true });
-  } catch {
+  } catch (err) {
+    logger.error({ err }, 'stripe webhook handler error');
     res.status(500).json({ error: 'Failed to process Stripe webhook' });
   }
 });
