@@ -96,13 +96,13 @@ billingRouter.post('/create-checkout', asyncHandler(async (req: Request, res: Re
   const stripe = getStripe();
 
   // Reuse or create Stripe customer
-  let customerId = org.stripeCustomerId ?? undefined;
+  let customerId = org.stripeCustomerId;
   if (!customerId) {
     const customer = await stripe.customers.create({ metadata: { orgId: org.id, orgSlug: orgSlug as string } });
     customerId = customer.id;
     await prisma.organization.update({
       where: { id: org.id },
-      data: { stripeCustomerId: customerId },
+      data: { stripeCustomerId: customer.id },
     });
   }
 
