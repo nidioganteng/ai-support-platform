@@ -16,6 +16,7 @@ import {
   CheckCircle2,
   AlertCircle,
   RotateCcw,
+  Sparkles,
 } from 'lucide-react';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000';
@@ -90,6 +91,8 @@ export default function ConversationsPage() {
   const [loadingDetail, setLoadingDetail] = useState(false);
   const [filterTab, setFilterTab] = useState<FilterTab>('ALL');
   const [pendingSources, setPendingSources] = useState<PendingSource[]>([]);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [loadingSuggestions, setLoadingSuggestions] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const fetchConversations = useCallback(async () => {
@@ -126,8 +129,28 @@ export default function ConversationsPage() {
 
   useEffect(() => {
     if (selectedId) void fetchDetail(selectedId, true);
-    else setDetail(null);
+    else { setDetail(null); setSuggestions([]); }
   }, [selectedId, fetchDetail]);
+
+  useEffect(() => {
+    if (!detail || detail.status !== 'PENDING_HUMAN') { setSuggestions([]); return; }
+    const load = async () => {
+      setLoadingSuggestions(true);
+      try {
+        const token = await getToken();
+        const res = await fetch(`${API_URL}/conversations/${detail.id}/suggestions`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (res.ok) {
+          const data = (await res.json()) as { suggestions: string[] };
+          setSuggestions(data.suggestions);
+        }
+      } finally {
+        setLoadingSuggestions(false);
+      }
+    };
+    void load();
+  }, [detail?.id, detail?.status]);
 
   // Polling for real-time updates from user (every 2.5s)
   useEffect(() => {
@@ -242,33 +265,51 @@ export default function ConversationsPage() {
     return true;
   });
 
-  const inputBar = (placeholder: string) => (
-    <form
-      onSubmit={handleSend}
-      className="border-t border-white/[0.05] bg-[#0a0a0a]/60 p-4 backdrop-blur-sm"
-    >
-      <div className="flex gap-3">
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder={placeholder}
-          disabled={sending}
-          className="input-glass flex-1 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500/50"
-        />
-        <button
-          type="submit"
-          disabled={sending || !input.trim()}
-          className="btn-primary inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-all"
-        >
-          {sending ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
+  const inputBar = (placeholder: string, showSuggestions = false) => (
+    <div className="border-t border-white/[0.05] bg-[#0a0a0a]/60 backdrop-blur-sm">
+      {showSuggestions && (suggestions.length > 0 || loadingSuggestions) && (
+        <div className="flex items-center gap-2 overflow-x-auto px-4 pt-3 pb-1 scrollbar-none">
+          <Sparkles className="h-3.5 w-3.5 shrink-0 text-indigo-400" />
+          {loadingSuggestions ? (
+            <span className="text-xs text-neutral-600 italic">Generating suggestions…</span>
           ) : (
-            <Send className="h-4 w-4" />
+            suggestions.map((s, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setInput(s)}
+                className="shrink-0 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-3 py-1 text-xs text-indigo-300 transition-colors hover:bg-indigo-500/20 hover:border-indigo-400/50"
+              >
+                {s.length > 60 ? s.slice(0, 60) + '…' : s}
+              </button>
+            ))
           )}
-        </button>
-      </div>
-    </form>
+        </div>
+      )}
+      <form onSubmit={handleSend} className="p-4">
+        <div className="flex gap-3">
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder={placeholder}
+            disabled={sending}
+            className="input-glass flex-1 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500/50"
+          />
+          <button
+            type="submit"
+            disabled={sending || !input.trim()}
+            className="btn-primary inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-all"
+          >
+            {sending ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Send className="h-4 w-4" />
+            )}
+          </button>
+        </div>
+      </form>
+    </div>
   );
 
   return (
@@ -565,7 +606,7 @@ export default function ConversationsPage() {
               </div>
             </div>
 
-            {inputBar('Reply to customer as Support Agent…')}
+            {inputBar('Reply to customer as Support Agent…', detail.status === 'PENDING_HUMAN')}
           </>
         ) : null}
       </div>
