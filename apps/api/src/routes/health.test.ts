@@ -8,6 +8,16 @@ vi.mock('@clerk/express', () => ({
   getAuth: () => ({ userId: null, orgSlug: null }),
 }));
 
+vi.mock('stripe', () => ({
+  default: vi.fn().mockImplementation(() => ({})),
+}));
+
+vi.mock('resend', () => ({
+  Resend: vi.fn().mockImplementation(() => ({
+    emails: { send: vi.fn().mockResolvedValue({ id: 'email_1' }) },
+  })),
+}));
+
 describe('GET /health', () => {
   it('returns 200 with an ok status payload', async () => {
     const app = createApp();
