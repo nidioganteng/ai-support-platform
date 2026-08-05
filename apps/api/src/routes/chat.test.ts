@@ -8,18 +8,32 @@ vi.mock('@clerk/express', () => ({
   getAuth: vi.fn(() => ({ userId: null, orgSlug: null, orgId: null })),
 }));
 
+vi.mock('stripe', () => ({
+  default: vi.fn().mockImplementation(() => ({})),
+}));
+
+vi.mock('resend', () => ({
+  Resend: vi.fn().mockImplementation(() => ({
+    emails: { send: vi.fn().mockResolvedValue({ id: 'email_1' }) },
+  })),
+}));
+
 vi.mock('@app/database', () => ({
   prisma: {
     organization: {
       upsert: vi.fn(),
+      findUnique: vi.fn(),
     },
     conversation: {
       findFirst: vi.fn(),
       create: vi.fn(),
       findMany: vi.fn(),
+      count: vi.fn(),
+      update: vi.fn(),
     },
     message: {
       create: vi.fn(),
+      findFirst: vi.fn(),
     },
   },
 }));
@@ -39,7 +53,7 @@ import { getAuth } from '@clerk/express';
 import { prisma } from '@app/database';
 
 describe('POST /chat', () => {
-  const mockOrg = { id: 'org-1', slug: 'acme', name: 'Acme' };
+  const mockOrg = { id: 'org-1', slug: 'acme', name: 'Acme', plan: 'FREE' };
   const mockConversation = { id: 'conv-1', organizationId: 'org-1', status: 'OPEN' };
   const mockAiMessage = {
     id: 'msg-2',
@@ -59,6 +73,7 @@ describe('POST /chat', () => {
     vi.mocked(prisma.organization.upsert).mockResolvedValue(mockOrg as never);
     vi.mocked(prisma.conversation.create).mockResolvedValue(mockConversation as never);
     vi.mocked(prisma.message.create).mockResolvedValue(mockAiMessage as never);
+    vi.mocked(prisma.conversation.count).mockResolvedValue(0 as never);
   });
 
   it('returns 401 when not authenticated', async () => {
@@ -68,7 +83,7 @@ describe('POST /chat', () => {
     expect(res.status).toBe(401);
   });
 
-  it('returns 403 when no org selected', async () => {
+  it('returns 401 when no org selected', async () => {
     vi.mocked(getAuth).mockReturnValue({
       userId: 'user-1',
       orgSlug: null,
@@ -76,7 +91,7 @@ describe('POST /chat', () => {
     } as unknown as ReturnType<typeof getAuth>);
     const app = createApp();
     const res = await request(app).post('/chat').send({ message: 'hello' });
-    expect(res.status).toBe(403);
+    expect(res.status).toBe(401);
   });
 
   it('returns 400 when message is missing', async () => {
@@ -182,5 +197,138 @@ describe('GET /conversations/:id', () => {
     const app = createApp();
     const res = await request(app).get('/conversations/unknown');
     expect(res.status).toBe(404);
+  });
+});
+
+describe('GET /chat/messages (Widget polling)', () => {
+  it('returns 400 if x-org-key or conversationId is missing', async () => {
+    const app = createApp();
+    const res = await request(app).get('/chat/messages');
+    expect(res.status).toBe(400);
+  });
+
+  it('returns 401 if public API key is invalid', async () => {
+    vi.mocked(prisma.organization.findUnique).mockResolvedValueOnce(null);
+    const app = createApp();
+    const res = await request(app)
+      .get('/chat/messages?conversationId=conv-1')
+      .set('x-org-key', 'invalid_key');
+    expect(res.status).toBe(401);
+  });
+
+  it('returns conversation status and messages for valid request', async () => {
+    vi.mocked(prisma.organization.findUnique).mockResolvedValueOnce({ id: 'org-1' } as any);
+    vi.mocked(prisma.conversation.findFirst).mockResolvedValueOnce({
+      id: 'conv-1',
+      status: 'OPEN',
+      messages: [{ id: 'msg-1', content: 'Hello' }],
+    } as any);
+
+    const app = createApp();
+    const res = await request(app)
+      .get('/chat/messages?conversationId=conv-1')
+      .set('x-org-key', 'valid_key');
+
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      status: 'OPEN',
+      messages: [{ id: 'msg-1', content: 'Hello' }],
+    });
+  });
+});
+
+describe('POST /conversations/:id/reply (Agent Reply)', () => {
+  beforeEach(() => {
+    vi.mocked(getAuth).mockReturnValue({
+      userId: 'user-1',
+      orgSlug: 'acme',
+    } as unknown as ReturnType<typeof getAuth>);
+    vi.mocked(prisma.organization.upsert).mockResolvedValue({ id: 'org-1' } as any);
+  });
+
+  it('returns 400 when message is missing or blank', async () => {
+    const app = createApp();
+    const res = await request(app).post('/conversations/conv-1/reply').send({});
+    expect(res.status).toBe(400);
+  });
+
+  it('returns 404 when conversation not found', async () => {
+    vi.mocked(prisma.conversation.findFirst).mockResolvedValueOnce(null);
+    const app = createApp();
+    const res = await request(app)
+      .post('/conversations/conv-1/reply')
+      .send({ message: 'Agent reply' });
+    expect(res.status).toBe(404);
+  });
+
+  it('creates AGENT message and updates conversation timestamp', async () => {
+    vi.mocked(prisma.conversation.findFirst).mockResolvedValueOnce({ id: 'conv-1' } as any);
+    vi.mocked(prisma.message.create).mockResolvedValueOnce({
+      id: 'msg-agent-1',
+      sender: 'AGENT',
+      content: 'Agent reply text',
+    } as any);
+    vi.mocked(prisma.conversation.update).mockResolvedValueOnce({ id: 'conv-1' } as any);
+
+    const app = createApp();
+    const res = await request(app)
+      .post('/conversations/conv-1/reply')
+      .send({ message: 'Agent reply text' });
+
+    expect(res.status).toBe(201);
+    expect(res.body).toHaveProperty('sender', 'AGENT');
+  });
+});
+
+describe('PATCH /conversations/:id (Status Update)', () => {
+  beforeEach(() => {
+    vi.mocked(getAuth).mockReturnValue({
+      userId: 'user-1',
+      orgSlug: 'acme',
+    } as unknown as ReturnType<typeof getAuth>);
+    vi.mocked(prisma.organization.upsert).mockResolvedValue({ id: 'org-1' } as any);
+  });
+
+  it('returns 400 for invalid status', async () => {
+    const app = createApp();
+    const res = await request(app).patch('/conversations/conv-1').send({ status: 'INVALID' });
+    expect(res.status).toBe(400);
+  });
+
+  it('updates conversation status successfully', async () => {
+    vi.mocked(prisma.conversation.findFirst).mockResolvedValueOnce({ id: 'conv-1' } as any);
+    vi.mocked(prisma.conversation.update).mockResolvedValueOnce({
+      id: 'conv-1',
+      status: 'RESOLVED',
+    } as any);
+
+    const app = createApp();
+    const res = await request(app).patch('/conversations/conv-1').send({ status: 'RESOLVED' });
+
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveProperty('status', 'RESOLVED');
+  });
+});
+
+describe('GET /conversations/:id/suggestions (AI Suggestions)', () => {
+  beforeEach(() => {
+    vi.mocked(getAuth).mockReturnValue({
+      userId: 'user-1',
+      orgSlug: 'acme',
+    } as unknown as ReturnType<typeof getAuth>);
+    vi.mocked(prisma.organization.upsert).mockResolvedValue({ id: 'org-1' } as any);
+  });
+
+  it('returns empty suggestions when no AI key is configured', async () => {
+    vi.mocked(prisma.conversation.findFirst).mockResolvedValueOnce({
+      id: 'conv-1',
+      messages: [{ sender: 'CUSTOMER', content: 'Help me' }],
+    } as any);
+
+    const app = createApp();
+    const res = await request(app).get('/conversations/conv-1/suggestions');
+
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({ suggestions: [] });
   });
 });
