@@ -41,7 +41,7 @@
   "39": "analytics/page.tsx",
   "40": "charts.tsx",
   "41": "billing/page.tsx",
-  "42": "api/vitest.config.ts",
+  "42": "pr-body-22.md",
   "43": "analytics/loading.tsx",
   "44": "billing/loading.tsx",
   "45": "conversations/loading.tsx",
@@ -51,7 +51,5 @@
   "49": "app/loading.tsx",
   "50": "Header.tsx",
   "51": "SplineScene.tsx",
-  "52": "widget.js",
-  "53": "worker/vitest.config.ts",
-  "54": "shared/vitest.config.ts"
+  "52": "widget.js"
 }

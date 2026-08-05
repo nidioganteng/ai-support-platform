@@ -1,11 +1,11 @@
 # Graph Report - ai-support-platform  (2026-08-05)
 
 ## Corpus Check
-- 100 files · ~28,266 words
+- 95 files · ~25,463 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 604 nodes · 694 edges · 55 communities (46 shown, 9 thin omitted)
+- 600 nodes · 677 edges · 53 communities (44 shown, 9 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 7 edges (avg confidence: 0.59)
 - Token cost: 0 input · 0 output
 
@@ -52,18 +52,19 @@
 - analytics/page.tsx
 - charts.tsx
 - billing/page.tsx
+- pr-body-22.md
 
 ## God Nodes (most connected - your core abstractions)
-1. `getEnv()` - 18 edges
-2. `compilerOptions` - 18 edges
+1. `compilerOptions` - 18 edges
+2. `getEnv()` - 16 edges
 3. `scripts` - 14 edges
 4. `Phase Plan` - 12 edges
 5. `compilerOptions` - 10 edges
 6. `getRedisConnectionOptions()` - 10 edges
-7. `createApp()` - 9 edges
+7. `scripts` - 7 edges
 8. `scripts` - 7 edges
 9. `scripts` - 7 edges
-10. `scripts` - 7 edges
+10. `main()` - 7 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `getStripe()` --calls--> `getEnv()`  [EXTRACTED]
@@ -80,7 +81,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (55 total, 9 thin omitted)
+## Communities (53 total, 9 thin omitted)
 
 ### Community 0 - "docs/README.md"
 Cohesion: 0.06
@@ -123,8 +124,8 @@ Cohesion: 0.06
 Nodes (32): devDependencies, pino-pretty, supertest, tsx, @types/cors, @types/express, @types/multer, @types/node (+24 more)
 
 ### Community 10 - "scripts"
-Cohesion: 0.05
-Nodes (36): concurrently, dotenv-cli, eslint, @eslint/js, devDependencies, concurrently, dotenv-cli, eslint (+28 more)
+Cohesion: 0.06
+Nodes (34): concurrently, dotenv-cli, eslint, @eslint/js, devDependencies, concurrently, dotenv-cli, eslint (+26 more)
 
 ### Community 11 - "shared/package.json"
 Cohesion: 0.11
@@ -194,8 +195,12 @@ Nodes (6): formatDate(), STATUS_COLORS, STATUS_LABELS, StatusData, VolumeChart()
 Cohesion: 0.33
 Nodes (3): BillingStatus, PLANS, UsageStat
 
+### Community 42 - "pr-body-22.md"
+Cohesion: 0.50
+Nodes (3): Changes Made, Overview, Testing Performed
+
 ## Knowledge Gaps
-- **306 isolated node(s):** `semi`, `singleQuote`, `trailingComma`, `printWidth`, `tabWidth` (+301 more)
+- **308 isolated node(s):** `semi`, `singleQuote`, `trailingComma`, `printWidth`, `tabWidth` (+303 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **9 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -203,13 +208,13 @@ Nodes (3): BillingStatus, PLANS, UsageStat
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `dependencies` connect `dependencies` to `worker/package.json`?**
-  _High betweenness centrality (0.028) - this node is a cross-community bridge._
+  _High betweenness centrality (0.027) - this node is a cross-community bridge._
 - **Why does `processPdfJob()` connect `worker/src/index.ts` to `dependencies`?**
   _High betweenness centrality (0.026) - this node is a cross-community bridge._
 - **Why does `pdf-parse` connect `dependencies` to `worker/src/index.ts`?**
-  _High betweenness centrality (0.026) - this node is a cross-community bridge._
+  _High betweenness centrality (0.025) - this node is a cross-community bridge._
 - **What connects `semi`, `singleQuote`, `trailingComma` to the rest of the system?**
-  _306 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _308 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `docs/README.md` be split into smaller, more focused modules?**
   _Cohesion score 0.05714285714285714 - nodes in this community are weakly interconnected._
 - **Should `worker/package.json` be split into smaller, more focused modules?**

@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@vitest/coverage-v8": "^2.1.9",
     "concurrently": "^10.0.4",
     "dotenv-cli": "^11.0.0",
     "eslint": "^9.13.0",

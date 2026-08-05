@@ -15,15 +15,28 @@ vi.mock('@clerk/express', () => ({
   },
 }));
 
+vi.mock('stripe', () => ({
+  default: vi.fn().mockImplementation(() => ({})),
+}));
+
+vi.mock('resend', () => ({
+  Resend: vi.fn().mockImplementation(() => ({
+    emails: { send: vi.fn().mockResolvedValue({ id: 'email_1' }) },
+  })),
+}));
+
 vi.mock('@app/database', async () => {
   const actual = await vi.importActual('@app/database');
   return {
     ...actual,
     prisma: {
       organization: {
-        upsert: vi.fn().mockResolvedValue({ id: 'org_db_1', slug: 'org_123' }),
+        upsert: vi.fn().mockResolvedValue({ id: 'org_db_1', slug: 'org_123', plan: 'FREE' }),
       },
       knowledgeSource: {
+        count: vi.fn().mockResolvedValue(0),
+        findFirst: vi.fn().mockResolvedValue({ id: 'ks_1', organizationId: 'org_db_1' }),
+        delete: vi.fn().mockResolvedValue({ id: 'ks_1' }),
         create: vi.fn().mockImplementation(({ data }) =>
           Promise.resolve({
             id: 'ks_123',
@@ -134,6 +147,28 @@ describe('knowledgeSourcesRouter', () => {
         type: 'WEBSITE',
         title: 'https://example.com/faq',
       });
+    });
+  });
+
+  describe('DELETE /knowledge-sources/:id', () => {
+    it('returns 404 if knowledge source not found', async () => {
+      const { prisma } = await import('@app/database');
+      vi.mocked(prisma.knowledgeSource.findFirst).mockResolvedValueOnce(null);
+
+      const res = await request(app)
+        .delete('/knowledge-sources/unknown_id')
+        .set('Authorization', 'Bearer valid_token');
+
+      expect(res.status).toBe(404);
+    });
+
+    it('deletes knowledge source successfully', async () => {
+      const res = await request(app)
+        .delete('/knowledge-sources/ks_1')
+        .set('Authorization', 'Bearer valid_token');
+
+      expect(res.status).toBe(200);
+      expect(res.body).toEqual({ success: true });
     });
   });
 });
