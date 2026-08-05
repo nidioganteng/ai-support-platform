@@ -154,8 +154,9 @@ export async function runRagPipeline(
 
   const systemPrompt = `You are ${botName}, an AI customer support assistant for ${orgName}.
 ${toneInstruction}
+IMPORTANT: Detect the language of the user's message and always respond in that same language.
 Answer the user's question using ONLY the context provided below.
-If the answer is not in the context, say: "I don't have information about that in my knowledge base."
+If the answer is not in the context, say the equivalent of "I don't have information about that in my knowledge base." in the user's language.
 Never make up information. Cite sources by referencing [Source N] when relevant.
 
 Context:
@@ -559,6 +560,82 @@ conversationsRouter.patch(
     });
 
     res.json(updated);
+  },
+);
+
+// GET /conversations/:id/suggestions — AI-suggested replies for agents
+conversationsRouter.get(
+  '/:id/suggestions',
+  requireOrgAuth,
+  async (req: Request, res: Response) => {
+    const { orgSlug, orgId } = getAuth(req);
+    if (!orgSlug) {
+      res.status(403).json({ error: 'No active organization selected' });
+      return;
+    }
+
+    const org = await getOrUpsertOrg(orgSlug, orgId ?? null);
+    const paramId = req.params['id'];
+    if (!paramId) {
+      res.status(400).json({ error: 'Missing id' });
+      return;
+    }
+
+    const conversation = await prisma.conversation.findFirst({
+      where: { id: paramId, organizationId: org.id },
+      include: { messages: { orderBy: { createdAt: 'asc' }, take: 20 } },
+    });
+
+    if (!conversation) {
+      res.status(404).json({ error: 'Conversation not found' });
+      return;
+    }
+
+    const env = getEnv();
+    const provider = env.AI_PROVIDER;
+    const apiKey = provider === 'gemini' ? env.GEMINI_API_KEY : provider === 'anthropic' ? env.ANTHROPIC_API_KEY : env.OPENAI_API_KEY;
+
+    if (!apiKey) {
+      res.json({ suggestions: [] });
+      return;
+    }
+
+    const baseURL = provider === 'gemini'
+      ? 'https://generativelanguage.googleapis.com/v1beta/openai/'
+      : undefined;
+    const model = provider === 'gemini' ? 'gemini-2.5-flash' : 'gpt-4o-mini';
+    const openai = new OpenAI({ apiKey, baseURL });
+
+    const transcript = conversation.messages
+      .map((m) => `${m.sender}: ${m.content}`)
+      .join('\n');
+
+    const completion = await openai.chat.completions.create({
+      model,
+      messages: [
+        {
+          role: 'system',
+          content: `You are a helpful support agent assistant. Based on the conversation transcript, generate exactly 3 short, helpful reply suggestions for the human support agent to send to the customer.
+Detect the language used by the customer and write all suggestions in that same language.
+Return ONLY a JSON array of 3 strings, no explanation. Example: ["Reply 1", "Reply 2", "Reply 3"]`,
+        },
+        { role: 'user', content: `Conversation:\n${transcript}` },
+      ],
+      temperature: 0.7,
+      max_tokens: 300,
+    });
+
+    let suggestions: string[] = [];
+    try {
+      const raw = completion.choices[0]?.message.content ?? '[]';
+      const cleaned = raw.replace(/```json|```/g, '').trim();
+      suggestions = JSON.parse(cleaned) as string[];
+      if (!Array.isArray(suggestions)) suggestions = [];
+    } catch {
+      suggestions = [];
+    }
+
+    res.json({ suggestions: suggestions.slice(0, 3) });
   },
 );
 
