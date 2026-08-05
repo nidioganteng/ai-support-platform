@@ -234,6 +234,39 @@ knowledgeSourcesRouter.get(
   },
 );
 
+// DELETE /knowledge-sources/:id
+knowledgeSourcesRouter.delete(
+  '/:id',
+  requireOrgAuth,
+  async (req: Request, res: Response) => {
+    const { orgSlug } = getAuth(req);
+    if (!orgSlug) {
+      res.status(403).json({ error: 'No active organization selected' });
+      return;
+    }
+
+    const { orgId } = getAuth(req);
+    const org = await prisma.organization.upsert({
+      where: { slug: orgSlug },
+      create: { slug: orgSlug, name: orgId ?? orgSlug },
+      update: {},
+    });
+
+    const paramId = req.params['id'] as string;
+    const ks = await prisma.knowledgeSource.findFirst({
+      where: { id: paramId, organizationId: org.id },
+    });
+
+    if (!ks) {
+      res.status(404).json({ error: 'Knowledge source not found' });
+      return;
+    }
+
+    await prisma.knowledgeSource.delete({ where: { id: ks.id } });
+    res.json({ success: true });
+  },
+);
+
 // Catch multer and other sync errors from this router — always return JSON
 knowledgeSourcesRouter.use(
   (err: unknown, _req: Request, res: Response, _next: NextFunction) => {
