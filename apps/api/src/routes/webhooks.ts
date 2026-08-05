@@ -1,7 +1,9 @@
 import { Router, type Request, type Response } from 'express';
 import { Webhook } from 'svix';
+import Stripe from 'stripe';
 import { prisma, OrganizationRole } from '@app/database';
 import { getEnv } from '@app/shared';
+import { logger } from '../logger.js';
 import crypto from 'crypto';
 
 export const webhooksRouter: Router = Router();
@@ -190,5 +192,106 @@ interface ClerkUserData {
     res.status(200).json({ success: true, received: eventType });
   } catch {
     res.status(500).json({ error: 'Failed to process webhook event' });
+  }
+});
+
+// POST /webhooks/stripe
+webhooksRouter.post('/stripe', async (req: CustomRequest, res: Response) => {
+  const env = getEnv();
+
+  if (!env.STRIPE_SECRET_KEY) {
+    res.status(500).json({ error: 'Stripe is not configured' });
+    return;
+  }
+
+  const stripe = new Stripe(env.STRIPE_SECRET_KEY);
+  const sig = req.headers['stripe-signature'] as string | undefined;
+  const rawBody = req.rawBody ?? JSON.stringify(req.body);
+
+  let event: Stripe.Event;
+  try {
+    if (env.STRIPE_WEBHOOK_SECRET && sig) {
+      event = stripe.webhooks.constructEvent(rawBody, sig, env.STRIPE_WEBHOOK_SECRET);
+    } else {
+      event = JSON.parse(rawBody) as Stripe.Event;
+    }
+  } catch {
+    res.status(400).json({ error: 'Invalid Stripe webhook signature' });
+    return;
+  }
+
+  try {
+    logger.info({ type: event.type }, 'stripe webhook received');
+
+    switch (event.type) {
+      case 'checkout.session.completed': {
+        const session = event.data.object as Stripe.Checkout.Session;
+        const orgId = session.metadata?.['orgId'];
+        const subscriptionId = typeof session.subscription === 'string'
+          ? session.subscription
+          : (session.subscription as Stripe.Subscription | null)?.id ?? null;
+
+        logger.info({ orgId, subscriptionId }, 'checkout.session.completed');
+
+        if (!orgId || !subscriptionId) break;
+
+        const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+        const priceId = subscription.items.data[0]?.price.id;
+        logger.info({ priceId, subscriptionId: subscription.id }, 'subscription retrieved');
+
+        const env2 = getEnv();
+        let plan: 'PRO' | 'ENTERPRISE' = 'PRO';
+        if (priceId === env2.STRIPE_ENTERPRISE_PRICE_ID) plan = 'ENTERPRISE';
+
+        const periodEnd = (subscription as unknown as Record<string, unknown>)['current_period_end'];
+        const currentPeriodEnd = typeof periodEnd === 'number' ? new Date(periodEnd * 1000) : null;
+
+        await prisma.organization.update({
+          where: { id: orgId },
+          data: { plan, stripeSubscriptionId: subscription.id, currentPeriodEnd },
+        });
+        logger.info({ orgId, plan }, 'organization plan updated');
+        break;
+      }
+
+      case 'customer.subscription.updated': {
+        const sub = event.data.object as Stripe.Subscription;
+        const org = await prisma.organization.findUnique({
+          where: { stripeSubscriptionId: sub.id },
+        });
+        if (!org) break;
+
+        const priceId = sub.items.data[0]?.price.id;
+        const env2 = getEnv();
+        let plan: 'PRO' | 'ENTERPRISE' = 'PRO';
+        if (priceId === env2.STRIPE_ENTERPRISE_PRICE_ID) plan = 'ENTERPRISE';
+
+        const periodEnd2 = (sub as unknown as Record<string, unknown>)['current_period_end'];
+        const currentPeriodEnd2 = typeof periodEnd2 === 'number' ? new Date(periodEnd2 * 1000) : null;
+
+        await prisma.organization.update({
+          where: { id: org.id },
+          data: { plan, currentPeriodEnd: currentPeriodEnd2 },
+        });
+        break;
+      }
+
+      case 'customer.subscription.deleted': {
+        const sub = event.data.object as Stripe.Subscription;
+        await prisma.organization.updateMany({
+          where: { stripeSubscriptionId: sub.id },
+          data: { plan: 'FREE', stripeSubscriptionId: null, currentPeriodEnd: null },
+        });
+        break;
+      }
+
+      default:
+        break;
+    }
+
+    res.status(200).json({ received: true });
+  } catch (err) {
+    logger.error({ err }, 'stripe webhook handler error');
+    res.status(500).json({ error: 'Failed to process Stripe webhook' });
   }
 });

@@ -12,6 +12,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Zap,
+  CreditCard,
 } from 'lucide-react';
 import { OrganizationSwitcher, UserButton } from '@clerk/nextjs';
 
@@ -20,6 +21,7 @@ const navigation = [
   { name: 'Knowledge Base', href: '/dashboard/knowledge-base', icon: Book },
   { name: 'Conversations', href: '/dashboard/conversations', icon: MessageSquare },
   { name: 'Analytics', href: '/dashboard/analytics', icon: BarChart2 },
+  { name: 'Billing', href: '/dashboard/billing', icon: CreditCard },
   { name: 'Settings', href: '/dashboard/settings', icon: Settings },
 ];
 
